@@ -1,50 +1,55 @@
-# Framework Name TodoMVC Example
+# ServiceNow Angular Training
 
-> Short description of the framework provided by the official website.
+For the training sessions we'll be building up a ToDo manager app,
+based on the templates provided at
+[http://todomvc.com](http://todomvc.com).
 
-> _[Framework Name - framework.com](link-to-framework)_
+## Getting Started
 
+To get started, you need to have *NodeJS* installed.  You can either
+install this via HomeBrew, or download Node directly from the
+[NodeJS website](http://nodejs.org).
 
-## Learning Framework Name
+Next, clone this repository using your favorite Git tool.  From the
+command-line, you can use:
 
-The [Framework Name website]() is a great resource for getting started.
+	$ git clone http://github.com/ctucker/angular-snc-training
 
-Here are some links you may find helpful:
+At this point you should have everything you need to develop an
+angular app and run tests against it.  To verify, go into the
+`angular-snc-training` directory and run:
 
-* [Documentation]()
-* [API Reference]()
-* [Applications built with Framework Name]()
-* [Blog]()
-* [FAQ]()
-* [Framework Name on GitHub]()
+	$ ./node_modules/karma/bin/karma start --single-run
 
-Articles and guides from the community:
+You should see an instance of Chrome flash up in the background, and
+get a report on the command line that ends with something like:
 
-* [Article 1]()
-* [Article 2]()
+	Executed 1 of 1 SUCCESS (1.807 secs / 0.008 secs)
 
-Get help from other Framework Name users:
+Congratulations, you just ran a unit test!
 
-* [Framework Name on StackOverflow](http://stackoverflow.com/questions/tagged/____)
-* [Mailing list on Google Groups]()
-* [Framework Name on Twitter](http://twitter.com/____)
-* [Framework Name on Google +]()
+## Running tests in the background
 
-_If you have other helpful links to share, or find any of the links above no longer work, please [let us know](https://github.com/tastejs/todomvc/issues)._
+It's a pain to have to run tests manually all the time, so it's best
+to have karma launch itself in the background and just keep on
+running.  It'll watch for file changes and automatically run your
+tests when you change your code.  To do this, run:
 
+	$ ./node_modules/karma/bin/karma start
 
-## Implementation
-
-How is the app structured? Are there deviations from the spec? If so, why?
-
-
-## Running
-
-If there is a build step required to get the example working, explain it here.
-
-To run the app, spin up an HTTP server and visit http://localhost/.../myexample/.
+If you're no OS X you'll also get a notification pop up telling you
+that tests are passing or failing.  If you want to stop the tests
+running, just ctrl-c out of the process.
 
 
-## Credit
+## Launching a local site
 
-This TodoMVC application was created by [you]().
+It's best to run everything over a "real" HTTP server rather than the
+filesystem to avoid any potential problems with XHR requests.  To
+launch a local server simply run:
+
+	$ ./node_modules/http-server/bin/http-server -p 8000 -c-1
+
+This will launch an http server on port 8000 with caching disabled.
+You can access the app by navigating to
+[http://localhost:8000/](http://localhost:8000).
