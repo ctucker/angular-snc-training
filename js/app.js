@@ -1,6 +1,5 @@
-(function( window ) {
-	'use strict';
+/* global angular */
+'use strict';
 
-	// Your starting point. Enjoy the ride!
-
-})( window );
+/** Create an angular module for the tasks app */
+var gTasks = angular.module('tasks', []);
