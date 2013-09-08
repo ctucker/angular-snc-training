@@ -26,7 +26,7 @@
 					<li ng-repeat="entry in taskList.entries">
 						<div class="view">
 							<input class="toggle" type="checkbox">
-							<label>{{ entry.title }}</label>
+							<label ng-bind="entry.title"></label>
 							<button class="destroy"></button>
 						</div>
 						<input class="edit" value="Rule the web">
