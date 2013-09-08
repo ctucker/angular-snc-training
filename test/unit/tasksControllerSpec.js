@@ -28,6 +28,11 @@ describe('TasksController', function() {
 		expect(scope.taskList.entries).toEqual([taskWithTitle('task 1'), taskWithTitle('task 2')]);
 	});
 
+	it('does not share a reference between the last added entry and the next new entry', function() {
+		addNewTask("task 1");
+		expect(scope.taskList.entries[0]).not.toBe(scope.newTask);
+	});
+
 	function taskWithTitle(taskTitle) {
 		return { title: taskTitle };
 	}
@@ -35,6 +40,5 @@ describe('TasksController', function() {
 	function addNewTask(newTitle) {
 		scope.newTask = { title: newTitle };
 		scope.addEntry();
-		return scope.newTask;
 	}
 });
