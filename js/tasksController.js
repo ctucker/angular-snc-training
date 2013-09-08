@@ -13,6 +13,7 @@ gTasks.controller('TasksController', function($scope) {
 
 	$scope.addEntry = function() {
 		$scope.taskList.entries.push({ title : $scope.newTask.title });
+		$scope.newTask.title = '';
 	};
 
 });

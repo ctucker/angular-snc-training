@@ -33,6 +33,11 @@ describe('TasksController', function() {
 		expect(scope.taskList.entries[0]).not.toBe(scope.newTask);
 	});
 
+	it('resets the newTask to have a blank title after adding an entry', function() {
+		addNewTask('task 1');
+		expect(scope.newTask.title).toEqual('');
+	});
+
 	function taskWithTitle(taskTitle) {
 		return { title: taskTitle };
 	}
