@@ -9,10 +9,12 @@
 		<link rel="stylesheet" href="css/app.css">
 	</head>
 	<body>
-		<section id="todoapp">
+		<section id="todoapp" ng-controller="TasksController">
 			<header id="header">
 				<h1>todos</h1>
-				<input id="new-todo" placeholder="What needs to be done?" ng-model="newTask" autofocus autocomplete="off">
+                <form ng-submit="addEntry()">
+                    <input id="new-todo" placeholder="What needs to be done?" ng-model="newTask.title" autofocus autocomplete="off">
+                </form>
 			</header>
 			<!-- This section should be hidden by default and shown when there are todos -->
 			<section id="main">
@@ -32,7 +34,7 @@
 					<li>
 						<div class="view">
 							<input class="toggle" type="checkbox">
-							<label>{{ newTask || 'Bind a value!'}}</label>
+							<label>{{ taskList.entries[0].title || 'Bind a value!' }}</label>
 							<button class="destroy"></button>
 						</div>
 						<input class="edit" value="Rule the web">
@@ -63,7 +65,8 @@
 			<p>Double-click to edit a todo</p>
 		</footer>
 		<!-- Scripts here. Don't remove this ↓ -->
-        <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+		<script type="text/javascript" src="bower_components/angular/angular.js"></script>
 		<script src="js/app.js"></script>
+		<script type="text/javascript" src="js/tasksController.js"></script>
 	</body>
 </html>
