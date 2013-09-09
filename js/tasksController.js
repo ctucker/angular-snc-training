@@ -9,6 +9,8 @@ gTasks.controller('TasksController', function($scope, taskListFactory) {
 		title : ''
 	};
 
+	$scope.statusFilter = null;
+
 	$scope.toggleAllCompleted = false;
 	$scope.$watch('toggleAllCompleted', function(completionStatus, oldStatus) {
 		if (completionStatus !== oldStatus) {

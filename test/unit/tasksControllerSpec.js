@@ -190,6 +190,23 @@ describe('TasksController', function() {
 		});
 	});
 
+	describe('filtering by location', function() {
+		var filterFilter, incomplete1, complete1, incomplete2, complete2;
+
+		beforeEach(inject(function(_filterFilter_) {
+			incomplete1 = addNewTask('incomplete1', false);
+			complete1 = addNewTask('complete1', true);
+			incomplete2 = addNewTask('incomplete2', false);
+			complete2 = addNewTask('complete2', true);
+			filterFilter = _filterFilter_;
+		}));
+
+		it('sets an empty filter by default', function() {
+			expect(filterFilter(scope.taskList.tasks, scope.statusFilter))
+				.toEqual([incomplete1, complete1, incomplete2, complete2]);
+		});
+	});
+
 	function taskWithTitle(taskTitle) {
 		return { title: taskTitle, completed : false };
 	}
