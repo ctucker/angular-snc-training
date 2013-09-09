@@ -21,7 +21,7 @@ module.exports = function(config) {
 
 		browsers: ['Chrome'],
 
-		reporters: ['progress', 'osx'],
+		reporters: ['dots', 'osx', 'growl'],
 
 //		logLevel: config.LOG_ALL,
 
@@ -29,6 +29,7 @@ module.exports = function(config) {
 			'karma-jasmine',
 			'karma-chrome-launcher',
 			'karma-osx-reporter',
+			'karma-growl-reporter',
 			'karma-ng-html2js-preprocessor'
 		],
 
