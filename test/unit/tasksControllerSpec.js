@@ -72,6 +72,17 @@ describe('TasksController', function() {
 		});
 	});
 
+	describe('recognizing when the list has tasks', function() {
+		it('sets hasTasks to false when the list is initially empty', function() {
+			expect(scope.hasTasks).toBe(false);
+		});
+
+		it('sets hasTasks to be true when a task is added', function() {
+			addNewTask('task 1');
+			expect(scope.hasTasks).toBe(true);
+		});
+	});
+
 	function taskWithTitle(taskTitle) {
 		return { title: taskTitle, completed : false };
 	}
@@ -79,6 +90,7 @@ describe('TasksController', function() {
 	function addNewTask(newTitle) {
 		scope.newTask = { title: newTitle };
 		scope.addEntry();
+		scope.$apply();
 		return getLastEntry();
 	}
 

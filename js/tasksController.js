@@ -7,6 +7,11 @@ gTasks.controller('TasksController', function($scope) {
 		entries : []
 	};
 
+	$scope.hasTasks = false;
+	$scope.$watch('taskList.entries.length', function(newValue) {
+		$scope.hasTasks = newValue > 0;
+	});
+
 	$scope.newTask = {
 		title : ''
 	};
