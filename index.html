@@ -27,7 +27,7 @@
 						<div class="view">
 							<input class="toggle" type="checkbox" ng-model="entry.completed">
 							<label ng-bind="entry.title"></label>
-							<button class="destroy"></button>
+							<button class="destroy" ng-click="removeTask(entry)"></button>
 						</div>
 						<input class="edit" value="Rule the web">
 					</li>

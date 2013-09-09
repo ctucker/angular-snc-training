@@ -64,6 +64,14 @@ describe('TasksController', function() {
 		});
 	});
 
+	describe('removing an entry', function() {
+		it('removes the entry under consideration when removeTask is called', function() {
+			var addedTask = addNewTask('to be deleted');
+			scope.removeTask(addedTask);
+			expect(getLastEntry()).toBeUndefined();
+		});
+	});
+
 	function taskWithTitle(taskTitle) {
 		return { title: taskTitle, completed : false };
 	}
@@ -71,6 +79,7 @@ describe('TasksController', function() {
 	function addNewTask(newTitle) {
 		scope.newTask = { title: newTitle };
 		scope.addEntry();
+		return getLastEntry();
 	}
 
 	function getLastEntry() {
