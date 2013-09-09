@@ -29,11 +29,8 @@ gTasks.controller('TasksController', function($scope, taskListFactory) {
 	};
 
 	$scope.addEntry = function() {
-		var trimmedTitle = trimTitle($scope.newTask.title);
-		if (trimmedTitle !== '') {
-			$scope.taskList.entries.push({ title : trimmedTitle, completed : false });
-			$scope.newTask.title = '';
-		}
+		$scope.taskList.appendTask($scope.newTask.title);
+		$scope.newTask.title = '';
 	};
 
 	$scope.removeTask = function(task) {
@@ -56,8 +53,4 @@ gTasks.controller('TasksController', function($scope, taskListFactory) {
 		}
 	};
 
-	function trimTitle(title) {
-		title = title || '';
-		return title.trim();
-	}
 });
