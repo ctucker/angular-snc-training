@@ -13,6 +13,13 @@ gTasks.factory('taskListFactory', function() {
 			}
 		}
 
+		function removeTask(task) {
+			var indexOfTask = tasks.indexOf(task);
+			if (indexOfTask >= 0) {
+				tasks.splice(indexOfTask, 1);
+			}
+		}
+
 		function countIncompleteTasks() {
 			return tasks.reduce(function(memo, task) {
 				return task.completed ? memo : memo + 1;
@@ -33,6 +40,7 @@ gTasks.factory('taskListFactory', function() {
 		// Public API follows
 		that.entries = tasks;
 		that.appendTask = appendTask;
+		that.removeTask = removeTask;
 		that.countIncompleteTasks = countIncompleteTasks;
 		that.markAllToCompletionStatus = markAllToCompletionStatus;
 

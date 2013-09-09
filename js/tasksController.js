@@ -34,10 +34,7 @@ gTasks.controller('TasksController', function($scope, taskListFactory) {
 	};
 
 	$scope.removeTask = function(task) {
-		var indexOfTask = $scope.taskList.entries.indexOf(task);
-		if (indexOfTask >= 0) {
-			$scope.taskList.entries.splice(indexOfTask, 1);
-		}
+		$scope.taskList.removeTask(task);
 	};
 
 	$scope.removeCompletedTasks = function() {
