@@ -13,6 +13,19 @@ describe('TasksController', function() {
 		tasksCtrl = $controller('TasksController', { $scope : scope} );
 	}));
 
+	beforeEach(function() {
+		this.addMatchers( {
+			toBeCompleted : function() {
+				var actual = this.actual;
+				this.message = function() {
+					return "Expected " + JSON.stringify(actual) + " to" + (this.isNot ? " not " : " ") + "be completed";
+				};
+
+				return this.actual && this.actual.completed === true;
+			}
+		});
+	});
+
 	describe('adding entries', function() {
 		it('records a new entry in the task list model when an entry is added', function() {
 			// Configure the new entry we're going to add, and add it
@@ -62,6 +75,40 @@ describe('TasksController', function() {
 			addNewTask('incomplete task');
 			expect(getLastEntry().completed).toBe(false);
 		});
+
+		describe('toggling all', function() {
+
+			it('marks all tasks as completed when toggleAllCompleted value is toggled on', function() {
+				var task1 = addNewTask('task 1'),
+					task2 = addNewTask('task 2');
+
+				scope.toggleAllCompleted = true;
+				scope.$apply();
+
+				expect(task1).toBeCompleted();
+				expect(task2).toBeCompleted();
+			});
+
+			it('marks all tasks as incomplete when toggleAllCompleted value is toggled off', function() {
+				var task1, task2;
+
+				// We have to do this to flip the state so the toggle can "take"
+				scope.toggleAllCompleted = true;
+				scope.$apply();
+
+				task1 = addNewTask('task 1', true);
+				task2 = addNewTask('task 2', true);
+
+				scope.toggleAllCompleted = false;
+				scope.$apply();
+
+				expect(task1).not.toBeCompleted();
+				expect(task2).not.toBeCompleted();
+			});
+
+		});
+
+
 	});
 
 	describe('removing entries', function() {

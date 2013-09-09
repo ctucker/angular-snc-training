@@ -1,4 +1,4 @@
-/* global gTasks */
+/* global gTasks, angular */
 "use strict";
 
 gTasks.controller('TasksController', function($scope) {
@@ -10,9 +10,21 @@ gTasks.controller('TasksController', function($scope) {
 			return this.entries.reduce(function(memo, task) {
 				return task.completed ? memo : memo + 1;
 			}, 0);
-		}
+		},
 
+		markAllToCompletionStatus : function(completionStatus) {
+			angular.forEach(this.entries, function(task) {
+				task.completed = completionStatus;
+			});
+		}
 	};
+
+	$scope.toggleAllCompleted = false;
+	$scope.$watch('toggleAllCompleted', function(completionStatus, oldStatus) {
+		if (completionStatus !== oldStatus) {
+			$scope.taskList.markAllToCompletionStatus(completionStatus);
+		}
+	});
 
 	$scope.hasTasks = false;
 	$scope.incompleteTaskCount = 0;
