@@ -4,13 +4,21 @@
 gTasks.controller('TasksController', function($scope) {
 
 	$scope.taskList = {
-		entries : []
+		entries : [],
+
+		countIncompleteTasks : function() {
+			return this.entries.reduce(function(memo, task) {
+				return task.completed ? memo : memo + 1;
+			}, 0);
+		}
 	};
 
 	$scope.hasTasks = false;
-	$scope.$watch('taskList.entries.length', function(newValue) {
-		$scope.hasTasks = newValue > 0;
-	});
+	$scope.incompleteTaskCount = 0;
+	$scope.$watch('taskList.entries', function(tasks) {
+		$scope.hasTasks = tasks.length > 0;
+		$scope.incompleteTaskCount = $scope.taskList.countIncompleteTasks();
+	}, true) ;
 
 	$scope.newTask = {
 		title : ''
@@ -35,5 +43,4 @@ gTasks.controller('TasksController', function($scope) {
 		title = title || '';
 		return title.trim();
 	}
-
 });

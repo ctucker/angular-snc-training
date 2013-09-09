@@ -81,6 +81,28 @@ describe('TasksController', function() {
 			addNewTask('task 1');
 			expect(scope.hasTasks).toBe(true);
 		});
+
+		it('counts 0 incomplete tasks when there are no tasks', function() {
+			expect(scope.incompleteTaskCount).toEqual(0);
+		});
+
+		it('counts 1 incomplete task when there is one task and it is incomplete', function() {
+			addNewTask('incomplete task');
+			expect(scope.incompleteTaskCount).toEqual(1);
+		});
+
+		it('counts 1 incomplete task when there is one incomplete task and several completed tasks', function() {
+			var complete1, complete2, incomplete;
+			complete1 = addNewTask('completed task 1');
+			incomplete = addNewTask('incomplete task');
+			complete2 = addNewTask('complete task 2');
+
+			complete1.completed = true;
+			complete2.completed = true;
+			scope.$apply(); // To catch the model change
+
+			expect(scope.incompleteTaskCount).toEqual(1);
+		});
 	});
 
 	function taskWithTitle(taskTitle) {
