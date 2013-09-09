@@ -18,7 +18,7 @@ describe('TasksController', function() {
 		addNewTask('New entry title');
 
 		// Verify the behavior: the entries list should now have a first element with the right title
-		expect(scope.taskList.entries[0]).toEqual(taskWithTitle('New entry title'));
+		expect(getLastEntry()).toEqual(taskWithTitle('New entry title'));
 	});
 
 	it('adds new entries to the end of the list when there are repeated addEntry() calls', function() {
@@ -30,12 +30,17 @@ describe('TasksController', function() {
 
 	it('does not share a reference between the last added entry and the next new entry', function() {
 		addNewTask("task 1");
-		expect(scope.taskList.entries[0]).not.toBe(scope.newTask);
+		expect(getLastEntry()).not.toBe(scope.newTask);
 	});
 
 	it('resets the newTask to have a blank title after adding an entry', function() {
 		addNewTask('task 1');
 		expect(scope.newTask.title).toEqual('');
+	});
+
+	it('trims whitespace from beginning and end of new entry before adding to list', function() {
+		addNewTask('  padded task  ');
+		expect(getLastEntry()).toEqual(taskWithTitle('padded task'));
 	});
 
 	function taskWithTitle(taskTitle) {
@@ -46,4 +51,9 @@ describe('TasksController', function() {
 		scope.newTask = { title: newTitle };
 		scope.addEntry();
 	}
+
+	function getLastEntry() {
+		return scope.taskList.entries[scope.taskList.entries.length - 1];
+	}
+
 });

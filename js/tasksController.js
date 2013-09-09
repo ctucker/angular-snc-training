@@ -12,8 +12,13 @@ gTasks.controller('TasksController', function($scope) {
 	};
 
 	$scope.addEntry = function() {
-		$scope.taskList.entries.push({ title : $scope.newTask.title });
+		$scope.taskList.entries.push({ title : trimTitle($scope.newTask.title) });
 		$scope.newTask.title = '';
 	};
+
+	function trimTitle(title) {
+		title = title || '';
+		return title.trim();
+	}
 
 });
