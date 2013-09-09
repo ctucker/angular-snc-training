@@ -64,11 +64,24 @@ describe('TasksController', function() {
 		});
 	});
 
-	describe('removing an entry', function() {
+	describe('removing entries', function() {
 		it('removes the entry under consideration when removeTask is called', function() {
 			var addedTask = addNewTask('to be deleted');
 			scope.removeTask(addedTask);
 			expect(getLastEntry()).toBeUndefined();
+		});
+
+		it('removes all entries marked completed when removeCompletedTasks is called', function() {
+			var incompleteTask;
+			addNewTask('first completed', true);
+			addNewTask('second completed', true);
+			incompleteTask = addNewTask('first incomplete', false);
+			addNewTask('third completed', true);
+
+			scope.removeCompletedTasks();
+
+			expect(getLastEntry()).toBe(incompleteTask);
+			expect(scope.taskList.entries.length).toBe(1);
 		});
 	});
 
@@ -103,17 +116,48 @@ describe('TasksController', function() {
 
 			expect(scope.incompleteTaskCount).toEqual(1);
 		});
+
+		it('counts 0 complete tasks where there are no tasks', function() {
+			expect(scope.completedTaskCount).toEqual(0);
+		});
+
+		it('counts 1 completed task when there is one task and it is completed', function() {
+			var completed = addNewTask('completed');
+			completed.completed = true;
+			scope.$apply();
+
+			expect(scope.completedTaskCount).toEqual(1);
+		});
+
+		it('counts 2 completed tasks when there are two completed and one incomplete tasks', function() {
+			var complete1, complete2, incomplete;
+			complete1 = addNewTask('completed task 1');
+			incomplete = addNewTask('incomplete task');
+			complete2 = addNewTask('complete task 2');
+
+			complete1.completed = true;
+			complete2.completed = true;
+			scope.$apply();
+
+			expect(scope.completedTaskCount).toEqual(2);
+		});
 	});
 
 	function taskWithTitle(taskTitle) {
 		return { title: taskTitle, completed : false };
 	}
 
-	function addNewTask(newTitle) {
+	function addNewTask(newTitle, completed) {
+		var addedTask;
 		scope.newTask = { title: newTitle };
 		scope.addEntry();
+		addedTask = getLastEntry();
+		if (addedTask) {
+			addedTask.completed = completed ? true : false;
+		}
 		scope.$apply();
-		return getLastEntry();
+
+		return addedTask;
 	}
 
 	function getLastEntry() {
