@@ -42,13 +42,13 @@
 				<!-- Remove this if you don't implement routing -->
 				<ul id="filters">
 					<li>
-						<a class="selected" href="#/">All</a>
+						<a ng-class="{selected : location.path() == '/'}" href="#/">All</a>
 					</li>
 					<li>
-						<a href="#/active">Active</a>
+						<a ng-class="{selected : location.path() == '/active'}" href="#/active">Active</a>
 					</li>
 					<li>
-						<a href="#/completed">Completed</a>
+						<a ng-class="{selected : location.path() == '/completed'}" href="#/completed">Completed</a>
 					</li>
 				</ul>
 				<!-- Hidden if no completed items are left ↓ -->

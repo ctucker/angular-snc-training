@@ -202,9 +202,37 @@ describe('TasksController', function() {
 		}));
 
 		it('sets an empty filter by default', function() {
-			expect(filterFilter(scope.taskList.tasks, scope.statusFilter))
-				.toEqual([incomplete1, complete1, incomplete2, complete2]);
+			expect(filteredTasks()).toEqual([incomplete1, complete1, incomplete2, complete2]);
 		});
+
+		it('matches only incomplete tasks when the location is /active', function() {
+			setPath("/active");
+
+			expect(filteredTasks()).toEqual([incomplete1, incomplete2]);
+		});
+
+		it('matches only complete tasks when the location is /completed', function() {
+			setPath("/completed");
+
+			expect(filteredTasks()).toEqual([complete1, complete2]);
+		});
+
+		it('sets an empty filter when path is set to /', function() {
+			setPath("/active"); // Move away
+			setPath("/"); // And back again
+
+			expect(filteredTasks()).toEqual([incomplete1, complete1, incomplete2, complete2]);
+		});
+
+		function setPath(path) {
+			scope.location.path(path);
+			scope.$apply();
+		}
+
+		function filteredTasks() {
+			return filterFilter(scope.taskList.tasks, scope.statusFilter);
+		}
+
 	});
 
 	function taskWithTitle(taskTitle) {

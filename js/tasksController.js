@@ -1,7 +1,13 @@
 /* global gTasks, angular */
 "use strict";
 
-gTasks.controller('TasksController', function($scope, taskListFactory) {
+gTasks.controller('TasksController', function($scope, $location, taskListFactory) {
+
+	var paths = {
+		'/active' : { completed : false },
+		'/completed' : { completed : true },
+		'/' : null
+	};
 
 	$scope.taskList = taskListFactory();
 
@@ -9,7 +15,17 @@ gTasks.controller('TasksController', function($scope, taskListFactory) {
 		title : ''
 	};
 
+	$scope.location = $location;
 	$scope.statusFilter = null;
+
+	$scope.$watch('location.path()', function(path) {
+		if (paths[path] !== undefined) {
+			$scope.statusFilter = paths[path];
+		}
+		else {
+			$scope.location.path("/");
+		}
+	});
 
 	$scope.toggleAllCompleted = false;
 	$scope.$watch('toggleAllCompleted', function(completionStatus, oldStatus) {
