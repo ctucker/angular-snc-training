@@ -14,7 +14,7 @@ gTasks.controller('TasksController', function($scope) {
 	$scope.addEntry = function() {
 		var trimmedTitle = trimTitle($scope.newTask.title);
 		if (trimmedTitle !== '') {
-			$scope.taskList.entries.push({ title : trimmedTitle });
+			$scope.taskList.entries.push({ title : trimmedTitle, completed : false });
 			$scope.newTask.title = '';
 		}
 	};

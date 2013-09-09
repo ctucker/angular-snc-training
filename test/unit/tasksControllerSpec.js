@@ -13,29 +13,31 @@ describe('TasksController', function() {
 		tasksCtrl = $controller('TasksController', { $scope : scope} );
 	}));
 
-	it('records a new entry in the task list model when an entry is added', function() {
-		// Configure the new entry we're going to add, and add it
-		addNewTask('New entry title');
+	describe('adding entries', function() {
+		it('records a new entry in the task list model when an entry is added', function() {
+			// Configure the new entry we're going to add, and add it
+			addNewTask('New entry title');
 
-		// Verify the behavior: the entries list should now have a first element with the right title
-		expect(getLastEntry()).toEqual(taskWithTitle('New entry title'));
-	});
+			// Verify the behavior: the entries list should now have a first element with the right title
+			expect(getLastEntry()).toEqual(taskWithTitle('New entry title'));
+		});
 
-	it('adds new entries to the end of the list when there are repeated addEntry() calls', function() {
-		addNewTask("task 1");
-		addNewTask("task 2");
+		it('adds new entries to the end of the list when there are repeated addEntry() calls', function() {
+			addNewTask("task 1");
+			addNewTask("task 2");
 
-		expect(scope.taskList.entries).toEqual([taskWithTitle('task 1'), taskWithTitle('task 2')]);
-	});
+			expect(scope.taskList.entries).toEqual([taskWithTitle('task 1'), taskWithTitle('task 2')]);
+		});
 
-	it('does not share a reference between the last added entry and the next new entry', function() {
-		addNewTask("task 1");
-		expect(getLastEntry()).not.toBe(scope.newTask);
-	});
+		it('does not share a reference between the last added entry and the next new entry', function() {
+			addNewTask("task 1");
+			expect(getLastEntry()).not.toBe(scope.newTask);
+		});
 
-	it('resets the newTask to have a blank title after adding an entry', function() {
-		addNewTask('task 1');
-		expect(scope.newTask.title).toEqual('');
+		it('resets the newTask to have a blank title after adding an entry', function() {
+			addNewTask('task 1');
+			expect(scope.newTask.title).toEqual('');
+		});
 	});
 
 	describe('normalizing entries', function() {
@@ -55,8 +57,15 @@ describe('TasksController', function() {
 		});
 	});
 
+	describe('marking entries as complete', function() {
+		it('records a default completed status of false for new entries', function() {
+			addNewTask('incomplete task');
+			expect(getLastEntry().completed).toBe(false);
+		});
+	});
+
 	function taskWithTitle(taskTitle) {
-		return { title: taskTitle };
+		return { title: taskTitle, completed : false };
 	}
 
 	function addNewTask(newTitle) {
