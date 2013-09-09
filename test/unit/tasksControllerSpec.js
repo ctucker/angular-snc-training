@@ -38,9 +38,21 @@ describe('TasksController', function() {
 		expect(scope.newTask.title).toEqual('');
 	});
 
-	it('trims whitespace from beginning and end of new entry before adding to list', function() {
-		addNewTask('  padded task  ');
-		expect(getLastEntry()).toEqual(taskWithTitle('padded task'));
+	describe('normalizing entries', function() {
+		it('trims whitespace from beginning and end of new entry before adding to list', function() {
+			addNewTask('  padded task  ');
+			expect(getLastEntry()).toEqual(taskWithTitle('padded task'));
+		});
+
+		it('disallows empty entry', function() {
+			addNewTask('');
+			expect(getLastEntry()).toBe(undefined);
+		});
+
+		it('disallows all whitespace entry', function() {
+			addNewTask('   ');
+			expect(getLastEntry()).toBe(undefined);
+		});
 	});
 
 	function taskWithTitle(taskTitle) {
