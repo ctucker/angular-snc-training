@@ -3,43 +3,15 @@
 
 gTasks.controller('TasksController', function($scope, $location, taskListFactory) {
 
-	var paths = {
-		'/active' : { completed : false },
-		'/completed' : { completed : true },
-		'/' : null
-	};
+	var paths;
+	configureRouting();
+	configureCompletionToggle();
+	configureTaskListWatch();
 
 	$scope.taskList = taskListFactory();
-
 	$scope.newTask = {
 		title : ''
 	};
-
-	$scope.location = $location;
-	$scope.statusFilter = null;
-
-	$scope.$watch('location.path()', function(path) {
-		if (paths[path] !== undefined) {
-			$scope.statusFilter = paths[path];
-		}
-		else {
-			$scope.location.path("/");
-		}
-	});
-
-	$scope.toggleAllCompleted = false;
-	$scope.$watch('toggleAllCompleted', function(completionStatus, oldStatus) {
-		if (completionStatus !== oldStatus) {
-			$scope.taskList.markAllToCompletionStatus(completionStatus);
-		}
-	});
-
-	$scope.$watch('taskList.tasks', function(tasks) {
-		$scope.hasTasks = tasks.length > 0;
-		$scope.incompleteTaskCount = $scope.taskList.countIncompleteTasks();
-		$scope.completedTaskCount = $scope.taskList.tasks.length - $scope.incompleteTaskCount;
-		$scope.hasCompletedTasks = $scope.completedTaskCount > 0;
-	}, true);
 
 	$scope.addTask = function() {
 		$scope.taskList.appendTask($scope.newTask.title);
@@ -54,4 +26,42 @@ gTasks.controller('TasksController', function($scope, $location, taskListFactory
 		$scope.taskList.removeAllCompletedTasks();
 	};
 
+
+	function configureRouting() {
+		paths = {
+			'/active' : { completed : false },
+			'/completed' : { completed : true },
+			'/' : null
+		};
+
+		$scope.location = $location;
+		$scope.statusFilter = null;
+
+		$scope.$watch('location.path()', function(path) {
+			if (paths[path] !== undefined) {
+				$scope.statusFilter = paths[path];
+			}
+			else {
+				$scope.location.path("/");
+			}
+		});
+	}
+
+	function configureCompletionToggle() {
+		$scope.toggleAllCompleted = false;
+		$scope.$watch('toggleAllCompleted', function(completionStatus, oldStatus) {
+			if (completionStatus !== oldStatus) {
+				$scope.taskList.markAllToCompletionStatus(completionStatus);
+			}
+		});
+	}
+
+	function configureTaskListWatch() {
+		$scope.$watch('taskList.tasks', function(tasks) {
+			$scope.hasTasks = tasks.length > 0;
+			$scope.incompleteTaskCount = $scope.taskList.countIncompleteTasks();
+			$scope.completedTaskCount = $scope.taskList.tasks.length - $scope.incompleteTaskCount;
+			$scope.hasCompletedTasks = $scope.completedTaskCount > 0;
+		}, true);
+	}
 });
