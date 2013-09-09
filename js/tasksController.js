@@ -38,16 +38,7 @@ gTasks.controller('TasksController', function($scope, taskListFactory) {
 	};
 
 	$scope.removeCompletedTasks = function() {
-		var tasks = $scope.taskList.entries;
-		var i = 0;
-		while(i < tasks.length) {
-			if (tasks[i].completed) {
-				tasks.splice(i, 1);
-			}
-			else {
-				++i;
-			}
-		}
+		$scope.taskList.removeAllCompletedTasks();
 	};
 
 });

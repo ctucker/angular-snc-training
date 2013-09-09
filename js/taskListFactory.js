@@ -20,6 +20,18 @@ gTasks.factory('taskListFactory', function() {
 			}
 		}
 
+		function removeAllCompletedTasks() {
+			var i = 0;
+			while(i < tasks.length) {
+				if (tasks[i].completed) {
+					tasks.splice(i, 1);
+				}
+				else {
+					++i;
+				}
+			}
+		}
+
 		function countIncompleteTasks() {
 			return tasks.reduce(function(memo, task) {
 				return task.completed ? memo : memo + 1;
@@ -41,6 +53,7 @@ gTasks.factory('taskListFactory', function() {
 		that.entries = tasks;
 		that.appendTask = appendTask;
 		that.removeTask = removeTask;
+		that.removeAllCompletedTasks = removeAllCompletedTasks;
 		that.countIncompleteTasks = countIncompleteTasks;
 		that.markAllToCompletionStatus = markAllToCompletionStatus;
 
