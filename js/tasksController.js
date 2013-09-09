@@ -5,6 +5,10 @@ gTasks.controller('TasksController', function($scope, taskListFactory) {
 
 	$scope.taskList = taskListFactory();
 
+	$scope.newTask = {
+		title : ''
+	};
+
 	$scope.toggleAllCompleted = false;
 	$scope.$watch('toggleAllCompleted', function(completionStatus, oldStatus) {
 		if (completionStatus !== oldStatus) {
@@ -12,23 +16,14 @@ gTasks.controller('TasksController', function($scope, taskListFactory) {
 		}
 	});
 
-	$scope.hasTasks = false;
-	$scope.incompleteTaskCount = 0;
-	$scope.completedTaskCount = 0;
-	$scope.hasCompletedTasks = $scope.completedTaskCount > 0;
-
-	$scope.$watch('taskList.entries', function(tasks) {
+	$scope.$watch('taskList.tasks', function(tasks) {
 		$scope.hasTasks = tasks.length > 0;
 		$scope.incompleteTaskCount = $scope.taskList.countIncompleteTasks();
-		$scope.completedTaskCount = $scope.taskList.entries.length - $scope.incompleteTaskCount;
+		$scope.completedTaskCount = $scope.taskList.tasks.length - $scope.incompleteTaskCount;
 		$scope.hasCompletedTasks = $scope.completedTaskCount > 0;
 	}, true);
 
-	$scope.newTask = {
-		title : ''
-	};
-
-	$scope.addEntry = function() {
+	$scope.addTask = function() {
 		$scope.taskList.appendTask($scope.newTask.title);
 		$scope.newTask.title = '';
 	};

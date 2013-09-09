@@ -11,6 +11,7 @@ describe('TasksController', function() {
 		// Create a controller, passing in a newly constructed scope
 		scope = $rootScope.$new();
 		tasksCtrl = $controller('TasksController', { $scope : scope} );
+		scope.$apply();
 	}));
 
 	beforeEach(function() {
@@ -26,54 +27,54 @@ describe('TasksController', function() {
 		});
 	});
 
-	describe('adding entries', function() {
-		it('records a new entry in the task list model when an entry is added', function() {
-			// Configure the new entry we're going to add, and add it
-			addNewTask('New entry title');
+	describe('adding tasks', function() {
+		it('records a new task in the task list model when an task is added', function() {
+			// Configure the new task we're going to add, and add it
+			addNewTask('New task title');
 
-			// Verify the behavior: the entries list should now have a first element with the right title
-			expect(getLastEntry()).toEqual(taskWithTitle('New entry title'));
+			// Verify the behavior: the tasks list should now have a first element with the right title
+			expect(getLastTask()).toEqual(taskWithTitle('New task title'));
 		});
 
-		it('adds new entries to the end of the list when there are repeated addEntry() calls', function() {
+		it('adds new tasks to the end of the list when there are repeated addTask() calls', function() {
 			addNewTask("task 1");
 			addNewTask("task 2");
 
-			expect(scope.taskList.entries).toEqual([taskWithTitle('task 1'), taskWithTitle('task 2')]);
+			expect(scope.taskList.tasks).toEqual([taskWithTitle('task 1'), taskWithTitle('task 2')]);
 		});
 
-		it('does not share a reference between the last added entry and the next new entry', function() {
+		it('does not share a reference between the last added task and the next new task', function() {
 			addNewTask("task 1");
-			expect(getLastEntry()).not.toBe(scope.newTask);
+			expect(getLastTask()).not.toBe(scope.newTask);
 		});
 
-		it('resets the newTask to have a blank title after adding an entry', function() {
+		it('resets the newTask to have a blank title after adding an task', function() {
 			addNewTask('task 1');
 			expect(scope.newTask.title).toEqual('');
 		});
 	});
 
-	describe('normalizing entries', function() {
-		it('trims whitespace from beginning and end of new entry before adding to list', function() {
+	describe('normalizing tasks', function() {
+		it('trims whitespace from beginning and end of new task before adding to list', function() {
 			addNewTask('  padded task  ');
-			expect(getLastEntry()).toEqual(taskWithTitle('padded task'));
+			expect(getLastTask()).toEqual(taskWithTitle('padded task'));
 		});
 
-		it('disallows empty entry', function() {
+		it('disallows empty task', function() {
 			addNewTask('');
-			expect(getLastEntry()).toBe(undefined);
+			expect(getLastTask()).toBe(undefined);
 		});
 
-		it('disallows all whitespace entry', function() {
+		it('disallows all whitespace task', function() {
 			addNewTask('   ');
-			expect(getLastEntry()).toBe(undefined);
+			expect(getLastTask()).toBe(undefined);
 		});
 	});
 
-	describe('marking entries as complete', function() {
-		it('records a default completed status of false for new entries', function() {
+	describe('marking tasks as complete', function() {
+		it('records a default completed status of false for new tasks', function() {
 			addNewTask('incomplete task');
-			expect(getLastEntry().completed).toBe(false);
+			expect(getLastTask().completed).toBe(false);
 		});
 
 		describe('toggling all', function() {
@@ -108,17 +109,16 @@ describe('TasksController', function() {
 
 		});
 
-
 	});
 
-	describe('removing entries', function() {
-		it('removes the entry under consideration when removeTask is called', function() {
+	describe('removing tasks', function() {
+		it('removes the task under consideration when removeTask is called', function() {
 			var addedTask = addNewTask('to be deleted');
 			scope.removeTask(addedTask);
-			expect(getLastEntry()).toBeUndefined();
+			expect(getLastTask()).toBeUndefined();
 		});
 
-		it('removes all entries marked completed when removeCompletedTasks is called', function() {
+		it('removes all tasks marked completed when removeCompletedTasks is called', function() {
 			var incompleteTask;
 			addNewTask('first completed', true);
 			addNewTask('second completed', true);
@@ -127,8 +127,8 @@ describe('TasksController', function() {
 
 			scope.removeCompletedTasks();
 
-			expect(getLastEntry()).toBe(incompleteTask);
-			expect(scope.taskList.entries.length).toBe(1);
+			expect(getLastTask()).toBe(incompleteTask);
+			expect(scope.taskList.tasks.length).toBe(1);
 		});
 	});
 
@@ -197,8 +197,8 @@ describe('TasksController', function() {
 	function addNewTask(newTitle, completed) {
 		var addedTask;
 		scope.newTask = { title: newTitle };
-		scope.addEntry();
-		addedTask = getLastEntry();
+		scope.addTask();
+		addedTask = getLastTask();
 		if (addedTask) {
 			addedTask.completed = completed ? true : false;
 		}
@@ -207,8 +207,8 @@ describe('TasksController', function() {
 		return addedTask;
 	}
 
-	function getLastEntry() {
-		return scope.taskList.entries[scope.taskList.entries.length - 1];
+	function getLastTask() {
+		return scope.taskList.tasks[scope.taskList.tasks.length - 1];
 	}
 
 });

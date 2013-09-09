@@ -50,7 +50,7 @@ gTasks.factory('taskListFactory', function() {
 		}
 
 		// Public API follows
-		that.entries = tasks;
+		that.tasks = tasks;
 		that.appendTask = appendTask;
 		that.removeTask = removeTask;
 		that.removeAllCompletedTasks = removeAllCompletedTasks;
