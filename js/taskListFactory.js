@@ -1,7 +1,7 @@
 /* global gTasks, angular */
 "use strict";
 
-gTasks.factory('taskListFactory', function() {
+gTasks.factory('taskListFactory', function(filterFilter) {
 	return function() {
 		var that = {},
 			tasks = [];
@@ -21,21 +21,11 @@ gTasks.factory('taskListFactory', function() {
 		}
 
 		function removeAllCompletedTasks() {
-			var i = 0;
-			while(i < tasks.length) {
-				if (tasks[i].completed) {
-					tasks.splice(i, 1);
-				}
-				else {
-					++i;
-				}
-			}
+			that.tasks = filterFilter(that.tasks, { completed : false });
 		}
 
 		function countIncompleteTasks() {
-			return tasks.reduce(function(memo, task) {
-				return task.completed ? memo : memo + 1;
-			}, 0);
+			return filterFilter(tasks, { completed : false}).length;
 		}
 
 		function markAllToCompletionStatus(completionStatus) {
