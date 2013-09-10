@@ -2,9 +2,9 @@
 "use strict";
 
 gTasks.factory('taskListFactory', function(filterFilter) {
-	return function() {
+	return function(existingTasks) {
 		var that = {},
-			tasks = [];
+			tasks = initializeTasks(existingTasks);
 
 		function appendTask(taskTitle) {
 			var trimmedTitle = trimTitle(taskTitle);
@@ -37,6 +37,13 @@ gTasks.factory('taskListFactory', function(filterFilter) {
 		function trimTitle(title) {
 			title = title || '';
 			return title.trim();
+		}
+
+		function initializeTasks(existingTasks) {
+			if (Array.isArray(existingTasks)) {
+				return existingTasks;
+			}
+			return [];
 		}
 
 		// Public API follows
