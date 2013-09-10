@@ -1,4 +1,4 @@
-/* global describe, it, expect, inject, beforeEach, module, spyOn, jasmine */
+/* global describe, it, expect, inject, beforeEach, module, spyOn, jasmine, angular */
 'use strict';
 
 describe('LocalStorageService', function() {
@@ -35,6 +35,15 @@ describe('LocalStorageService', function() {
 			{ title: 'foo', completed: false }
 		];
 		taskPersister.store(taskList);
+		expect(taskPersister.retrieve()).toEqual(taskList);
+	});
+
+	it('should strip $$hashkey out when storing', function() {
+		var taskList = [
+			{ title: 'foo', completed: false }
+		];
+		var angularTaskList = [ angular.extend({$$hashKey : 1}, taskList[0]) ];
+		taskPersister.store(angularTaskList);
 		expect(taskPersister.retrieve()).toEqual(taskList);
 	});
 

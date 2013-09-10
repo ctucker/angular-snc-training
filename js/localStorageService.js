@@ -9,7 +9,15 @@ angular.module('localStorageService', []).factory('taskPersister', function(loca
 		},
 
 		store : function(taskList) {
-			localStorage.setItem(localStorageKey, JSON.stringify(taskList || '[]'));
+
+			var jsonString = JSON.stringify(taskList || '[]', function(key, value) {
+				// Strip the hashkey out so Angular doesn't get confused when it reads this back in
+				if (key === '$$hashKey') {
+					return undefined;
+				}
+				return value;
+			});
+			localStorage.setItem(localStorageKey, jsonString);
 		}
 	};
 
