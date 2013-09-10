@@ -26,6 +26,10 @@ gTasks.controller('TasksController', function($scope, $location, taskListFactory
 		$scope.taskList.removeAllCompletedTasks();
 	};
 
+	$scope.editTask = function(task) {
+		$scope.taskBeingEdited = task;
+	}
+
 
 	function configureRouting() {
 		paths = {

@@ -278,6 +278,18 @@ describe('TasksController', function() {
 
 	});
 
+	describe('editing a task', function() {
+		var task;
+		beforeEach(function() {
+			task = addNewTask('task');
+		});
+
+		it('sets the taskBeingEdited to the task when editTask is called', function() {
+			scope.editTask(task);
+			expect(scope.taskBeingEdited).toBe(task);
+		});
+	});
+
 	function taskWithTitle(taskTitle) {
 		return { title: taskTitle, completed : false };
 	}

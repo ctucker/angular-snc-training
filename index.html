@@ -23,10 +23,11 @@
 				<ul id="todo-list" ng-cloak>
 					<!-- These are here just to show the structure of the list items -->
 					<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-					<li ng-repeat="task in taskList.tasks | filter:statusFilter" ng-class="{completed : task.completed}">
+					<li ng-repeat="task in taskList.tasks | filter:statusFilter"
+						ng-class="{completed : task.completed, editing : task == taskBeingEdited}">
 						<div class="view">
 							<input class="toggle" type="checkbox" ng-model="task.completed">
-							<label ng-bind="task.title"></label>
+							<label ng-bind="task.title" ng-dblclick="editTask(task)"></label>
 							<button class="destroy" ng-click="removeTask(task)"></button>
 						</div>
 						<input class="edit" value="Rule the web">
