@@ -31,6 +31,10 @@ gTasks.controller('TasksController', function($scope, $location, taskListFactory
 		$scope.$broadcast('focusEditInput_' + index);
 	};
 
+	$scope.finishEditing = function() {
+		$scope.taskBeingEdited = null;
+	};
+
 
 	function configureRouting() {
 		paths = {

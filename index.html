@@ -30,7 +30,9 @@
 							<label ng-bind="task.title" ng-dblclick="editTask(task, $index)"></label>
 							<button class="destroy" ng-click="removeTask(task)"></button>
 						</div>
-						<input class="edit" value="Rule the web" sn-set-focus="{{ 'focusEditInput_' + $index }}">
+						<form ng-submit="finishEditing()">
+							<input class="edit" value="Rule the web" sn-set-focus="{{ 'focusEditInput_' + $index }}" ng-blur="finishEditing()">
+						</form>
 					</li>
 				</ul>
 			</section>

@@ -288,6 +288,12 @@ describe('TasksController', function() {
 			scope.editTask(task);
 			expect(scope.taskBeingEdited).toBe(task);
 		});
+
+		it('sets the taskBeingEdited to null when finishEditing is called', function() {
+			scope.editTask(task);
+			scope.finishEditing();
+			expect(scope.taskBeingEdited).toBe(null);
+		})
 	});
 
 	function taskWithTitle(taskTitle) {
