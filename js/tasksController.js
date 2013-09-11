@@ -30,6 +30,10 @@ gTasks.controller('TasksController', function($scope, $location, taskListFactory
 		$scope.taskBeingEdited = task;
 	};
 
+	$scope.finishEditing = function() {
+		$scope.taskBeingEdited = null;
+	};
+
 
 	function configureRouting() {
 		paths = {
