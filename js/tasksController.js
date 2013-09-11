@@ -28,7 +28,7 @@ gTasks.controller('TasksController', function($scope, $location, taskListFactory
 
 	$scope.editTask = function(task) {
 		$scope.taskBeingEdited = task;
-	}
+	};
 
 
 	function configureRouting() {
