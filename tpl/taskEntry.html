@@ -1,8 +1,8 @@
 <div class="view">
 	<input class="toggle" type="checkbox" ng-model="task.completed">
-	<label ng-bind="task.title" ng-dblclick="editTask(task, $index)"></label>
-	<button class="destroy" ng-click="removeTask(task)"></button>
+	<label ng-bind="task.title" ng-dblclick="edit({task: task, index: $index})"></label>
+	<button class="destroy" ng-click="destroy({task : task})"></button>
 </div>
-<form ng-submit="finishEditing()">
-	<input class="edit" value="Rule the web" sn-set-focus="{{ 'focusEditInput_' + $index }}" ng-blur="finishEditing()">
+<form ng-submit="finishEdit()">
+	<input class="edit" ng-model="task.title" sn-set-focus="{{ 'focusEditInput_' + index }}" ng-blur="finishEdit()">
 </form>

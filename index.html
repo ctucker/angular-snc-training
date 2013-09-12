@@ -26,7 +26,14 @@
 					<li ng-repeat="task in taskList.tasks | filter:statusFilter"
 						ng-class="{completed : task.completed, editing : task == taskBeingEdited}">
 
-						<task-entry></task-entry>
+						<task-entry
+								task="task"
+								index="$index"
+								edit="editTask(task, $index)"
+								finish-edit="finishEditing()"
+								destroy="removeTask(task)"
+								>
+						</task-entry>
 					</li>
 				</ul>
 			</section>
