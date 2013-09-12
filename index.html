@@ -27,10 +27,10 @@
 						ng-class="{completed : task.completed, editing : task == taskBeingEdited}">
 						<div class="view">
 							<input class="toggle" type="checkbox" ng-model="task.completed">
-							<label ng-bind="task.title" ng-dblclick="editTask(task)"></label>
+							<label ng-bind="task.title" ng-dblclick="editTask(task, $index)"></label>
 							<button class="destroy" ng-click="removeTask(task)"></button>
 						</div>
-						<input class="edit" value="Rule the web">
+						<input class="edit" value="Rule the web" sn-set-focus="{{ 'focusEditInput_' + $index }}">
 					</li>
 				</ul>
 			</section>
@@ -65,5 +65,6 @@
 		<script type="text/javascript" src="js/tasksController.js"></script>
 		<script type="text/javascript" src="js/taskListFactory.js"></script>
 		<script type="text/javascript" src="js/localStorageService.js"></script>
+		<script type="text/javascript" src="js/snSetFocus.js"></script>
 	</body>
 </html>

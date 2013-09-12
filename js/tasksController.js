@@ -26,9 +26,10 @@ gTasks.controller('TasksController', function($scope, $location, taskListFactory
 		$scope.taskList.removeAllCompletedTasks();
 	};
 
-	$scope.editTask = function(task) {
+	$scope.editTask = function(task, index) {
 		$scope.taskBeingEdited = task;
-	}
+		$scope.$broadcast('focusEditInput_' + index);
+	};
 
 
 	function configureRouting() {

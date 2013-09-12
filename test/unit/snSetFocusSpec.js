@@ -17,5 +17,10 @@ describe('snSetFocus directive', function() {
 		scope.$digest();
 	}));
 
+	it('sets the input to be focussed when inFocus message is broadcast', function() {
+		scope.$broadcast('inFocus');
+		timeout.flush();
+		expect(scope.focusedElement).toEqual(element);
+	});
 
 });
