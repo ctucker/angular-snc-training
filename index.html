@@ -25,14 +25,8 @@
 					<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
 					<li ng-repeat="task in taskList.tasks | filter:statusFilter"
 						ng-class="{completed : task.completed, editing : task == taskBeingEdited}">
-						<div class="view">
-							<input class="toggle" type="checkbox" ng-model="task.completed">
-							<label ng-bind="task.title" ng-dblclick="editTask(task, $index)"></label>
-							<button class="destroy" ng-click="removeTask(task)"></button>
-						</div>
-						<form ng-submit="finishEditing()">
-							<input class="edit" value="Rule the web" sn-set-focus="{{ 'focusEditInput_' + $index }}" ng-blur="finishEditing()">
-						</form>
+
+						<task-entry></task-entry>
 					</li>
 				</ul>
 			</section>
@@ -68,5 +62,6 @@
 		<script type="text/javascript" src="js/taskListFactory.js"></script>
 		<script type="text/javascript" src="js/localStorageService.js"></script>
 		<script type="text/javascript" src="js/snSetFocus.js"></script>
+		<script type="text/javascript" src="js/taskEntry.js"></script>
 	</body>
 </html>
