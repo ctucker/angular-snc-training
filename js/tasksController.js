@@ -1,14 +1,14 @@
 /* global gTasks, angular */
 "use strict";
 
-gTasks.controller('TasksController', function($scope, $location, taskListFactory) {
+gTasks.controller('TasksController', function($scope, $location, taskListFactory, taskPersister) {
 
 	var paths;
 	configureRouting();
 	configureCompletionToggle();
 	configureTaskListWatch();
 
-	$scope.taskList = taskListFactory();
+	$scope.taskList = taskListFactory(taskPersister.retrieve());
 	$scope.newTask = {
 		title : ''
 	};
@@ -62,6 +62,7 @@ gTasks.controller('TasksController', function($scope, $location, taskListFactory
 			$scope.incompleteTaskCount = $scope.taskList.countIncompleteTasks();
 			$scope.completedTaskCount = $scope.taskList.tasks.length - $scope.incompleteTaskCount;
 			$scope.hasCompletedTasks = $scope.completedTaskCount > 0;
+			taskPersister.store($scope.taskList.tasks);
 		}, true);
 	}
 });

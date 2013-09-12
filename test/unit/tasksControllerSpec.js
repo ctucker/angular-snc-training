@@ -1,8 +1,15 @@
-/* global describe, it, expect, inject, beforeEach, module */
+/* global describe, it, expect, inject, beforeEach, module, spyOn, jasmine */
 'use strict';
 
 describe('TasksController', function() {
 	var scope, tasksCtrl;
+
+	var mockTaskPersister = jasmine.createSpyObj('taskPersister', ['retrieve', 'store', 'clear']);
+
+	// Configure a mock local store service
+	beforeEach(module('localStorageService', function($provide) {
+		$provide.value('taskPersister', mockTaskPersister);
+	}));
 
 	// Pull in the "tasks" module to get our app configuration
 	beforeEach(module('tasks'));
@@ -10,7 +17,7 @@ describe('TasksController', function() {
 	beforeEach(inject(function($rootScope, $controller) {
 		// Create a controller, passing in a newly constructed scope
 		scope = $rootScope.$new();
-		tasksCtrl = $controller('TasksController', { $scope : scope} );
+		tasksCtrl = $controller('TasksController', { $scope : scope });
 		scope.$apply();
 	}));
 
@@ -231,6 +238,42 @@ describe('TasksController', function() {
 
 		function filteredTasks() {
 			return filterFilter(scope.taskList.tasks, scope.statusFilter);
+		}
+
+	});
+
+	describe('saving state', function() {
+		it('should restore state on initial load', function() {
+			expect(mockTaskPersister.retrieve).toHaveBeenCalled();
+		});
+
+		it('should record state when a new task is added', function() {
+			addNewTask('task');
+			expect(mockTaskPersister.store).toHaveBeenCalled();
+		});
+
+		it('should record state when a task is removed', function() {
+			var task = quietlyAddTask();
+			scope.removeTask(task);
+			scope.$apply();
+
+			expect(mockTaskPersister.store).toHaveBeenCalled();
+		});
+
+		it('should record state when a task is marked completed', function() {
+			var task = quietlyAddTask();
+
+			task.completed = true;
+			scope.$apply();
+
+			expect(mockTaskPersister.store).toHaveBeenCalledWith([task]);
+		});
+
+		function quietlyAddTask() {
+			var task = addNewTask('task');
+			mockTaskPersister.store.reset();
+			expect(mockTaskPersister.store).not.toHaveBeenCalled(); // Just to be safe..
+			return task;
 		}
 
 	});
