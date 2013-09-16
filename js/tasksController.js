@@ -35,6 +35,10 @@ gTasks.controller('TasksController', function($scope, $location, taskListFactory
 		$scope.taskBeingEdited = null;
 	};
 
+	$scope.currentlyEditing = function() {
+		return $scope.taskBeingEdited;
+	};
+
 
 	function configureRouting() {
 		paths = {
