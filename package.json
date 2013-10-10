@@ -4,6 +4,9 @@
 		"karma-ng-html2js-preprocessor": "~0.1",
 		"karma-osx-reporter": "*",
 		"karma-growl-reporter": "*",
+
+		"protractor": "*",
+
 		"http-server": "*"
 	}
 }
