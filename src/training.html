@@ -1,161 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Title</title>
+	<title>Introduction to Angular</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link href="styles/remarkjs-std.css" rel="stylesheet" type="text/css"/>
+	<link href="styles/aha-solarized.css" rel="stylesheet" type="text/css"/>
 	<style type="text/css">
-		/* Slideshow styles, based off remarkjs.com styles */
-		@import url(http://fonts.googleapis.com/css?family=Droid+Serif);
-		@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+		/* Show-specific styles */
 
-		body {
-			font-family: 'Droid Serif';
-			font-size: 20px;
-		}
-		.title h1 {
-			font-size: 4em;
-			text-decoration: ThreeDShadow solid ;
-		}
-		h1, h2, h3 {
-			font-family: 'Yanone Kaffeesatz';
-			font-weight: 400;
-			margin-bottom: 0;
-		}
-		pre {
-			max-width: 75%;
-			overflow: hidden;
-		}
-		h1 { font-size: 3em; }
-		h2 { font-size: 2em; }
-		h3 { font-size: 1.6em; }
-		.footnote {
-			position: absolute;
-			bottom: 3em;
-		}
-		li p { line-height: 1.25em; }
-		.red { color: #fa0000; }
-		.large { font-size: 2em; }
-		a, a > code {
-			color: rgb(249, 38, 114);
-			text-decoration: none;
-		}
-		code {
-			-moz-border-radius: 5px;
-			-web-border-radius: 5px;
-			background: #e7e8e2;
-			border-radius: 5px;
-			font-size: 16px;
-		}
-		.pull-left {
-			float: left;
-			width: 47%;
-		}
-		.pull-right {
-			float: right;
-			width: 47%;
-		}
-		.pull-right ~ p {
-			clear: both;
-		}
-		#slideshow .slide .content code {
-			font-size: 0.8em;
-		}
-		#slideshow .slide .content pre code {
-			font-size: 0.9em;
-			padding: 15px;
-		}
-		.inverse {
-			background: #272822;
-			color: #777872;
-			text-shadow: 0 0 20px #333;
-		}
-		.inverse h1, .inverse h2 {
-			color: #f3f3f3;
-			line-height: 0.8em;
-		}
-
-		/* Slide-specific styling */
-		#slide-inverse .footnote {
-			bottom: 12px;
-			left: 20px;
-		}
-		#slide-how .slides {
-			font-size: 0.9em;
-			position: absolute;
-			top:  151px;
-			right: 140px;
-		}
-		#slide-how .slides h3 {
-			margin-top: 0.2em;
-		}
-		#slide-how .slides .first, #slide-how .slides .second {
-			padding: 1px 20px;
-			height: 90px;
-			width: 120px;
-			-moz-box-shadow: 0 0 10px #777;
-			-webkit-box-shadow: 0 0 10px #777;
-			box-shadow: 0 0 10px #777;
-		}
-		#slide-how .slides .first {
-			background: #fff;
-			position: absolute;
-			top: 20%;
-			left: 20%;
-			z-index: 1;
-		}
-		#slide-how .slides .second {
-			position: relative;
-			background: #fff;
-			z-index: 0;
-		}
-
-			/* Two-column layout */
-		.left-column {
-			color: #777;
-			width: 20%;
-			height: 92%;
-			float: left;
-		}
-		.left-column h2:last-of-type, .left-column h3:last-child {
-			color: #000;
-		}
-		.right-column {
-			width: 75%;
-			float: right;
-			padding-top: 2em;
+		/* Terminal listings should wrap, as they do on the CLI */
+		pre .terminal {
+			white-space: pre-line;
 		}
 	</style>
-
-	<style type="text/css">
-		.aha-fg-black { color : #073642 }
-		.aha-fg-red { color : #dc322f }
-		.aha-fg-green { color: #859900 }
-		.aha-fg-yellow { color: #b58900 }
-		.aha-fg-blue { color: #268bd2 }
-		.aha-fg-magenta { color: #d33682 }
-		.aha-fg-cyan { color: #2aa198 }
-		.aha-fg-white { color: #eee8d5 }
-
-		.aha-bg-black { background-color: #002b36 }
-		.aha-bg-red { background-color : #dc322f }
-		.aha-bg-green { background-color: #859900 }
-		.aha-bg-yellow { background-color: #b58900 }
-		.aha-bg-blue { background-color: #268bd2 }
-		.aha-bg-magenta { background-color: #d33682 }
-		.aha-bg-cyan { background-color: #2aa198 }
-		.aha-bg-white { background-color: #eee8d5 }
-
-		.aha-underline { text-decoration: underline }
-		.aha-bold { font-weight: bold }
-		.aha-blink { }
-	</style>
-
 </head>
 <body>
 <textarea id="source">
 include "training.md"
 </textarea>
-<script src="http://gnab.github.io/remark/downloads/remark-0.5.7.min.js" type="text/javascript"></script>
+<!--<script src="http://gnab.github.io/remark/downloads/remark-0.5.7.min.js" type="text/javascript"></script>-->
+<script src="javascript/remark-0.5.7.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 	var hljs = remark.highlighter.engine;

@@ -21,7 +21,7 @@ class: center, middle, title
 
 Everything you need to get started is in a Github repo, ready to clone:
 
-``` bash
+```terminal
 git clone http://github.com/ctucker/angular-snc-training
 ```
 
@@ -33,7 +33,7 @@ Check the instructions in the README.md file for additional info.
 
 ---
 
-# Verifying your setup: Karma
+# Karma test runner
 
 We run all of our unit tests using Karma.  Verify it works like so:
 
@@ -50,32 +50,32 @@ For more information see https://github.com/theabraham/growly.
 </span><span class="aha-fg-green ">INFO [Chrome 30.0.1599 (Mac OS X 10.8.5)]: </span><span class="aha-fg-white ">Connected on socket R1mFdn9VnQW6vTRaKq9N
 .
 Chrome 30.0.1599 (Mac OS X 10.8.5): Executed 1 of 1</span><span class="aha-fg-green "> SUCCESS</span><span class="aha-fg-white "> (0.823 secs / 0.008 secs)
-</span><span class="aha-fg-red ">ERROR [reporter.osx]: </span><span class="aha-fg-white ">error: socket hang up
 </span>
 ```
 
+* Default Chrome installed by ServiceNow IT is ancient and doesn't
+work, so if you have Chrome errors download and re-install (update
+within Chrome will *not* work).
+
 ---
 
-When everything is installed, run:
-```bash
-```
-to start Karma.  You should see a `SUCCESS` message.
+# Protractor test runner
 
-In a new tab, run:
+Our end-to-end tests are written using Protractor, which is a thin
+Angular-aware wrapper written around Selenium.
 
+To get ready to run protractor tests first run:
 ```terminal
-$ ./node_modules/protractor/bin/install_selenium_standalone
-$ ./selenium/start
+$ ./protractor.sh selenium
 ```
+This will download and launch selenium.
 
-to install and run Selenium locally
-
-Finally, in another new tab, run:
-
-```bash
-$ ./node_modules/protractor/bin/protractor protractor.conf.js
+In a new window now run:
+```terminal
+$ ./protractor.sh
 ```
-to run the end-to-end tests (which should fail at this stage).
+This will run all the end-to-end tests in Chrome, and report the
+results. At this point, the tests will run but fail.
 
 ---
 
