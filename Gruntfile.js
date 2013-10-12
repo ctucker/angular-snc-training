@@ -10,10 +10,19 @@ module.exports = function(grunt) {
 	    }
 	},
 
+	copy : {
+	    files : {
+		cwd: 'src',
+		expand: true,
+		src: ['**/*', '!training.*'],
+		dest: 'slideshow/'
+	    }
+	},
+
 	watch : {
 	    includes : {
 		files : ['src/*'],
-		tasks : ['includes'],
+		tasks : ['copy', 'includes'],
 		options: {
 		    livereload: true
 		}
@@ -24,6 +33,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-includes');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
-    grunt.registerTask('default', ['includes']);
+    grunt.registerTask('default', ['copy', 'includes']);
 }
