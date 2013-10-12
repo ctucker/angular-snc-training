@@ -1,1 +1,2 @@
 /* base.css overrides */
+[ng-cloak] { display: none !important; }
