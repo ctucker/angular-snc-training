@@ -15,6 +15,9 @@ class: center, middle, title
 
 * Testing is an integral part of the course
 
+* Code is all in a github repo, with supporting scripts to jump about
+  in history
+
 ---
 
 # Setting up your environment
@@ -22,7 +25,7 @@ class: center, middle, title
 Everything you need to get started is in a Github repo, ready to clone:
 
 ```terminal
-git clone http://github.com/ctucker/angular-snc-training
+$ git clone http://github.com/ctucker/angular-snc-training
 ```
 
 You'll also need to install NodeJS (for the testing framework):
@@ -30,6 +33,20 @@ You'll also need to install NodeJS (for the testing framework):
 * http://nodejs.org/ or `brew install node`
 
 Check the instructions in the README.md file for additional info.
+
+---
+
+# Tagged steps
+
+.step-name[foo-bar]
+
+There is a script, `load-step.sh` that can be used to load each stage
+of the training application.
+
+On the slides, you'll see a green box that indicates what stage you
+should have loaded for that particular slide.
+
+`./load-step.sh --help` to get help.
 
 ---
 
@@ -59,26 +76,127 @@ within Chrome will *not* work).
 
 ---
 
-# Protractor test runner
+# Local web server
+
+Although we could do most everything using file urls, we'll be
+spinning up a local HTTP server.  This is easily done:
+
+```terminal
+$ ./http-server.sh
+<span class="aha-fg-yellow ">Starting up http-server, serving </span><span class="aha-fg-white "></span><span class="aha-fg-cyan ">./</span><span class="aha-fg-white "></span><span class="aha-fg-yellow "> on port: </span><span class="aha-fg-white "></span><span class="aha-fg-cyan ">8000</span><span class="aha-fg-white ">
+Hit CTRL-C to stop the server
+```
+
+You'll need the web server up for the next steps, running e2e tests with protractor
+
+---
+
+# End-to-end: Selenium server
 
 Our end-to-end tests are written using Protractor, which is a thin
 Angular-aware wrapper written around Selenium.
 
-To get ready to run protractor tests first run:
+To get ready to Selenium ready to go, run:
 ```terminal
 $ ./protractor.sh selenium
-```
-This will download and launch selenium.
+Installing Selenium
+When finished, start the Selenium Standalone Server with ./selenium/start
 
-In a new window now run:
-```terminal
-$ ./protractor.sh
+downloading http://selenium.googlecode.com/files/selenium-server-standalone-2.35.0.jar...
+downloading https://chromedriver.googlecode.com/files/chromedriver_mac32_2.2.zip...
+chromedriver_mac32_2.2.zip downloaded to ./selenium/chromedriver_mac32_2.2.zip
+selenium-server-standalone-2.35.0.jar downloaded to ./selenium/selenium-server-standalone-2.35.0.jar
+Oct 12, 2013 1:57:57 PM org.openqa.grid.selenium.GridLauncher main
+INFO: Launching a standalone server
+Setting system property webdriver.chrome.driver to ./selenium/chromedriver
+...
 ```
-This will run all the end-to-end tests in Chrome, and report the
-results. At this point, the tests will run but fail.
 
 ---
 
-# Let's get started!
+# End-to-end: Protractor
 
-Remember that failing protractor test from 
+Now you can run the actual Protractor tests with:
+
+```terminal
+$ ./protractor.sh
+Using the selenium server at http://localhost:4444/wd/hub
+<span class="aha-fg-red ">F</span>
+
+Failures:
+
+  1) angularjs homepage should be able to load the index page
+   Message:
+     <span class="aha-fg-red ">Error: Angular could not be found on the page http://localhost:8000/</span>
+   Stacktrace:
+     Error: Angular could not be found on the page http://localhost:8000/
+    at /Users/ctucker/dev/js/angular-snc-training/node_modules/protractor/lib/protractor.js:298:15
+...
+
+Finished in 10.39 seconds
+<span class="aha-fg-red ">1 test, 1 assertion, 1 failure
+</span>
+```
+
+Note that while the tests run, they currently fail!
+
+---
+
+# WebStorm / IntelliJ users
+
+There are run configurations for a lot of these steps included in the
+repository so you can do everything from inside the IDE.
+
+Add the configurations with:
+```terminal
+$ cp -a intellij/runConfigurations .idea/runConfigurations
+```
+
+You'll then see them in the run menu:
+
+.center[![Run Configurations](images/runConfigurations.png)]
+
+---
+
+# First steps
+
+.tag[]
+
+That failing test is no good.  Let's make it pass!
+
+Recall the error:
+```terminal
+<span class="aha-fg-red ">Error: Angular could not be found on the page http://localhost:8000/</span>
+```
+
+The solution is to add Angular to the page, which we'll do now.
+
+---
+
+# TODO: Add the secondary test here
+
+---
+
+# A brief tour of Angular bindings
+
+* `ng-model="newTask"` adds a newTask variable to the `root` scope
+* `{{ newTask }}` binds that variable into the HTML
+* Angular takes care of updating the bound value when the scope value
+  is changed
+
+.middle[.center[![newTask binding](images/newTask-Scope.png)]]
+
+---
+
+# $watch(), $apply(), and $digest()
+
+.fullsize[![Angular Lifecycle](images/angularLifecycle.svg)]
+
+---
+
+# Unit testing
+
+
+Add some content
+
+Some more content

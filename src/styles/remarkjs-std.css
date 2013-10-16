@@ -8,7 +8,6 @@ body {
 }
 .title h1 {
     font-size: 4em;
-    text-decoration: ThreeDShadow solid ;
 }
 h1, h2, h3 {
     font-family: 'Yanone Kaffeesatz';

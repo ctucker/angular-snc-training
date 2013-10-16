@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 
 	watch : {
 	    includes : {
-		files : ['src/*'],
+		files : ['src/**/*', '!src/diagrams/**/*'],
 		tasks : ['copy', 'includes'],
 		options: {
 		    livereload: true
