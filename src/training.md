@@ -36,9 +36,12 @@ Check the instructions in the README.md file for additional info.
 
 ---
 
-# Tagged steps
+layout: true
+.step-name[start-here]
 
-.step-name[foo-bar]
+---
+
+# Tagged steps
 
 There is a script, `load-step.sh` that can be used to load each stage
 of the training application.
@@ -144,8 +147,7 @@ Note that while the tests run, they currently fail!
 
 # WebStorm / IntelliJ users
 
-There are run configurations for a lot of these steps included in the
-repository so you can do everything from inside the IDE.
+Run configs are provided to launch from within IDE.
 
 Add the configurations with:
 ```terminal
@@ -160,8 +162,6 @@ You'll then see them in the run menu:
 
 # First steps
 
-.tag[]
-
 That failing test is no good.  Let's make it pass!
 
 Recall the error:
@@ -173,7 +173,25 @@ The solution is to add Angular to the page, which we'll do now.
 
 ---
 
-# TODO: Add the secondary test here
+layout: true
+.step-name[part1-step1]
+
+---
+
+# Adding behavior, test-first
+
+Let's add a simple feature:
+
+* When I type into the input box, the label in the final `<li>` on the
+  page should receive the value I type
+
+We'll write a Protractor test to look for that behavior now, and then
+add the code to make it pass.
+
+---
+
+layout: true
+.step-name[part1-step2]
 
 ---
 
@@ -194,9 +212,55 @@ The solution is to add Angular to the page, which we'll do now.
 
 ---
 
-# Unit testing
+layout: true
+.step-name[part1-step3]
 
+---
 
-Add some content
+# Only add the task on enter
 
-Some more content
+Right now we update the task title in place.  We want to only do
+this when the user hits enter.
+
+Steps:
+
+1. Update our e2e test to expect a form submission
+2. Introduce a controller to capture the entry when it's added and
+   bind it into the UI
+
+We'll quickly walk through updating the test to make it fail, then
+we'll look at what a controller test looks like and you will make it
+pass.
+
+---
+
+# Making it pass: the Controller
+
+Go through the test step-by-step:
+
+1. Add a `$scope.newTask` variable to hold your newly entered task
+2. Add a `$scope.taskList` variable that holds a list of tasks
+3. Add a `$scope.addTask()` function that will add your new task on to
+   the task list
+
+This is all just plain-old JavaScript: the only thing to remember is
+that `$scope` in your controller is the same thing as `scope` in the
+test.
+
+---
+
+# Making it pass: the HTML
+
+There are a few things to do here:
+
+* Tell Angular the name of your app module with `ng-app=tasks`
+* Add your controller to the todo-app section container with
+  `ng-controller=TasksController`
+* Wrap the `new-todo` input in a form
+* Update the model and binding to reflect the `newTask.title` variable
+* Add an `ng-submit` to the form to call the `addTask()` function
+* Make sure you add the `tasksController.js` file to the scripts at
+  the bottom of the page!
+
+---
+

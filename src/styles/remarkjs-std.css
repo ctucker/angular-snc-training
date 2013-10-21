@@ -7,14 +7,14 @@ body {
     font-size: 20px;
 }
 .title h1 {
-    font-size: 4em;
+    font-size: 3em;
 }
 h1, h2, h3 {
     font-family: 'Yanone Kaffeesatz';
     font-weight: 400;
     margin-bottom: 0;
 }
-h1 { font-size: 3em; }
+h1 { font-size: 2.5em; }
 h2 { font-size: 2em; }
 h3 { font-size: 1.6em; }
 .footnote {
