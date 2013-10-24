@@ -9,7 +9,18 @@
 		};
 
 		$scope.addTask = function() {
-			$scope.taskList.tasks.push({title : $scope.newTask.title });
+			var title = normalizedTitle();
+			if (title !== '') {
+				$scope.taskList.tasks.push({title : title });
+				$scope.newTask = {};
+			}
 		};
+
+		function normalizedTitle() {
+			if ($scope.newTask.title) {
+				return $scope.newTask.title.trim();
+			}
+			return '';
+		}
 	});
 })();
