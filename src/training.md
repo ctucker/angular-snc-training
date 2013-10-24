@@ -264,3 +264,129 @@ There are a few things to do here:
 
 ---
 
+layout: true
+.step-name[part1-step4]
+
+---
+
+# Adding multiple tasks
+
+The controller currently lets you add multiple tasks, but we do
+nothing with them.
+
+We want to:
+
+1. Verify in our `todoListSpec` that adding an item to the list causes a
+   new item to be added to the UI (this will .red[fail])
+2. Verify that our controller adds new tasks to the end of the task
+   list (this will .green[pass])
+3. Change the HTML to make the `todoListSpec` pass
+
+---
+
+# Multiple tasks e2e
+
+Add a failing test to the `todoListSpec.js` that:
+
+1. Adds two items to the todo-list by sending keys and submitting the
+   `new-todo` input
+  * Use taskInput.clear() to blank out the input 
+2. Verifies that the HTML now has two `<li>` elements under the
+   `#todo-list` `<ul>` for the new entries
+
+To get at the list of DOM elements for assertion, use the form:
+
+```javascript
+ptor.findElements(selector).then(
+	function(foundItems) { ... }
+)
+```
+
+---
+
+layout: true
+.step-name[part1-step5]
+
+---
+
+# Multiple tasks controller spec
+
+Add a passing test to the `tasksControllerSpec.js` that:
+
+1. Adds two tasks to the list using `scope.newTask` and
+   `scope.addTask()`
+2. Verifies that the task list has both tasks in the right order
+
+This should be a very simple test!
+
+---
+
+layout: true
+.step-name[part1-step6]
+
+---
+
+# Multiple tasks HTML
+
+We need to repeat elements on the page so we'll use the `ng-repeat`
+directive.
+
+
+Usage:
+```html
+<li ng-repeat="«name» in «scope variable»">
+	...
+	{{ «name».«property» }}
+	...
+</li>
+```
+
+* After making your change, run your e2e tests
+* You may need to adjust the first test now the list is "correct" (I did)
+
+---
+
+layout: true
+.step-name[part1-step7]
+
+---
+
+# A little bit about Directives
+
+* Directives in Angular are the only thing that can manipulate the DOM
+* We've now seen a few built-in directives:
+  * `ng-controller`: connect a controller and set up a new scope
+  * `ng-model`: bind a model value to an input
+  * `ng-submit`: set a form-submission handler
+  * `ng-repeat`: repeat a DOM template for every element in a list
+* Directives allow us to *extend* HTML with custom markup
+  * Applied as elements, attributes, CSS classes, or comments
+
+---
+
+# Cleaning up the UI
+
+There are still a couple of niggling UI issues:
+
+1. We should clear the input after submitting the form
+2. We should strip leading and trailing whitespace for task titles
+3. We should not allow the submission of an empty or undefined task
+
+Write tests and implementation for each of these in turn, using what we've
+learned so far.
+
+You can trust Angular, so test at the controller level.
+
+---
+
+layout: true
+.step-name[part1-complete]
+
+---
+
+# Part 1: Complete!
+
+We're all done with part 1: we have a working, if not fully featured,
+todo-list application!
+
+.center[![Part1 Complete](images/part1-complete-screen.png)]
