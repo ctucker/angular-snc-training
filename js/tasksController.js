@@ -11,7 +11,7 @@
 		$scope.addTask = function() {
 			var title = normalizedTitle();
 			if (title !== '') {
-				$scope.taskList.tasks.push({title : title });
+				$scope.taskList.tasks.push({title : title, completed : false});
 				$scope.newTask = {};
 			}
 		};

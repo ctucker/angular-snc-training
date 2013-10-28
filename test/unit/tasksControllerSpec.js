@@ -59,14 +59,21 @@
 			});
 		});
 
+		describe('completing a task', function() {
+			it('starts out with a new task being incomplete', function() {
+				var task = addNewTask('task');
+				expect(task.completed).toBe(false);
+			});
+		});
+
 		function taskWithTitle(taskTitle) {
-			return { title: taskTitle };
+			return { title: taskTitle, completed: false};
 		}
 
 		function addNewTask(newTitle) {
 			scope.newTask = { title: newTitle };
 			scope.addTask();
-			return scope.newTask;
+			return scope.taskList.tasks[scope.taskList.tasks.length - 1];
 		}
 
 	});

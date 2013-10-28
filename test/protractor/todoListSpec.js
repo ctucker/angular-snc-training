@@ -50,6 +50,35 @@
 			});
 		});
 
+		it('should set the completed class on a task when the completed checkbox is checked', function() {
+			ptor.get('/');
+
+			addTask();
+
+			var completedInput = ptor.findElement(protractor.By.css('#todo-list input[type=checkbox]'));
+			completedInput.click();
+
+			expect(ptor.findElement(protractor.By.css('#todo-list li')).getAttribute('class')).toContain('completed');
+		});
+
+		it('should unset the completed class on a task when the completed checkbox is unchecked', function() {
+			ptor.get('/');
+			addTask();
+
+			var completedInput = ptor.findElement(protractor.By.css('#todo-list input[type=checkbox]'));
+			completedInput.click();
+			completedInput.click();
+
+			expect(ptor.findElement(protractor.By.css('#todo-list li')).getAttribute('class')).toNotContain('completed');
+		});
+
+		function addTask(taskTitle) {
+			var taskInput = ptor.findElement(protractor.By.css('#new-todo'));
+
+			taskInput.sendKeys(taskTitle || 'default');
+			taskInput.submit();
+		}
+
 	});
 
 })();
