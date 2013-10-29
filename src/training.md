@@ -498,3 +498,30 @@ We'll implement this as before in a test-driven  fashion by:
 3. Updating the HTML to make the e2e test pass
 
 ---
+
+layout: true
+.step-name[part2-step3]
+
+---
+
+# Counting incomplete items
+
+The count in the bottom left should update dynamically.
+
+1. Write an e2e test to verify the number is correct
+2. Add a scope variable to track the number of completed items
+3. Add a watch to the task list to update the completion count every
+   time a task is changed
+4. Update the HTML to make the e2e test pass
+
+Bonus: use `ng-pluralize` to print "item" for 1 item, "items" for
+anything else (with tests, of course!)
+
+---
+
+layout: true
+.step-name[part2-step4]
+
+---
+
+# Clearing completed items
