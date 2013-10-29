@@ -112,21 +112,71 @@
 
 			it('should have a count of 1 when there is one complete and one incomplete task', function() {
 				addNewTask('incomplete task');
-				addNewTask('complete task').completed = true;
+				addNewTask('complete task', true);
 				scope.$apply();
 
 				expect(scope.incompleteTaskCount).toBe(1);
 			});
 		});
 
+		describe('completed tasks', function() {
+			it('should start out with a count of zero', function() {
+				expect(scope.completedTaskCount).toBe(0);
+			});
+
+			it('should have a count of 1 when a single task is completed', function() {
+				addNewTask('completed task', true);
+
+				expect(scope.completedTaskCount).toBe(1);
+			});
+
+			it('should have a count of 0 when there are multiple tasks, all incomplete', function() {
+				addNewTask('incomplete 1');
+				addNewTask('incomplete 2');
+				addNewTask('incomplete 3');
+
+				expect(scope.completedTaskCount).toBe(0);
+			});
+
+			it('should have a count of 2 when there are two complete and three incomplete tasks', function() {
+				addNewTask('incomplete1');
+				addNewTask('complete1', true);
+				addNewTask('incomplete2');
+				addNewTask('complete2', true);
+				addNewTask('incomplete3');
+
+				expect(scope.completedTaskCount).toBe(2);
+			});
+
+			it('should remove all completed tasks when clearCompleted() is called', function() {
+				addNewTask('incomplete');
+				addNewTask('complete', true);
+				addNewTask('complete 2', true);
+				addNewTask('incomplete 2');
+
+				scope.clearCompleted();
+				scope.$apply();
+
+				expect(scope.completedTaskCount).toBe(0);
+				expect(scope.taskList.tasks.length).toBe(2);
+			});
+		});
+
+
 		function taskWithTitle(taskTitle) {
 			return { title: taskTitle, completed: false};
 		}
 
-		function addNewTask(newTitle) {
+		function addNewTask(newTitle, isCompleted) {
 			scope.newTask = { title: newTitle };
 			scope.addTask();
-			return scope.taskList.tasks[scope.taskList.tasks.length - 1];
+			scope.$apply();
+			var addedTask = scope.taskList.tasks[scope.taskList.tasks.length - 1];
+			if (isCompleted) {
+				addedTask.completed = isCompleted;
+				scope.$apply();
+			}
+			return addedTask;
 		}
 
 	});

@@ -104,6 +104,38 @@
 			expect(findElement('#todo-count').getText()).toBe('1 item left');
 		});
 
+		it('should not show the clear completed button when there are no completed tasks', function() {
+			ptor.get('/');
+			addTask();
+
+			expect(findElement('#clear-completed').isDisplayed()).toBe(false);
+		});
+		it('should show the correct number of completed tasks in the clear completed button', function() {
+			ptor.get('/');
+			addTask();
+			addTask();
+
+			markAllTasksComplete().then(function() {
+				addTask();
+			}).then(function() {
+				expect(findElement('#clear-completed').getText()).toBe('Clear completed (2)');
+			});
+		});
+
+		it('should delete completed tasks when the clear completed button is clicked', function() {
+			ptor.get('/');
+			addTask('to delete');
+			addTask('to delete 2');
+
+			markAllTasksComplete().then(function() {
+				addTask('to keep');
+			}).then(function() {
+				findElement('#clear-completed').click();
+			}).then(function() {
+				expect(findElement('#todo-list li:first-child label').getText()).toBe('to keep');
+			});
+		});
+
 		function addTask(taskTitle) {
 			var taskInput = findElement('#new-todo');
 
@@ -113,6 +145,15 @@
 
 		function findElement(selector) {
 			return ptor.findElement(byCss(selector));
+		}
+
+
+		function markAllTasksComplete() {
+			return ptor.findElements(byCss('#todo-list li input[type=checkbox]')).then(function (checkboxes) {
+				checkboxes.forEach(function (checkbox) {
+					checkbox.click();
+				});
+			});
 		}
 
 		function byCss(selector) {
