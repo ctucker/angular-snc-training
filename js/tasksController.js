@@ -9,9 +9,13 @@
 		};
 
 		$scope.hasTasks = false;
-		$scope.$watch('taskList.tasks.length', function(newValue) {
-			$scope.hasTasks = newValue !== 0;
-		});
+		$scope.incompleteTaskCount = 0;
+		$scope.$watch('taskList.tasks', function(newValue) {
+			$scope.hasTasks = newValue.length !== 0;
+			$scope.incompleteTaskCount = newValue.filter(function(t) {
+				return !t.completed;
+			}).length;
+		}, true);
 
 		$scope.addTask = function() {
 			var title = normalizedTitle();

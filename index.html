@@ -36,7 +36,9 @@
 			<!-- This footer should hidden by default and shown when there are todos -->
 			<footer id="footer" ng-cloak ng-show="hasTasks">
 				<!-- This should be `0 items left` by default -->
-				<span id="todo-count"><strong>1</strong> item left</span>
+				<span id="todo-count"><strong>{{ incompleteTaskCount }}</strong>
+					<ng-pluralize count="incompleteTaskCount" when="{one: ' item', other: ' items'}"></ng-pluralize> left
+				</span>
 				<!-- Remove this if you don't implement routing -->
 				<ul id="filters">
 					<li>

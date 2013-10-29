@@ -89,6 +89,21 @@
 			expect(findElement('#footer').isDisplayed()).toBe(true);
 		});
 
+		it('should show the correct count of items left to be done in the list', function() {
+			ptor.get('/');
+			addTask();
+			addTask();
+
+			expect(findElement('#todo-count').getText()).toBe('2 items left');
+		});
+
+		it('should use the singular for items when there is only one item in the list', function() {
+			ptor.get('/');
+			addTask();
+
+			expect(findElement('#todo-count').getText()).toBe('1 item left');
+		});
+
 		function addTask(taskTitle) {
 			var taskInput = findElement('#new-todo');
 

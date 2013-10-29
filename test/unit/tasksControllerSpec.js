@@ -98,6 +98,27 @@
 			});
 		});
 
+		describe('counting remaining tasks', function() {
+			it('should start out with a count of zero', function() {
+				expect(scope.incompleteTaskCount).toBe(0);
+			});
+
+			it('should have a count of 1 when there is one task and it is incomplete', function() {
+				addNewTask('task');
+				scope.$apply();
+
+				expect(scope.incompleteTaskCount).toBe(1);
+			});
+
+			it('should have a count of 1 when there is one complete and one incomplete task', function() {
+				addNewTask('incomplete task');
+				addNewTask('complete task').completed = true;
+				scope.$apply();
+
+				expect(scope.incompleteTaskCount).toBe(1);
+			});
+		});
+
 		function taskWithTitle(taskTitle) {
 			return { title: taskTitle, completed: false};
 		}
