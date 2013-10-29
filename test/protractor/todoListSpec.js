@@ -72,6 +72,10 @@
 			expect(ptor.findElement(protractor.By.css('#todo-list li')).getAttribute('class')).toNotContain('completed');
 		});
 
+		it('should delete a task when the delete button is clicked', function() {
+			// Protractor support for hover events in Selenium is still very weak, so we'll skip this test...
+		});
+
 		function addTask(taskTitle) {
 			var taskInput = ptor.findElement(protractor.By.css('#new-todo'));
 

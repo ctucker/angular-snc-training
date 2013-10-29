@@ -16,6 +16,12 @@
 			}
 		};
 
+		$scope.deleteTask = function(task) {
+			var indexOfTask = $scope.taskList.tasks.indexOf(task);
+			if (indexOfTask >= 0)
+				$scope.taskList.tasks.splice(indexOfTask, 1);
+		};
+
 		function normalizedTitle() {
 			if ($scope.newTask.title) {
 				return $scope.newTask.title.trim();

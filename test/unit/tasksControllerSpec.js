@@ -66,6 +66,20 @@
 			});
 		});
 
+		describe('deleting a task', function() {
+			it('should remove a task from the task list if the delete function is called', function() {
+				var task = addNewTask('task');
+				scope.deleteTask(task);
+				expect(scope.taskList.tasks.length).toBe(0);
+			});
+
+			it('should no-op if asked to remove a task that does not exist', function() {
+				var task = addNewTask('task');
+				scope.deleteTask({ title : 'foo' });
+				expect(scope.taskList.tasks.length).toBe(1);
+			});
+		});
+
 		function taskWithTitle(taskTitle) {
 			return { title: taskTitle, completed: false};
 		}
