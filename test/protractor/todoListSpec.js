@@ -10,13 +10,13 @@
 		});
 
 		function getItems() {
-			return ptor.findElements(protractor.By.css('#todo-list > li'));
+			return ptor.findElements(byCss('#todo-list > li'));
 		}
 
 		it('should add a new item to the list', function() {
 			ptor.get('/');
 
-			var taskInput = ptor.findElement(protractor.By.css('#new-todo'));
+			var taskInput = findElement('#new-todo');
 
 			// Type something in, and make sure it doesn't immediately reflect
 			taskInput.sendKeys("new todo item");
@@ -34,7 +34,7 @@
 		it('should add multiple items to the list in order', function() {
 			ptor.get('/');
 
-			var taskInput = ptor.findElement(protractor.By.css('#new-todo'));
+			var taskInput = findElement('#new-todo');
 
 			taskInput.sendKeys("Item 1");
 			taskInput.submit();
@@ -55,32 +55,53 @@
 
 			addTask();
 
-			var completedInput = ptor.findElement(protractor.By.css('#todo-list input[type=checkbox]'));
+			var completedInput = findElement('#todo-list input[type=checkbox]');
 			completedInput.click();
 
-			expect(ptor.findElement(protractor.By.css('#todo-list li')).getAttribute('class')).toContain('completed');
+			expect(findElement('#todo-list li').getAttribute('class')).toContain('completed');
 		});
 
 		it('should unset the completed class on a task when the completed checkbox is unchecked', function() {
 			ptor.get('/');
 			addTask();
 
-			var completedInput = ptor.findElement(protractor.By.css('#todo-list input[type=checkbox]'));
+			var completedInput = findElement('#todo-list input[type=checkbox]');
 			completedInput.click();
 			completedInput.click();
 
-			expect(ptor.findElement(protractor.By.css('#todo-list li')).getAttribute('class')).toNotContain('completed');
+			expect(findElement('#todo-list li').getAttribute('class')).toNotContain('completed');
 		});
 
 		it('should delete a task when the delete button is clicked', function() {
 			// Protractor support for hover events in Selenium is still very weak, so we'll skip this test...
 		});
 
+		it('should not show the footer if there are no tasks', function() {
+			ptor.get('/');
+
+			expect(findElement('#footer').isDisplayed()).toBe(false);
+		});
+
+		it('should show the footer if there is a task in the list', function() {
+			ptor.get('/');
+			addTask();
+
+			expect(findElement('#footer').isDisplayed()).toBe(true);
+		});
+
 		function addTask(taskTitle) {
-			var taskInput = ptor.findElement(protractor.By.css('#new-todo'));
+			var taskInput = findElement('#new-todo');
 
 			taskInput.sendKeys(taskTitle || 'default');
 			taskInput.submit();
+		}
+
+		function findElement(selector) {
+			return ptor.findElement(byCss(selector));
+		}
+
+		function byCss(selector) {
+			return protractor.By.css(selector);
 		}
 
 	});

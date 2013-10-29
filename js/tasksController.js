@@ -8,6 +8,11 @@
 			tasks: []
 		};
 
+		$scope.hasTasks = false;
+		$scope.$watch('taskList.tasks.length', function(newValue) {
+			$scope.hasTasks = newValue !== 0;
+		});
+
 		$scope.addTask = function() {
 			var title = normalizedTitle();
 			if (title !== '') {

@@ -80,6 +80,24 @@
 			});
 		});
 
+		describe('setting hasTasks flag', function() {
+			it('should set the hasTasks flag to true when the task list has an entry', function() {
+				addNewTask('task');
+				scope.$apply();
+
+				expect(scope.hasTasks).toBe(true);
+			});
+
+			it('should set the hasTasks flag to false when the last entry is deleted', function() {
+				var task = addNewTask('task');
+				scope.$apply();
+				scope.deleteTask(task);
+				scope.$apply();
+
+				expect(scope.hasTasks).toBe(false);
+			});
+		});
+
 		function taskWithTitle(taskTitle) {
 			return { title: taskTitle, completed: false};
 		}
