@@ -390,3 +390,111 @@ We're all done with part 1: we have a working, if not fully featured,
 todo-list application!
 
 .center[![Part1 Complete](images/part1-complete-screen.png)]
+
+
+---
+
+layout: true
+.step-name[part2-start]
+
+---
+
+class: center, middle, title
+
+# $watch and $apply
+
+### Custom lifecycle management
+
+---
+
+# Warm up: marking tasks complete
+
+Clicking the check mark next to a task should mark it completed and
+set the `<li>` class to `completed`.
+
+To conditionally set a class, use the `ng-class` directive on the `<li>`
+
+```javascript
+ng-class="{ «class_name» : «boolean expression» }"
+```
+You should:
+
+* Track completion status of each task
+* Use an `ng-model` binding on checkbox to set status
+* Use `ng-class` to set the class based
+
+---
+
+layout: true
+.step-name[part2-step1]
+
+---
+
+# Warm up: deleting tasks
+
+Mouse over the right side of the task to see a red X.
+
+Clicking the red X should delete the task from the list.
+
+You should:
+
+* Add a (tested) `deleteTask` function to your controller
+* Invoke it using an `ng-click` directive on the delete button
+* Skip the e2e test (Protractor has issues with `:hover`)
+
+---
+
+layout: true
+.step-name[part2-step2]
+
+---
+
+# Recall $watch/$apply/$digest
+
+.fullsize[![Angular Lifecycle](images/angularLifecycle.svg)]
+
+---
+
+# $scope.$watch
+
+You can watch for changes with $scope.$watch:
+```javascript
+$scope.$watch('expr', function() {...}, useEquals)
+```
+
+* `expr` : any Angular expression.  It will be evaluated on each digest
+  loop and, if it has changed, trigger the...
+* `function() {...}` : callback function to execute when the watch
+  changes
+* `useEquals` : flag to indicate a reference or a deep-equality
+  comparison
+
+---
+
+# $scope.$apply
+
+In normal operation, Angular will automatically call `$apply` on any
+DOM event.
+
+However...if you manipulate the DOM without Angular knowing, you will
+have to manually call `$scope.$apply()` for Angular to digest your
+changes.
+
+This is particularly common in tests.
+
+---
+
+# Conditionally hiding the footer
+
+One of our requirements is to only show the footer when there are
+entries in the todo list.
+
+We'll implement this as before in a test-driven  fashion by:
+
+1. Writing an e2e test to verify the footer is not visible when there
+   are no entries, and is visible when there are entries
+2. Adding a test and behavior to our controller to manage a flag for
+   "entries are present"
+3. Updating the HTML to make the e2e test pass
+
+---
