@@ -12,7 +12,14 @@
 					if (this.tasks[i].completed)
 						this.tasks.splice(i,1);
 				}
+			},
+
+			markAllToCompletionStatus : function(status) {
+				this.tasks.forEach(function(task) {
+					task.completed = status;
+				});
 			}
+
 		};
 
 		$scope.hasTasks = false;
@@ -25,6 +32,12 @@
 			}).length;
 			$scope.completedTaskCount = newValue.length - $scope.incompleteTaskCount;
 		}, true);
+
+		$scope.toggleAllCompleted = false;
+		$scope.$watch('toggleAllCompleted', function(toggleState) {
+			$scope.taskList.markAllToCompletionStatus(toggleState);
+		});
+
 
 		$scope.addTask = function() {
 			var title = normalizedTitle();

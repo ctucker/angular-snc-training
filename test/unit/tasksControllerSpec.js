@@ -162,6 +162,35 @@
 			});
 		});
 
+		describe('marking all completed', function() {
+			it('when toggleAllCompleted is true, all tasks are marked completed', function() {
+				addNewTask('1');
+				addNewTask('2');
+				addNewTask('3');
+
+				scope.toggleAllCompleted = true;
+				scope.$apply();
+
+				expect(scope.completedTaskCount).toBe(3);
+				expect(scope.incompleteTaskCount).toBe(0);
+			});
+
+			it('when toggleAllCompleted is switched to false, all tasks are marked incomplete', function() {
+				addNewTask('1');
+				addNewTask('2');
+				addNewTask('3', true);
+
+				scope.toggleAllCompleted = true;
+				scope.$apply();
+
+				scope.toggleAllCompleted = false;
+				scope.$apply();
+
+				expect(scope.completedTaskCount).toBe(0);
+				expect(scope.incompleteTaskCount).toBe(3);
+			});
+		});
+
 
 		function taskWithTitle(taskTitle) {
 			return { title: taskTitle, completed: false};

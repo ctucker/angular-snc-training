@@ -136,6 +136,17 @@
 			});
 		});
 
+		it('should mark all tasks as completed when the chevrons are clicked', function() {
+			ptor.get('/');
+			addTask('task1');
+			addTask('task2');
+
+			var completeAll = findElement('#toggle-all');
+			completeAll.click().then(function() {
+				expect(findElement('#todo-count').getText()).toMatch(/^0/);
+			});
+		});
+
 		function addTask(taskTitle) {
 			var taskInput = findElement('#new-todo');
 
