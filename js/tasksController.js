@@ -6,15 +6,8 @@
 
 		$scope.taskList = taskList;
 
-		$scope.hasTasks = false;
-		$scope.incompleteTaskCount = 0;
-		$scope.completedTaskCount = 0;
-		$scope.$watch('taskList.tasks', function(newValue) {
-			$scope.hasTasks = newValue.length !== 0;
-			$scope.incompleteTaskCount = newValue.filter(function(t) {
-				return !t.completed;
-			}).length;
-			$scope.completedTaskCount = newValue.length - $scope.incompleteTaskCount;
+		$scope.$watch('taskList.tasks', function() {
+			$scope.taskList.recalculateCounts();
 		}, true);
 
 		$scope.toggleAllCompleted = false;
@@ -22,30 +15,17 @@
 			$scope.taskList.markAllToCompletionStatus(toggleState);
 		});
 
-
 		$scope.addTask = function() {
-			var title = normalizedTitle();
-			if (title !== '') {
-				$scope.taskList.tasks.push({title : title, completed : false});
-				$scope.newTask = {};
-			}
+			$scope.taskList.addTask($scope.newTask.title);
+			$scope.newTask = {};
 		};
 
 		$scope.deleteTask = function(task) {
-			var indexOfTask = $scope.taskList.tasks.indexOf(task);
-			if (indexOfTask >= 0)
-				$scope.taskList.tasks.splice(indexOfTask, 1);
+			$scope.taskList.deleteTask(task);
 		};
 
 		$scope.clearCompleted = function() {
 			$scope.taskList.clearCompleted();
 		};
-
-		function normalizedTitle() {
-			if ($scope.newTask.title) {
-				return $scope.newTask.title.trim();
-			}
-			return '';
-		}
 	});
 })();

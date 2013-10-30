@@ -34,10 +34,10 @@
 				</ul>
 			</section>
 			<!-- This footer should hidden by default and shown when there are todos -->
-			<footer id="footer" ng-cloak ng-show="hasTasks">
+			<footer id="footer" ng-cloak ng-show="taskList.hasTasks">
 				<!-- This should be `0 items left` by default -->
-				<span id="todo-count"><strong>{{ incompleteTaskCount }}</strong>
-					<ng-pluralize count="incompleteTaskCount" when="{one: ' item', other: ' items'}"></ng-pluralize> left
+				<span id="todo-count"><strong>{{ taskList.incompleteTaskCount }}</strong>
+					<ng-pluralize count="taskList.incompleteTaskCount" when="{one: ' item', other: ' items'}"></ng-pluralize> left
 				</span>
 				<!-- Remove this if you don't implement routing -->
 				<ul id="filters">
@@ -52,7 +52,7 @@
 					</li>
 				</ul>
 				<!-- Hidden if no completed items are left ↓ -->
-				<button id="clear-completed" ng-show="completedTaskCount > 0" ng-click="clearCompleted()">Clear completed ({{completedTaskCount}})</button>
+				<button id="clear-completed" ng-show="taskList.completedTaskCount > 0" ng-click="clearCompleted()">Clear completed ({{taskList.completedTaskCount}})</button>
 			</footer>
 		</section>
 		<footer id="info">

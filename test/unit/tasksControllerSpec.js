@@ -85,7 +85,7 @@
 				addNewTask('task');
 				scope.$apply();
 
-				expect(scope.hasTasks).toBe(true);
+				expect(scope.taskList.hasTasks).toBe(true);
 			});
 
 			it('should set the hasTasks flag to false when the last entry is deleted', function() {
@@ -94,20 +94,20 @@
 				scope.deleteTask(task);
 				scope.$apply();
 
-				expect(scope.hasTasks).toBe(false);
+				expect(scope.taskList.hasTasks).toBe(false);
 			});
 		});
 
 		describe('counting remaining tasks', function() {
 			it('should start out with a count of zero', function() {
-				expect(scope.incompleteTaskCount).toBe(0);
+				expect(scope.taskList.incompleteTaskCount).toBe(0);
 			});
 
 			it('should have a count of 1 when there is one task and it is incomplete', function() {
 				addNewTask('task');
 				scope.$apply();
 
-				expect(scope.incompleteTaskCount).toBe(1);
+				expect(scope.taskList.incompleteTaskCount).toBe(1);
 			});
 
 			it('should have a count of 1 when there is one complete and one incomplete task', function() {
@@ -115,19 +115,19 @@
 				addNewTask('complete task', true);
 				scope.$apply();
 
-				expect(scope.incompleteTaskCount).toBe(1);
+				expect(scope.taskList.incompleteTaskCount).toBe(1);
 			});
 		});
 
 		describe('completed tasks', function() {
 			it('should start out with a count of zero', function() {
-				expect(scope.completedTaskCount).toBe(0);
+				expect(scope.taskList.completedTaskCount).toBe(0);
 			});
 
 			it('should have a count of 1 when a single task is completed', function() {
 				addNewTask('completed task', true);
 
-				expect(scope.completedTaskCount).toBe(1);
+				expect(scope.taskList.completedTaskCount).toBe(1);
 			});
 
 			it('should have a count of 0 when there are multiple tasks, all incomplete', function() {
@@ -135,7 +135,7 @@
 				addNewTask('incomplete 2');
 				addNewTask('incomplete 3');
 
-				expect(scope.completedTaskCount).toBe(0);
+				expect(scope.taskList.completedTaskCount).toBe(0);
 			});
 
 			it('should have a count of 2 when there are two complete and three incomplete tasks', function() {
@@ -145,7 +145,7 @@
 				addNewTask('complete2', true);
 				addNewTask('incomplete3');
 
-				expect(scope.completedTaskCount).toBe(2);
+				expect(scope.taskList.completedTaskCount).toBe(2);
 			});
 
 			it('should remove all completed tasks when clearCompleted() is called', function() {
@@ -157,7 +157,7 @@
 				scope.clearCompleted();
 				scope.$apply();
 
-				expect(scope.completedTaskCount).toBe(0);
+				expect(scope.taskList.completedTaskCount).toBe(0);
 				expect(scope.taskList.tasks.length).toBe(2);
 			});
 		});
@@ -171,8 +171,8 @@
 				scope.toggleAllCompleted = true;
 				scope.$apply();
 
-				expect(scope.completedTaskCount).toBe(3);
-				expect(scope.incompleteTaskCount).toBe(0);
+				expect(scope.taskList.completedTaskCount).toBe(3);
+				expect(scope.taskList.incompleteTaskCount).toBe(0);
 			});
 
 			it('when toggleAllCompleted is switched to false, all tasks are marked incomplete', function() {
@@ -186,8 +186,8 @@
 				scope.toggleAllCompleted = false;
 				scope.$apply();
 
-				expect(scope.completedTaskCount).toBe(0);
-				expect(scope.incompleteTaskCount).toBe(3);
+				expect(scope.taskList.completedTaskCount).toBe(0);
+				expect(scope.taskList.incompleteTaskCount).toBe(3);
 			});
 		});
 
