@@ -1,26 +1,10 @@
 (function() {
 	"use strict";
 
-	angular.module('tasks').controller('TasksController', function($scope) {
+	angular.module('tasks').controller('TasksController', function($scope, taskList) {
 		$scope.newTask = {};
 
-		$scope.taskList = {
-			tasks: [],
-
-			clearCompleted : function() {
-				for (var i = this.tasks.length - 1; i >= 0; i--) {
-					if (this.tasks[i].completed)
-						this.tasks.splice(i,1);
-				}
-			},
-
-			markAllToCompletionStatus : function(status) {
-				this.tasks.forEach(function(task) {
-					task.completed = status;
-				});
-			}
-
-		};
+		$scope.taskList = taskList;
 
 		$scope.hasTasks = false;
 		$scope.incompleteTaskCount = 0;
