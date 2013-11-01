@@ -171,6 +171,10 @@ Recall the error:
 
 The solution is to add Angular to the page, which we'll do now.
 
+???
+
+To be implemented by presenter live
+
 ---
 
 layout: true
@@ -187,6 +191,10 @@ Let's add a simple feature:
 
 We'll write a Protractor test to look for that behavior now, and then
 add the code to make it pass.
+
+???
+
+To be implemented by presenter live
 
 ---
 
@@ -497,6 +505,10 @@ We'll implement this as before in a test-driven  fashion by:
    "entries are present"
 3. Updating the HTML to make the e2e test pass
 
+???
+
+To be implemented by presenter live
+
 ---
 
 layout: true
@@ -525,3 +537,224 @@ layout: true
 ---
 
 # Clearing completed items
+
+Combine the previous steps:
+
+1. Conditionally show the "Clear completed" button if there are
+   completed tasks
+2. Show the correct count of completed items
+3. Delete the completed tasks when the button is clicked
+
+You'll need to use the `ng-show` and `ng-click` directives, and
+manipulate the existing watch.
+
+---
+
+layout: true
+.step-name[part2-step5]
+
+---
+
+# Flagging all items as completed
+
+We'll skip this for now (it's implemented in the code that we're
+following, but there's not a lot of value in coding it ourselves).
+
+We're done with our exploration of watch/apply/digest.
+
+Next up we'll take a look at factories, services, and dependency injection.
+
+---
+
+layout: true
+.step-name[part3-start]
+
+---
+
+# What is dependency injection?
+
+It's all about who has responsibility for creating the objects you use
+(your *dependencies*).  Consider:
+
+.pull-left[
+```javascript
+function makeCoffee() {
+	var pot = new Pot();
+	pot.brew();
+}
+makeCoffee();
+```
+Traditional
+]
+
+.pull-right[
+```javascript
+function makeCoffee(pot) {
+	pot.brew();
+}
+var pot = new Pot();
+makeCoffee(pot);
+```
+Injected
+]
+
+---
+
+# DI in Angular
+
+* Angular injects dependencies by *name*
+* Dependencies are configured in *modules*
+* You've already seen an injected dependency...
+
+```javascript
+angular.module('tasks')
+  .controller('TasksController',
+              function($scope) {
+});
+```
+`$scope` is an injected dependency: when Angular calls the controller
+function, it passes in a new Scope instance called `$scope` for you.
+
+---
+
+# Injecting your own dependency
+
+* Register a dependency against the module
+* We'll be looking at *factory* dependencies
+
+```javascript
+angular.module('tasks').factory('taskList', function() {...})
+```
+
+This registers a factory called "taskList" that you can inject:
+
+```javascript
+controller('TasksController', function($scope, taskList) {
+  // taskList is the return value of your factory function
+}
+```
+
+---
+
+# Angular dependency lifecycle
+
+Dependencies in Angular are *singletons*.
+
+```javascript
+function(taskList, taskList) {
+	taskList === taskList; // => true
+}
+```
+
+There are many different kinds of dependency:
+
+* `provider`, `factory`, `service`, `value`, `constant`
+* `controller`, `directive`, `filter`
+* etc.
+
+---
+
+# A factory for our task list
+
+The `taskList` object in our controller is getting big.  Let's pull it
+out.
+
+```javascript
+angular.module('tasks').factory('taskList', function() {...})
+```
+
+Move the definition of the `taskList` object into the factory function,
+and return it.
+
+Add the `taskList` as a dependency to your controller (by adding it as
+an argument), and bind it to the scope.
+
+---
+
+layout: true
+.step-name[part3-step1]
+
+---
+
+# Factor taskList behavior
+
+* Controller now has a few things that breach encapsulation on
+  `taskList`
+* Move implementation details to `taskList` for:
+  * `addTask()`
+  * `deleteTask(task)`
+  * `normalizedTitle()`
+* Your tests should all still pass!
+
+---
+
+layout: true
+.step-name[part3-step2]
+
+---
+
+# Filtering the task list
+
+The links at the bottom of the list should filter what is shown.
+
+In Angular:
+
+* We use *filters* to control what `ng-repeat` shows
+* We use `$location` to access the address bar
+
+```html
+<li ng-repeat="task in taskList.tasks | someFilter">
+	...
+</li>
+```
+A filter is just a function that takes some input (in this case a list
+of tasks) and produces an output (in this case a filtered list of
+tasks)
+
+---
+
+# The generic "filter" filter
+
+Angular supplies a parameterizable filter called `filter` to filter
+arrays.
+
+This takes a *predicate* argument of:
+
+* A function that returns true when a match is found
+* An object that acts as a "template" for matches
+
+Arguments are given with the `filterName:argument` syntax.
+
+```html
+<li ng-repeat="task in taskList.tasks | filter:predicateVar">
+	...
+</li>
+```
+
+---
+
+# Filtering by object template
+
+To match tasks by status we could use:
+
+```javascript
+$scope.statusMask = { completed : true | false }
+```
+
+To match all tasks we could use:
+
+```javascript
+$scope.statusMask = {}
+```
+
+And in our `ng-repeat` use:
+
+```html
+<li ng-repeat="task in taskList.tasks | filter:statusMask">
+	...
+</li>
+```
+
+---
+
+# 
