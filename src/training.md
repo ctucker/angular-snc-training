@@ -700,7 +700,6 @@ The links at the bottom of the list should filter what is shown.
 In Angular:
 
 * We use *filters* to control what `ng-repeat` shows
-* We use `$location` to access the address bar
 
 ```html
 <li ng-repeat="task in taskList.tasks | someFilter">
@@ -757,4 +756,25 @@ And in our `ng-repeat` use:
 
 ---
 
-# 
+# Identifying path changes
+
+Use `$location` to manage the address bar
+
+* Our routes are:
+    * **#/active** - only active tasks
+	* **#/complete** - only complete tasks
+	* **#/** - all tasks
+* Use $location.path() to get the path component after the `#` up to
+the query string params
+* You can watch the path by assigning `$location` to a scope variable
+  and watching `location.path()`
+
+---
+
+layout: true
+.step-name[part3-step3]
+
+---
+
+
+
