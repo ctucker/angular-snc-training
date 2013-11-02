@@ -776,5 +776,114 @@ layout: true
 
 ---
 
+# Loading demo data
+
+Let's say we have some demo data on the server.
+
+We want to pull that down when the user clicks a "Load Demo Data"
+link, and populate it into the task list.
+
+* We'll use `$http` in a new service
+* We'll learn about promises and how they're awesome
+
+---
+
+# $http: Interacting with the server
+
+`$http` is a simple interface for making a call to the server.
+
+* Basic syntax for a get is `$http.get(url)`
+* Returns a *promise* with HTTP-specific methods
+	* `success` for when the result is a 2XX response
+	* `error` otherwise (redirects are transparently followed)
+* Easy to unit test with `$httpBackend`
+* See the docs for examples
+
+---
+
+# Promises: what and why
+
+* Alternative to callbacks
+* Simple way to manage parallelization/chaining
+
+```javascript
+myPromise = myService.fetchDataAsync();
+myPromise.then(
+   function resolve(value) { /* success */ },
+   function reject(reason) { /* failure */ },
+   function notify(value)  { /* status change */ }
+)
+```
+`then` returns a promise, so you can chain them:
+
+```javascript
+myPromise.then(resolveFn, rejectFn)
+         .then(resolveFn2, rejectFn2);
+```
+
+---
+
+# Promises: a simple example
+
+We create a promise using the `deferred` API:
+
+```javascript
+function getUsername() {
+	var deferred = $q.defer();
+	if (happy)
+		deferred.resolve('chris.tucker');
+	else
+		deferred.reject("No username available");
+
+	return deferred.promise;
+}
+```
+
+---
+
+#  Promises: a simple example (cont.)
+
+And we can use (and chain) promises like so:
+
+```javascript
+function getAvailableAppCount() {
+	getUsername().then(function(username) {
+		return getAvailableApps();
+	}).then(function(availableApps) {
+		return availableApps.length;
+	});
+}
+
+$scope.appCount = getAvailableAppCount();
+```
+
+* Angular views render promises when they resolve
+* See docs for a lot more about promises (`$q`)
+
+---
+
+# Loading default data
+
+* JSON file at `/demo.json`
+* Has the format:
+
+```javascript
+[ { "title" : "Buy Milk",
+    "completed" : true|false },
+  ...
+]
+```
+
+* Add a button "Load Demo Data" to the HTML
+* When clicked, link should fetch the data with `$http`
+* Data should be set as the task list
+* Create a new service for this and test it with `$httpBackend`
+
+---
+
+layout: true
+.step-name[part3-step4]
+
+---
 
 
