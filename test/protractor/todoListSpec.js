@@ -147,6 +147,73 @@
 			});
 		});
 
+		describe('navigating the filter links', function() {
+			var tasksCreatedPromise,
+				allLink,
+				activeLink,
+				completedLink;
+
+			beforeEach(function() {
+				ptor.get('/');
+				addTask('completed 1');
+				addTask('completed 2');
+				tasksCreatedPromise = markAllTasksComplete().then(function() {
+					addTask('incomplete 1');
+					addTask('incomplete 2');
+				});
+
+				allLink = findElement('#filters li:nth-child(1)');
+				activeLink = findElement('#filters li:nth-child(2)');
+				completedLink = findElement('#filters li:nth-child(3)');
+			});
+
+			function verifySelected(link) {
+				expect(link.findElement(byCss('a')).getAttribute('class')).toContain('selected');
+			}
+
+			it('should show only active tasks when the active link is followed', function() {
+				tasksCreatedPromise.then(function() {
+					activeLink.click();
+
+					getItems().then(function(items) {
+						expect(items[0].getText()).toBe("incomplete 1");
+						expect(items[1].getText()).toBe("incomplete 2");
+						expect(items.length).toBe(2);
+
+						verifySelected(activeLink);
+					});
+				});
+			});
+
+			it('should show only completed tasks when the completed link is followed', function() {
+				tasksCreatedPromise.then(function() {
+					completedLink.click();
+
+					getItems().then(function(items) {
+						expect(items[0].getText()).toBe('completed 1');
+						expect(items[1].getText()).toBe('completed 2');
+						expect(items.length).toBe(2);
+
+						verifySelected(completedLink);
+					});
+				});
+			});
+
+			it('should show all tasks when flipping back to all tasks', function() {
+				tasksCreatedPromise.then(function() {
+					completedLink.click();
+					allLink.click();
+
+					getItems().then(function(items) {
+						expect(items.length).toBe(4);
+
+						verifySelected(allLink);
+					});
+				});
+			});
+
+		});
+
 		function addTask(taskTitle) {
 			var taskInput = findElement('#new-todo');
 

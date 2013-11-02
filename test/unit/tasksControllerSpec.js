@@ -191,6 +191,36 @@
 			});
 		});
 
+		describe('filtering tasks', function() {
+
+			it('should set an empty status mask for the / path', function() {
+				scope.location.path('/');
+				scope.$apply();
+
+				expect(scope.statusMask).toEqual({});
+			});
+
+			it('should set an empty status mask for the empty path', function() {
+				scope.location.path('');
+				scope.$apply();
+
+				expect(scope.statusMask).toEqual({});
+			});
+
+			it('should set a completed-only status mask for the /completed path', function() {
+				scope.location.path('/completed');
+				scope.$apply();
+
+				expect(scope.statusMask).toEqual({completed : true});
+			});
+
+			it('should set a not-completed status mask for the /active path', function() {
+				scope.location.path('/active');
+				scope.$apply();
+
+				expect(scope.statusMask).toEqual({completed : false});
+			});
+		});
 
 		function taskWithTitle(taskTitle) {
 			return { title: taskTitle, completed: false};

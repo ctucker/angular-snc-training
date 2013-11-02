@@ -1,10 +1,12 @@
 (function() {
 	"use strict";
 
-	angular.module('tasks').controller('TasksController', function($scope, taskList) {
+	angular.module('tasks').controller('TasksController', function($scope, $location, taskList) {
+
 		$scope.newTask = {};
 
 		$scope.taskList = taskList;
+		$scope.location = $location;
 
 		$scope.hasTasks = false;
 		$scope.incompleteTaskCount = 0;
@@ -20,6 +22,21 @@
 		$scope.toggleAllCompleted = false;
 		$scope.$watch('toggleAllCompleted', function(toggleState) {
 			$scope.taskList.markAllToCompletionStatus(toggleState);
+		});
+
+		$scope.$watch('location.path()', function(newPath) {
+			if (newPath === '/active') {
+				$scope.statusMask = { completed : false };
+				$scope.selectedFilter = 'active';
+			}
+			else if (newPath === '/completed') {
+				$scope.statusMask = { completed : true };
+				$scope.selectedFilter = 'completed';
+			}
+			else {
+				$scope.statusMask = {};
+				$scope.selectedFilter = 'all';
+			}
 		});
 
 		$scope.addTask = function() {
