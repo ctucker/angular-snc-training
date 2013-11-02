@@ -222,6 +222,39 @@
 			});
 		});
 
+		describe('loading demo data', function() {
+
+			var taskList,
+				mockLoadedDataPromise;
+
+			beforeEach(inject(function($controller, _taskList_) {
+
+				taskList = _taskList_;
+				mockLoadedDataPromise = {
+					then : function(fn) { fn(); }
+				};
+				spyOn(mockLoadedDataPromise, 'then').andCallThrough();
+				var mockDataLoader = {
+					loadDemoData : function() { return mockLoadedDataPromise; }
+				};
+				spyOn(taskList, 'setTaskList');
+
+				$controller('TasksController', {
+					$scope : scope,
+					taskList : taskList,
+					demoDataLoader : mockDataLoader }
+				);
+			}));
+
+
+			it('should load demo data from the demoDataService and assign it to the task list', function() {
+				scope.loadDemoData();
+
+				expect(mockLoadedDataPromise.then).toHaveBeenCalled();
+				expect(taskList.setTaskList).toHaveBeenCalled();
+			});
+		});
+
 		function taskWithTitle(taskTitle) {
 			return { title: taskTitle, completed: false};
 		}

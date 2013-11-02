@@ -1,7 +1,7 @@
 (function() {
 	"use strict";
 
-	angular.module('tasks').controller('TasksController', function($scope, $location, taskList) {
+	angular.module('tasks').controller('TasksController', function($scope, $location, taskList, demoDataLoader) {
 
 		$scope.newTask = {};
 
@@ -50,6 +50,12 @@
 
 		$scope.clearCompleted = function() {
 			$scope.taskList.clearCompleted();
+		};
+
+		$scope.loadDemoData = function() {
+			demoDataLoader.loadDemoData().then(function(demoData) {
+				$scope.taskList.setTaskList(demoData);
+			});
 		};
 	});
 })();

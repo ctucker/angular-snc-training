@@ -38,6 +38,10 @@ angular.module('tasks').factory('taskList', function() {
 			this.tasks.forEach(function(task) {
 				task.completed = status;
 			});
+		},
+
+		setTaskList : function(newTaskList) {
+			this.tasks = angular.copy(newTaskList);
 		}
 	};
 });
