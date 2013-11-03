@@ -30,6 +30,19 @@
 
 				expect(taskList.tasks[0].complete).toBe(false);
 			});
+
+			it('should no-op if new task list is null', function() {
+				taskList.addTask('task');
+				taskList.setTaskList(null);
+				expect(taskList.tasks[0].title).toBe('task');
+			});
+
+			it('should no-op if new task list is undefined', function() {
+				taskList.addTask('task');
+				taskList.setTaskList(void(0));
+				expect(taskList.tasks[0].title).toBe('task');
+			});
+
 		});
 	});
 })();

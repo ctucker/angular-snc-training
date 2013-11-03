@@ -2,15 +2,22 @@
 	'use strict';
 
 	describe('TasksController', function() {
-		var scope;
+		var scope,
+			persisterMock;
 
 		// Pull in the "tasks" module to get our app configuration
 		beforeEach(module('tasks'));
 
 		beforeEach(inject(function($rootScope, $controller) {
 			// Create a controller, passing in a newly constructed scope
+			persisterMock = jasmine.createSpyObj('persister', ['save', 'load']);
+
 			scope = $rootScope.$new();
-			$controller('TasksController', { $scope : scope} );
+
+			$controller('TasksController', {
+				$scope : scope,
+				persister : persisterMock
+			} );
 		}));
 
 		describe('adding a task', function() {
@@ -253,6 +260,25 @@
 				expect(mockLoadedDataPromise.then).toHaveBeenCalled();
 				expect(taskList.setTaskList).toHaveBeenCalled();
 			});
+		});
+
+		describe('persisting tasks', function() {
+			it('should save the list of tasks when it changes', function() {
+				addNewTask('title');
+				expect(persisterMock.save).toHaveBeenCalledWith("tasks.list", scope.taskList.tasks);
+			});
+
+			it('should restore the state of the tasks on load', inject(function($controller, $rootScope) {
+				var task = addNewTask('title 1');
+				task.completed = true;
+
+				var newScope = $rootScope.$new();
+				$controller('TasksController', { $scope : newScope });
+				newScope.$apply();
+
+				expect(newScope.taskList.tasks[0].title).toBe('title 1');
+				expect(newScope.taskList.tasks[0].completed).toBe(true);
+			}));
 		});
 
 		function taskWithTitle(taskTitle) {

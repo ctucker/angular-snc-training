@@ -1,20 +1,25 @@
 (function() {
 	"use strict";
 
-	angular.module('tasks').controller('TasksController', function($scope, $location, taskList, demoDataLoader) {
+	angular.module('tasks').controller('TasksController', function($scope, $location, taskList, demoDataLoader, persister) {
+		var TASK_LIST_KEY = "tasks.list";
 
 		$scope.newTask = {};
+
+		taskList.setTaskList(persister.load(TASK_LIST_KEY));
 
 		$scope.taskList = taskList;
 		$scope.location = $location;
 
 		$scope.$watch('taskList.tasks', function() {
 			$scope.taskList.recalculateCounts();
+			persister.save(TASK_LIST_KEY, $scope.taskList.tasks);
 		}, true);
 
 		$scope.toggleAllCompleted = false;
-		$scope.$watch('toggleAllCompleted', function(toggleState) {
-			$scope.taskList.markAllToCompletionStatus(toggleState);
+		$scope.$watch('toggleAllCompleted', function(newState, oldState) {
+			if (newState !== oldState)
+				$scope.taskList.markAllToCompletionStatus(newState);
 		});
 
 		$scope.$watch('location.path()', function(newPath) {

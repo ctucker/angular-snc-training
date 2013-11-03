@@ -53,7 +53,8 @@ angular.module('tasks').factory('taskList', function() {
 		},
 
 		setTaskList : function(newTaskList) {
-			this.tasks = angular.copy(newTaskList);
+			if (newTaskList !== null && typeof newTaskList !== 'undefined')
+				this.tasks = angular.copy(newTaskList);
 		}
 	};
 });

@@ -7,6 +7,7 @@
 
 		beforeEach(function() {
 			ptor = protractor.getInstance();
+			ptor.executeScript('localStorage.clear()');
 		});
 
 		function getItems() {
@@ -224,6 +225,20 @@
 					expect(items.length).toBe(3); // 3 items of demo data
 				});
 			});
+		});
+
+		describe('maintaining state', function() {
+
+			it('remembers state between page loads', function() {
+				ptor.get('/');
+				addTask('my task');
+
+				ptor.get('/');
+				getItems().then(function(items) {
+					expect(items.length).toBe(1);
+				});
+			});
+
 		});
 
 		function addTask(taskTitle) {

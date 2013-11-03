@@ -1,6 +1,6 @@
 (function() {
 	'use strict';
 
-	angular.module('tasks', []);
+	angular.module('tasks', ['localstorage']);
 
 })();
