@@ -886,4 +886,127 @@ layout: true
 
 ---
 
+# Persisting task information
+
+* We've looked at creating a simple service dependency to pull data
+  from the server
+* Want to look at saving data now
+* Later we'll consider doing this over AJAX; for now, we'll use
+  LocalStorage
+
+---
+
+# Modules and dependencies
+
+* We know we may want to use different storage mechanisms
+* Rather than coding our storage system into the `tasks` module, we'll
+  create a third-party module and *depend* on that
+
+```javascript
+angular.module('localStorage', []).
+	factory('persister', function() {
+		// Service to persist to local storage
+	});
+```
+
+```javascript
+angular.module('tasks', ['localStorage']);
+```
+
+To change storage mechanisms, we change the module dependency.
+
+---
+
+# The LocalStorage API
+
+* We'll just use the stock HTML5 LocalStorage API:
+
+```javascript
+localStorage.setItem(key, string); // Save an item to key
+localStorage.getItem(key); // => item stored under key
+```
+
+* For our purposes, we'll just store a JSON string as our value
+* Use `angular.toJson` and `angular.fromJson` for serialization
+* To start with, write a service that can store a JS object and
+  retrieve a JS object on-demand
+* Initially do this completely independently of tasks
+
+---
+
+layout: true
+.step-name[part3-step5]
+
+---
+
+# Tying it in to the Todo list
+
+At this point we've not tied the local storage in to the app.  Let's
+change that.
+
+* We should *retrieve* the task list when the application loads.
+* We should *store* the task list whenever it changes.
+
+Inject the `persister` as a dependency.
+
+Set tasks with `setTaskList` and persist them whenever they change
+with `persister.save(key, data)`
+
+---
+
+layout: true
+.step-name[part3-step6]
+
+---
+
+<!-- # Removing some coupling -->
+
+
+<!-- We have some rather tight coupling at the moment between the `taskList` -->
+<!-- and the tasks controller. -->
+
+<!-- ```javascript -->
+<!-- $scope.$watch('taskList.tasks', function(newValue) { -->
+<!-- 	// All the tasklist calculations -->
+<!-- }, true); -->
+<!-- ``` -->
+
+<!-- The controller shouldn't know about the `tasks` array, so let's -->
+<!-- abstract it out using *events*. -->
+
+
+<!-- --- -->
+
+<!-- # Publishing and responding to events -->
+
+<!-- Events happen on an Angular *scope*. -->
+
+<!-- We publish events with `$emit` and `$broadcast`: -->
+<!-- ```javascript -->
+<!-- $scope.$emit('event_name', data); // Event goes UP -->
+<!-- $scope.$broadcast('event_name', data); // Event goes DOWN -->
+<!-- ``` -->
+
+<!-- and we listen for them with `$on`: -->
+<!-- ```javascript -->
+<!-- $scope.$on('event_name', function(data) { -->
+<!-- 	// Respond to the event -->
+<!-- }); -->
+<!-- ``` -->
+
+<!-- --- -->
+
+<!-- # Eventing the task list -->
+
+<!-- * We want to broadcast an event whenever the task list changes -->
+<!-- * We'll use `$broadcast` to send the event *down* -->
+<!-- 	* A service can only get hold of `$rootScope`, not the controller -->
+<!--       scope, so we broadcast down from that -->
+<!-- 	* There are other (arguably better) ways of doing this: this is -->
+<!--       just to demonstrate eventing -->
+<!-- * In the controller, we'll listen for the event with a `$on` handler -->
+<!-- * We'll hard-code the event name, though in a production app there are -->
+<!--   a variety of configuration mechanisms we may instead choose to use -->
+	  
+---
 
