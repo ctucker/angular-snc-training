@@ -160,6 +160,12 @@ You'll then see them in the run menu:
 
 ---
 
+# What we'll be doing
+
+.middle[.center[![task0-complete](images/todolist-task0.png)]]
+
+---
+
 # First steps
 
 That failing test is no good.  Let's make it pass!
@@ -392,30 +398,12 @@ layout: true
 
 ---
 
-# Part 1: Complete!
-
-We're all done with part 1: we have a working, if not fully featured,
-todo-list application!
-
-.center[![Part1 Complete](images/part1-complete-screen.png)]
-
-
----
-
 layout: true
 .step-name[part2-start]
 
 ---
 
-class: center, middle, title
-
-# $watch and $apply
-
-### Custom lifecycle management
-
----
-
-# Warm up: marking tasks complete
+# Marking tasks complete
 
 Clicking the check mark next to a task should mark it completed and
 set the `<li>` class to `completed`.
@@ -438,7 +426,7 @@ layout: true
 
 ---
 
-# Warm up: deleting tasks
+# Deleting tasks
 
 Mouse over the right side of the task to see a red X.
 
@@ -449,6 +437,12 @@ You should:
 * Add a (tested) `deleteTask` function to your controller
 * Invoke it using an `ng-click` directive on the delete button
 * Skip the e2e test (Protractor has issues with `:hover`)
+
+---
+
+# Task 1: Complete!
+
+.middle[.center[![task1-complete](images/todolist-task1.png)]]
 
 ---
 
@@ -776,6 +770,12 @@ layout: true
 
 ---
 
+# Task 2: Complete!
+
+.middle[.center[![task2-complete](images/todolist-task2.png)]]
+
+---
+
 # Loading demo data
 
 Let's say we have some demo data on the server.
@@ -886,6 +886,12 @@ layout: true
 
 ---
 
+# Task 3: Complete!
+
+.middle[.center[![task3-complete](images/todolist-task3.png)]]
+
+---
+
 # Persisting task information
 
 * We've looked at creating a simple service dependency to pull data
@@ -950,7 +956,7 @@ change that.
 Inject the `persister` as a dependency.
 
 Set tasks with `setTaskList` and persist them whenever they change
-with `persister.save(key, data)`
+with `persister.save(key, data)`.
 
 ---
 
@@ -959,54 +965,28 @@ layout: true
 
 ---
 
-<!-- # Removing some coupling -->
+# Task 4: Complete!
 
+.middle[.center[![task4-complete](images/todolist-task4.png)]]
 
-<!-- We have some rather tight coupling at the moment between the `taskList` -->
-<!-- and the tasks controller. -->
-
-<!-- ```javascript -->
-<!-- $scope.$watch('taskList.tasks', function(newValue) { -->
-<!-- 	// All the tasklist calculations -->
-<!-- }, true); -->
-<!-- ``` -->
-
-<!-- The controller shouldn't know about the `tasks` array, so let's -->
-<!-- abstract it out using *events*. -->
-
-
-<!-- --- -->
-
-<!-- # Publishing and responding to events -->
-
-<!-- Events happen on an Angular *scope*. -->
-
-<!-- We publish events with `$emit` and `$broadcast`: -->
-<!-- ```javascript -->
-<!-- $scope.$emit('event_name', data); // Event goes UP -->
-<!-- $scope.$broadcast('event_name', data); // Event goes DOWN -->
-<!-- ``` -->
-
-<!-- and we listen for them with `$on`: -->
-<!-- ```javascript -->
-<!-- $scope.$on('event_name', function(data) { -->
-<!-- 	// Respond to the event -->
-<!-- }); -->
-<!-- ``` -->
-
-<!-- --- -->
-
-<!-- # Eventing the task list -->
-
-<!-- * We want to broadcast an event whenever the task list changes -->
-<!-- * We'll use `$broadcast` to send the event *down* -->
-<!-- 	* A service can only get hold of `$rootScope`, not the controller -->
-<!--       scope, so we broadcast down from that -->
-<!-- 	* There are other (arguably better) ways of doing this: this is -->
-<!--       just to demonstrate eventing -->
-<!-- * In the controller, we'll listen for the event with a `$on` handler -->
-<!-- * We'll hard-code the event name, though in a production app there are -->
-<!--   a variety of configuration mechanisms we may instead choose to use -->
-	  
 ---
 
+layout: true
+.step-name[task5-start]
+
+---
+
+# Editing entries
+
+We switch to an editing mode by:
+
+* Double-clicking on a title
+* Making a change to the title
+* Hitting enter to submit the change
+
+The HTML/CSS already supports this:
+
+* Set the "editing" class on the `<li>` being edited
+* Set the value of the `edit` input appropriately
+
+Wrap the `input` in a form to handle submission
