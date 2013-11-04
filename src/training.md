@@ -992,10 +992,117 @@ The HTML/CSS already supports this:
 Wrap the `input` in a form to handle submission with
 the enter key.
 
+???
+
+Will lead to a working UI, but one that is lacking focus.
+
+We'll need to add focus handling in the next step.
+
+Note that we're going to start skippng protractor tests at this point
+
 ---
 
 # Handling focus
 
-We have a problem: we need to set focus on the input (and finish
-editing when it is blurred) but we don't have a good way to do so.
+Editing works, but we're not focusing the form element.
 
+Setting focus is going to require our first foray into the world of
+*custom directives*
+
+* Focus is a function of the DOM
+* Recall that in Angular, only Directives may manipulate the DOM
+
+---
+
+# Directives
+
+```javascript
+angular.module('tasks').directive('name', function() {
+	return {
+		restrict: 'AECM',
+		controller: function() { }
+		link: function(scope, element, attrs) { }
+		// ... lots of other options ...
+	};
+}
+```
+
+* Restrict limits directive type to Attribute, Class,
+  Element, or coMment
+  * Class and comment directives should generally be avoided
+* The controller lets you create a directive-specific controller
+* The "link" function takes your scope and tweaks the DOM.
+
+???
+
+Note that the link function is the workhorse
+
+---
+
+# How a directive works
+
+1. Angular sees the directive in HTML and looks for the directive
+   handler
+2. Angular *compiles* the directive, to get a *link* function
+	* Both `compile` and `link` functions can be specified in the
+      directive
+3. Angular calls the `link` function with the current scope, element,
+   and attributes
+
+Separation between compile and link is to support directives
+like`ng-repeat` that need to stamp out a common template and then bind
+in different values.
+
+???
+
+Essentially a perf enhancement
+
+---
+
+layout: true
+.step-name[task5-step2]
+
+---
+
+# Testing directives
+
+To test a directive, we simulate Angular's sequence:
+
+```javascript
+inject(function($rootScope, $compile) {
+	var scope = $rootScope.$new();
+	var element = angular.element('<div my-directive>');
+	var linkFn = $compile(element);
+	linkFn(scope);
+	scope.$apply();
+
+	// Perform assertions
+})();
+```
+
+`$compile` is a standard Angular service that will compile your
+directive (steps 1 and 2 from before).
+
+???
+
+This is added in task5-step2 for everyone
+
+---
+
+# sn-edit-task
+
+We want to create a directive that handles the task editing.  We want
+to change from:
+
+```html
+<li ng-dblclick="editTask(task)" ...>
+```
+to
+```html
+<li sn-edit-task="task" ...>
+```
+and retain all the same behavior.
+
+???
+
+Presenter led: walk through a TDD on this
