@@ -46,6 +46,14 @@
 			$scope.taskList.deleteTask(task);
 		};
 
+		$scope.editTask = function(task) {
+			$scope.taskBeingEdited = task;
+		};
+
+		$scope.finishEditing = function() {
+			$scope.taskBeingEdited = null;
+		};
+
 		$scope.clearCompleted = function() {
 			$scope.taskList.clearCompleted();
 		};
