@@ -989,4 +989,13 @@ The HTML/CSS already supports this:
 * Set the "editing" class on the `<li>` being edited
 * Set the value of the `edit` input appropriately
 
-Wrap the `input` in a form to handle submission
+Wrap the `input` in a form to handle submission with
+the enter key.
+
+---
+
+# Handling focus
+
+We have a problem: we need to set focus on the input (and finish
+editing when it is blurred) but we don't have a good way to do so.
+
