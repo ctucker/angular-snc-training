@@ -2,21 +2,21 @@ class: center, middle, title
 
 # Introduction to AngularJS
 
-## An overview of the Angular framework
+### Chris Tucker, UI Team Technical Architect
+### Scott Marshall, The Guy Who Actually Knows This Stuff
 
 ---
 
 # How this will be organized
 
 * Combination of three styles:
-	* Lecture-style overviews of aspects of Angular
-	* Live development of features by instructor
+	* Presented overviews of aspects of Angular
+	* Live development of features
 	* Paired-up implementation of features by all of you
 
 * Testing is an integral part of the course
 
-* Code is all in a github repo, with supporting scripts to jump about
-  in history
+* Code is all in a github repo
 
 ---
 
@@ -32,24 +32,37 @@ You'll also need to install NodeJS (for the testing framework):
 
 * http://nodejs.org/ or `brew install node`
 
-Check the instructions in the README.md file for additional info.
+Check the instructions in the README.md file for additional info
+(we'll cover more in the next few slides).
+
+???
+
+Pause to get everyone set up
 
 ---
 
 layout: true
-.step-name[start-here]
+.step-name[x-start-here]
 
 ---
 
 # Tagged steps
 
-There is a script, `load-step.sh` that can be used to load each stage
-of the training application.
+Git branches are used to manage steps
 
-On the slides, you'll see a green box that indicates what stage you
-should have loaded for that particular slide.
+To fast-forward to the next step you should:
 
-`./load-step.sh --help` to get help.
+```terminal
+$ git commit -a -m 'Commiting local changes'
+$ git checkout <branch-name>
+```
+
+On each slide you'll see a green box (see bottom left) indicating what
+step you should currently have checked out.
+
+???
+
+Make sure everyone can pull the right branch
 
 ---
 
@@ -73,9 +86,11 @@ Chrome 30.0.1599 (Mac OS X 10.8.5): Executed 1 of 1</span><span class="aha-fg-gr
 </span>
 ```
 
-* Default Chrome installed by ServiceNow IT is ancient and doesn't
-work, so if you have Chrome errors download and re-install (update
-within Chrome will *not* work).
+* Default ServiceNow Chrome is broken, needs re-installing
+
+???
+
+Pause to help out with any issues in getting Karma running
 
 ---
 
@@ -90,7 +105,12 @@ $ ./http-server.sh
 Hit CTRL-C to stop the server
 ```
 
-You'll need the web server up for the next steps, running e2e tests with protractor
+You'll need the web server up for the next steps, running e2e tests
+with protractor
+
+???
+
+e2e vs unit
 
 ---
 
@@ -184,7 +204,7 @@ To be implemented by presenter live
 ---
 
 layout: true
-.step-name[part1-step1]
+.step-name[x-task1-step1]
 
 ---
 
@@ -205,7 +225,7 @@ To be implemented by presenter live
 ---
 
 layout: true
-.step-name[part1-step2]
+.step-name[x-task1-step2]
 
 ---
 
@@ -227,7 +247,7 @@ layout: true
 ---
 
 layout: true
-.step-name[part1-step3]
+.step-name[x-task1-step3]
 
 ---
 
@@ -236,15 +256,37 @@ layout: true
 Right now we update the task title in place.  We want to only do
 this when the user hits enter.
 
-Steps:
+* At this point, we're going to need some custom JS
+* This is where the *Controller* comes in
 
-1. Update our e2e test to expect a form submission
-2. Introduce a controller to capture the entry when it's added and
-   bind it into the UI
+---
 
-We'll quickly walk through updating the test to make it fail, then
-we'll look at what a controller test looks like and you will make it
-pass.
+# Controllers
+
+* Establishes a new scope that inherits from its parent
+* Declared in JS:
+```javascript
+angular.module('tasks').controller('CtrlName', fn)
+```
+* and in HTML
+```html
+<div ng-controller="CtrlName">...</div>
+```
+* All our behavior and data will go on the scope
+
+???
+
+Note that scope is *not* the model
+
+---
+
+# Adding the task on enter
+
+* Record a "new task" variable on the scope
+* Bind the value to a different variable
+* Update that different variable when the form is submitted
+
+Let's go through writing a spec for this...
 
 ---
 
@@ -267,9 +309,9 @@ test.
 
 There are a few things to do here:
 
-* Tell Angular the name of your app module with `ng-app=tasks`
+* Tell Angular the app module name with `ng-app="tasks"`
 * Add your controller to the todo-app section container with
-  `ng-controller=TasksController`
+  `ng-controller="TasksController"`
 * Wrap the `new-todo` input in a form
 * Update the model and binding to reflect the `newTask.title` variable
 * Add an `ng-submit` to the form to call the `addTask()` function
@@ -279,7 +321,7 @@ There are a few things to do here:
 ---
 
 layout: true
-.step-name[part1-step4]
+.step-name[x-task1-step4]
 
 ---
 
@@ -319,7 +361,7 @@ ptor.findElements(selector).then(
 ---
 
 layout: true
-.step-name[part1-step5]
+.step-name[x-task1-step5]
 
 ---
 
@@ -336,7 +378,7 @@ This should be a very simple test!
 ---
 
 layout: true
-.step-name[part1-step6]
+.step-name[x-task1-step6]
 
 ---
 
@@ -361,7 +403,7 @@ Usage:
 ---
 
 layout: true
-.step-name[part1-step7]
+.step-name[x-task1-step7]
 
 ---
 
@@ -399,7 +441,7 @@ layout: true
 ---
 
 layout: true
-.step-name[part2-start]
+.step-name[x-task1-step8]
 
 ---
 
@@ -422,7 +464,7 @@ You should:
 ---
 
 layout: true
-.step-name[part2-step1]
+.step-name[x-task1-step9]
 
 ---
 
@@ -447,7 +489,7 @@ You should:
 ---
 
 layout: true
-.step-name[part2-step2]
+.step-name[x-task2-start]
 
 ---
 
@@ -506,7 +548,7 @@ To be implemented by presenter live
 ---
 
 layout: true
-.step-name[part2-step3]
+.step-name[x-task2-step1]
 
 ---
 
@@ -526,7 +568,7 @@ anything else (with tests, of course!)
 ---
 
 layout: true
-.step-name[part2-step4]
+.step-name[x-task2-step2]
 
 ---
 
@@ -545,7 +587,7 @@ manipulate the existing watch.
 ---
 
 layout: true
-.step-name[part2-step5]
+.step-name[x-task2-step3]
 
 ---
 
@@ -561,7 +603,7 @@ Next up we'll take a look at factories, services, and dependency injection.
 ---
 
 layout: true
-.step-name[part3-start]
+.step-name[x-task3-start]
 
 ---
 
