@@ -50,6 +50,10 @@ angular.module('tasks').factory('taskList', function() {
 				return prev + (cur.completed ? 0 : 1);
 			}, 0);
 			this.completedTaskCount = this.tasks.length - this.incompleteTaskCount;
+		},
+
+		setTaskList : function(newTaskList) {
+			this.tasks = angular.copy(newTaskList);
 		}
 	};
 });

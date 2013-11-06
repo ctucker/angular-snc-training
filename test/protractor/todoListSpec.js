@@ -214,6 +214,18 @@
 
 		});
 
+		describe('loading demo data', function() {
+			it('should load demo data when clicking the Load Demo Data button', function() {
+				ptor.get('/');
+				var demoDataButton = findElement('#load-demo-data');
+				demoDataButton.click();
+
+				getItems().then(function(items) {
+					expect(items.length).toBe(3); // 3 items of demo data
+				});
+			});
+		});
+
 		function addTask(taskTitle) {
 			var taskInput = findElement('#new-todo');
 
