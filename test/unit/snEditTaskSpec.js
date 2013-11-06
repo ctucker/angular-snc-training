@@ -12,7 +12,7 @@ describe('sn-edit-task directive', function() {
 		scope = $rootScope.$new();
 
 		scope.task = { title : "my task" };
-		element = angular.element('<input sn-edit-task="task" />');
+		element = angular.element('<div sn-edit-task="task"><input class="edit"><input></div>');
 
 		$compile(element)(scope);
 		scope.$digest();
@@ -23,6 +23,14 @@ describe('sn-edit-task directive', function() {
 		element.triggerHandler('dblclick');
 		$timeout.flush(); // flush the timeout
 		expect(scope.editTask).toHaveBeenCalled();
+	});
+
+	it('should set focus on the edit-class input on double click', function() {
+		var editInput = element.find('input')[0];
+		spyOn(editInput, 'focus');
+		element.triggerHandler('dblclick');
+		$timeout.flush();
+		expect(editInput.focus).toHaveBeenCalled();
 	});
 
 

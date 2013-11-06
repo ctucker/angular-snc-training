@@ -32,7 +32,7 @@
 							<button class="destroy" ng-click="deleteTask(task)"></button>
 						</div>
 						<form ng-submit="finishEditing()">
-							<input class="edit" ng-model="task.title">
+							<input class="edit" ng-model="task.title" ng-blur="finishEditing()">
 						</form>
 					</li>
 				</ul>
