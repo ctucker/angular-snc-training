@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Localhost 8000" type="JavascriptDebugSession" factoryName="Remote" singleton="true">
+    <JSRemoteDebuggerConfigurationSettings>
+      <option name="engineId" value="chrome" />
+      <option name="fileUrl" value="http://localhost:8000/" />
+      <mapping url="http://localhost:8000" local-file="$PROJECT_DIR$" />
+    </JSRemoteDebuggerConfigurationSettings>
+    <RunnerSettings RunnerId="JavascriptDebugRunner" />
+    <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
+    <method />
+  </configuration>
+</component>

@@ -1,10 +1,11 @@
-/* global describe, it, expect */
-'use strict';
+(function() {
+	'use strict';
 
-describe('canary', function() {
+	describe('canary', function() {
 
-	it('should not squawk', function() {
-		expect(true).toBe(true);
+		it('should not squawk', function() {
+			expect(true).toBe(true);
+		});
+
 	});
-
-});
+})();

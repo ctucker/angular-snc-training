@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Karma Unit" type="NodeJSConfigurationType" factoryName="Node.js" singleton="true" path-to-node="/usr/local/bin/node" path-to-js-file="./node_modules/karma/bin/karma" application-parameters="start" working-dir="$PROJECT_DIR$">
+    <RunnerSettings RunnerId="NodeJS.debug" />
+    <RunnerSettings RunnerId="NodeJS.run" />
+    <ConfigurationWrapper RunnerId="NodeJS.debug" />
+    <ConfigurationWrapper RunnerId="NodeJS.run" />
+    <method />
+  </configuration>
+</component>
