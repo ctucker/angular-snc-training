@@ -66,6 +66,9 @@ Make sure everyone can pull the right branch
 
 ---
 
+class: small-terminal
+
+
 # Karma test runner
 
 We run all of our unit tests using Karma.  Verify it works like so:
@@ -603,7 +606,7 @@ Next up we'll take a look at factories, services, and dependency injection.
 ---
 
 layout: true
-.step-name[x-task3-start]
+.step-name[x-task2-step4]
 
 ---
 
@@ -708,7 +711,7 @@ an argument), and bind it to the scope.
 ---
 
 layout: true
-.step-name[part3-step1]
+.step-name[x-task2-step5]
 
 ---
 
@@ -720,12 +723,14 @@ layout: true
   * `addTask()`
   * `deleteTask(task)`
   * `normalizedTitle()`
+* Extra credit: move all of the counts and their calculation to
+  `taskList`
 * Your tests should all still pass!
 
 ---
 
 layout: true
-.step-name[part3-step2]
+.step-name[x-task2-step6]
 
 ---
 
@@ -808,7 +813,7 @@ the query string params
 ---
 
 layout: true
-.step-name[part3-step3]
+.step-name[x-task2-step7]
 
 ---
 
@@ -817,6 +822,9 @@ layout: true
 .middle[.center[![task2-complete](images/todolist-task2.png)]]
 
 ---
+
+layout: true
+.step-name[x-task3-start]
 
 # Loading demo data
 
@@ -924,13 +932,18 @@ $scope.appCount = getAvailableAppCount();
 ---
 
 layout: true
-.step-name[part3-step4]
+.step-name[x-task3-step1]
 
 ---
 
 # Task 3: Complete!
 
 .middle[.center[![task3-complete](images/todolist-task3.png)]]
+
+---
+
+layout: true
+.step-name[x-task4-start]
 
 ---
 
@@ -983,7 +996,7 @@ localStorage.getItem(key); // => item stored under key
 ---
 
 layout: true
-.step-name[part3-step5]
+.step-name[x-task4-step1]
 
 ---
 
@@ -1003,7 +1016,7 @@ with `persister.save(key, data)`.
 ---
 
 layout: true
-.step-name[part3-step6]
+.step-name[x-task4-step2]
 
 ---
 
@@ -1014,7 +1027,7 @@ layout: true
 ---
 
 layout: true
-.step-name[task5-start]
+.step-name[x-task5-start]
 
 ---
 
@@ -1102,7 +1115,7 @@ Essentially a perf enhancement
 ---
 
 layout: true
-.step-name[task5-step2]
+.step-name[x-task5-step2]
 
 ---
 
