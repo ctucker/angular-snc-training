@@ -20,7 +20,12 @@
 			<section id="main">
 				<input id="toggle-all" type="checkbox" ng-model="toggleAllCompleted">
 				<label for="toggle-all">Mark all as complete</label>
-				<todo-list></todo-list>
+				<todo-list
+						task-list="taskList"
+						status-mask="statusMask"
+						delete-task="deleteTask(todoItem)"
+						>
+				</todo-list>
 			</section>
 			<!-- This footer should hidden by default and shown when there are todos -->
 			<footer id="footer" ng-cloak ng-show="taskList.hasTasks">

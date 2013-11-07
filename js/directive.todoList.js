@@ -3,7 +3,12 @@ angular.module('tasks').directive('todoList', function() {
 
 	return {
 		restrict: 'E',
-		templateUrl: 'tpl/todoList.html'
+		templateUrl: 'tpl/todoList.html',
+		scope : {
+			taskList : '=',
+			statusMask : '=',
+			deleteTask : '&'
+		}
 	};
 
 });

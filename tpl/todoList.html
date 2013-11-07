@@ -5,7 +5,7 @@
 		<div class="view">
 			<input class="toggle" type="checkbox" ng-model="task.completed">
 			<label ng-bind="task.title"></label>
-			<button class="destroy" ng-click="deleteTask(task)"></button>
+			<button class="destroy" ng-click="deleteTask({todoItem : task})"></button>
 		</div>
 		<form ng-submit="finishEditing()">
 			<input class="edit" ng-model="task.title" ng-blur="finishEditing()">
