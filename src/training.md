@@ -1061,6 +1061,11 @@ Note that we're going to start skippng protractor tests at this point
 
 ---
 
+layout: true
+.step-name[x-task5-step1]
+
+---
+
 # Handling focus
 
 Editing works, but we're not focusing the form element.
@@ -1181,6 +1186,21 @@ class `edit`.  Make it so!
 * You can't focus a hidden element, so run a $digest to update the UI
   before attempting to call `focus()`
 * Use `ng-blur` to finish editing when focus is removed from the input
+
+---
+
+# Finding the right element
+
+```javascript
+function findEditInput(childInputs) {
+    for (var i = 0; i < childInputs.length; ++i) {
+        var classNames = childInputs[i].getAttribute('class');
+        if (classNames && classNames.indexOf('edit') >= 0)
+            return childInputs[i];
+    }
+    return void(0);
+}
+```
 
 ---
 
@@ -1324,13 +1344,18 @@ scope : { 'tasks' : '=listOfTasks' }
 
 # Isolating down: part 1
 
-Isolate the scope for the <todo-list> directive!
+Isolate the scope for the <todo-list> directive.
 
 You'll need to isolate down:
 
 * The repeat variables (`taskList` and `statusMask`)
 * The `deleteTask` expression
-* The `finishEditing` expression
+
+You'll need to isolate *up* the argument to `deleteTask`:
+```html
+<button ng-click="deleteTask({todoItem : task})">
+```
+(passing up uses similar syntax to scope isolation object)
 
 Editing tasks *won't work* yet, so don't worry about that for now.
 
@@ -1340,3 +1365,14 @@ layout: true
 .step-name[x-task5-step6]
 
 ---
+
+# Isolating down: part 2
+
+Editing doesn't work because we were accessing `scope.editTask()` from
+our `sn-edit-task` directive
+
+* `scope.editTask()` is defined on the `TasksController`
+* ... but we only care about which task is edited for the list
+* ... and the list is now owned by the `todo-list` directive
+* so let's move the editing management down on to a controller for the
+  `todo-list` directive!
