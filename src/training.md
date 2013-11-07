@@ -698,6 +698,8 @@ There are many different kinds of dependency:
 The `taskList` object in our controller is getting big.  Let's pull it
 out.
 
+Create a file `factory.taskList.js` to contain the new factory.
+
 ```javascript
 angular.module('tasks').factory('taskList', function() {...})
 ```
@@ -825,6 +827,8 @@ layout: true
 
 layout: true
 .step-name[x-task3-start]
+
+---
 
 # Loading demo data
 
@@ -1105,7 +1109,7 @@ Note that the link function is the workhorse
    and attributes
 
 Separation between compile and link is to support directives
-like`ng-repeat` that need to stamp out a common template and then bind
+like `ng-repeat` that need to stamp out a common template and then bind
 in different values.
 
 ???
@@ -1161,3 +1165,178 @@ and retain all the same behavior.
 ???
 
 Presenter led: walk through a TDD on this
+
+---
+
+# Focus!
+
+As well as setting the class, we must focus the input with the
+class `edit`.  Make it so!
+
+* Update the test HTML to:
+```html
+<div sn-edit-task="task"><input class="edit"><input></div>
+```
+* Use `spyOn` to spy on the focus method of the edit input
+* You can't focus a hidden element, so run a $digest to update the UI
+  before attempting to call `focus()`
+* Use `ng-blur` to finish editing when focus is removed from the input
+
+---
+
+layout: true
+.step-name[x-task5-step3]
+
+---
+
+# Adding an element
+
+We can go further.  Let's break the task list itself into a directive.
+
+We want to change our index.html from:
+```html
+<li ng-repeat="task in taskList.tasks | filter:statusMask" ...>
+    ...
+</li>
+```
+to:
+```html
+<task-list />
+```
+
+---
+
+layout: true
+.step-name[x-task5-step4]
+
+---
+
+# Templates and element directives
+
+* To create an element directive we use the 'E' restrict setting.
+* We can specify an HTML template file with `templateUrl`
+
+```javascript
+{
+	restrict: 'E',
+	templateUrl: 'tpl/todoList.html
+}
+```
+
+* Extract the HTML out of `index.html`, put it into a template file,
+  and use the new directive in you index
+* There is a simple test of the `todo-list` directive that will pass
+  when things are working
+* ptor `getItems()` selector is bad; fix it and run tests
+
+---
+
+layout: true
+.step-name[x-task5-step5]
+
+---
+
+# Scopes and isolation
+
+Although the `<todo-list>` directive works, it's still heavily coupled
+to the `tasks` controller.
+
+In particular, consider the repeat:
+```html
+<li ng-repeat="task in taskList.tasks | filter:statusMask"
+```
+and the function calls we make to the controller
+```html
+<button class="destroy" ng-click="deleteTask(task)">...
+<form ng-submit="finishEditing()">...
+<input class="edit" ... ng-blur="finishEditing()">...
+```
+
+---
+
+# Isolating the scope
+
+We want to prevent the todo-list from directly seeing anything about
+the tasks controller.
+
+Isolate using the `scope` argument to DDO:
+
+```javascript
+{ restrict: 'E',
+  templateUrl: 'tpl/todoList.html',
+  scope: { ... }
+}
+```
+
+The `scope` argument takes a few forms, which we'll talk about now...
+
+---
+
+class: large-code
+
+# scope : { ... }
+
+Basic syntax:
+
+`varName` : `bindTypeChar` [`attributeName`] 
+Where:
+
+`bindTypeChar` is:
+
+* `@` - Bind string value of attribute (1-way)
+* `=` - Two way bind to variable specified in attributeName
+* `&` - Bind to the expression in attributeName
+
+---
+
+# An example...
+
+Create a local scope variable called "tasks" that holds a list of
+tasks, specified by the list-of-tasks attribute.
+
+```javascript
+scope : { 'tasks' : '=listOfTasks' }
+```
+
+```html
+>> index.html
+<my-directive list-of-tasks="taskList" />
+```
+
+```html
+>> template.html
+<li ng-repeat="task in tasks"> ... </li>
+```
+
+---
+
+# Isolation
+
+* `scope : {...}` declaration *isolates* the scope
+* Now the directive can't see any values from the parent scope
+* Have to explicitly declare any linkages you want, and set them in
+  the attributes
+* Use Batarang to help visualize this
+	* ng-repeat establishes an isolate scope, so you can already see
+      this in action
+
+---
+
+# Isolating down: part 1
+
+Isolate the scope for the <todo-list> directive!
+
+You'll need to isolate down:
+
+* The repeat variables (`taskList` and `statusMask`)
+* The `deleteTask` expression
+* The `finishEditing` expression
+
+Editing tasks *won't work* yet, so don't worry about that for now.
+
+---
+
+layout: true
+.step-name[x-task5-step6]
+
+---
