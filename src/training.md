@@ -1376,3 +1376,17 @@ our `sn-edit-task` directive
 * ... and the list is now owned by the `todo-list` directive
 * so let's move the editing management down on to a controller for the
   `todo-list` directive!
+
+---
+
+layout:true
+.step-name[training-ams]
+
+---
+
+# All done...for now
+
+* Plenty more to learn
+* Come chat to me, email me (chris.tucker@servicenow.com), etc. if you
+  have questions/comments/suggestions
+* Final code can be pulled from github branch training-ams
