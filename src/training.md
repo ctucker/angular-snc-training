@@ -1390,3 +1390,4 @@ layout:true
 * Come chat to me, email me (chris.tucker@servicenow.com), etc. if you
   have questions/comments/suggestions
 * Final code can be pulled from github branch training-ams
+* You can see this presentation by checking out the `doc` branch
