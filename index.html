@@ -20,22 +20,7 @@
 			<section id="main">
 				<input id="toggle-all" type="checkbox" ng-model="toggleAllCompleted">
 				<label for="toggle-all">Mark all as complete</label>
-				<ul id="todo-list" ng-cloak>
-					<!-- These are here just to show the structure of the list items -->
-					<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-					<li ng-repeat="task in taskList.tasks | filter:statusMask"
-						ng-class="{completed : task.completed, editing : task == editing.task}"
-						sn-edit-task="task">
-						<div class="view">
-							<input class="toggle" type="checkbox" ng-model="task.completed">
-							<label ng-bind="task.title"></label>
-							<button class="destroy" ng-click="deleteTask(task)"></button>
-						</div>
-						<form ng-submit="finishEditing()">
-							<input class="edit" ng-model="task.title" ng-blur="finishEditing()">
-						</form>
-					</li>
-				</ul>
+				<todo-list></todo-list>
 			</section>
 			<!-- This footer should hidden by default and shown when there are todos -->
 			<footer id="footer" ng-cloak ng-show="taskList.hasTasks">
@@ -71,5 +56,6 @@
 		<script type="text/javascript" src="js/factory.demoDataLoader.js"></script>
 		<script type="text/javascript" src="js/factory.localstorage.persister.js"></script>
 		<script type="text/javascript" src="js/directive.snEditTask.js"></script>
+		<script type="text/javascript" src="js/directive.todoList.js"></script>
 	</body>
 </html>

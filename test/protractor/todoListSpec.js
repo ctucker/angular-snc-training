@@ -11,7 +11,7 @@
 		});
 
 		function getItems() {
-			return ptor.findElements(byCss('#todo-list > li'));
+			return ptor.findElements(byCss('#todo-list li'));
 		}
 
 		it('should add a new item to the list', function() {

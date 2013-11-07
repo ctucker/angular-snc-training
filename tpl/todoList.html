@@ -1,0 +1,14 @@
+<ul id="todo-list" ng-cloak>
+	<li ng-repeat="task in taskList.tasks | filter:statusMask"
+		ng-class="{completed : task.completed, editing : task == editing.task}"
+		sn-edit-task="task">
+		<div class="view">
+			<input class="toggle" type="checkbox" ng-model="task.completed">
+			<label ng-bind="task.title"></label>
+			<button class="destroy" ng-click="deleteTask(task)"></button>
+		</div>
+		<form ng-submit="finishEditing()">
+			<input class="edit" ng-model="task.title" ng-blur="finishEditing()">
+		</form>
+	</li>
+</ul>
