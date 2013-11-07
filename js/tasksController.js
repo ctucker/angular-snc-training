@@ -5,7 +5,6 @@
 		var TASK_LIST_KEY = "tasks.list";
 
 		$scope.newTask = {};
-		$scope.editing = { task: null };
 
 		taskList.setTaskList(persister.load(TASK_LIST_KEY));
 
@@ -45,14 +44,6 @@
 
 		$scope.deleteTask = function(task) {
 			$scope.taskList.deleteTask(task);
-		};
-
-		$scope.editTask = function(task) {
-			$scope.editing.task = task;
-		};
-
-		$scope.finishEditing = function() {
-			$scope.editing.task = null;
 		};
 
 		$scope.clearCompleted = function() {

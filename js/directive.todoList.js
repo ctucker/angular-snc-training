@@ -8,6 +8,15 @@ angular.module('tasks').directive('todoList', function() {
 			taskList : '=',
 			statusMask : '=',
 			deleteTask : '&'
+		},
+		controller : function($scope) {
+			$scope.editing = { task : null };
+			$scope.editTask = function(task) {
+				$scope.editing.task = task;
+			};
+			$scope.finishEditing = function() {
+				$scope.editing.task = null;
+			};
 		}
 	};
 

@@ -281,21 +281,6 @@
 			}));
 		});
 
-		describe('editing a task', function() {
-			it('records the currently edited task when editTask is called', function() {
-				var task = addNewTask('my task');
-				scope.editTask(task);
-				expect(scope.editing.task).toBe(task);
-			});
-
-			it('resets the currently edited task when finishEditing is called', function() {
-				var task = addNewTask('my task');
-				scope.editTask(task);
-				scope.finishEditing();
-				expect(scope.editing.task).toBeNull();
-			});
-		});
-
 		function taskWithTitle(taskTitle) {
 			return { title: taskTitle, completed: false};
 		}
