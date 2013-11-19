@@ -1,0 +1,74 @@
+.aha-fg-black {
+    color: #073642
+}
+
+.aha-fg-red {
+    color: #dc322f
+}
+
+.aha-fg-green {
+    color: #859900
+}
+
+.aha-fg-yellow {
+    color: #b58900
+}
+
+.aha-fg-blue {
+    color: #268bd2
+}
+
+.aha-fg-magenta {
+    color: #d33682
+}
+
+.aha-fg-cyan {
+    color: #2aa198
+}
+
+.aha-fg-white {
+    color: #eee8d5
+}
+
+.aha-bg-black {
+    background-color: #002b36
+}
+
+.aha-bg-red {
+    background-color: #dc322f
+}
+
+.aha-bg-green {
+    background-color: #859900
+}
+
+.aha-bg-yellow {
+    background-color: #b58900
+}
+
+.aha-bg-blue {
+    background-color: #268bd2
+}
+
+.aha-bg-magenta {
+    background-color: #d33682
+}
+
+.aha-bg-cyan {
+    background-color: #2aa198
+}
+
+.aha-bg-white {
+    background-color: #eee8d5
+}
+
+.aha-underline {
+    text-decoration: underline
+}
+
+.aha-bold {
+    font-weight: bold
+}
+
+.aha-blink {
+}
