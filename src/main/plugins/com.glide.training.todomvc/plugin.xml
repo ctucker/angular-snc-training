@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<plugin
+		id="com.glide.training.todomvc"
+		name="Glide SNC training"
+		version="0.0.1"
+		state="published"
+		provider_name="ServiceNow">
+	<description>Training application for ServiceNow Angular Training course</description>
+	<requires>
+		<import plugin="com.glide.ui.angular"/>
+	</requires>
+</plugin>
