@@ -2,8 +2,16 @@ class: center, middle, title
 
 # Introduction to AngularJS
 
-### Chris Tucker, UI Team Technical Architect
-### Scott Marshall, The Guy Who Actually Knows This Stuff
+## Chris Tucker, Will Leingang
+### ServiceNow Core (Platform) UI Team
+---
+
+# Goals of this training
+
+* Familiarize everyone with Angular techniques and terminology
+* Gain hands-on experience writing an Angular application
+* Learn how to write tested Angular code
+* Understand how we integrate Angular into the ServiceNow platform
 
 ---
 
@@ -20,24 +28,42 @@ class: center, middle, title
 
 ---
 
-# Setting up your environment
+# Code and Node
 
-Everything you need to get started is in a Github repo, ready to clone:
+Clone code from Github:
 
 ```terminal
 $ git clone http://github.com/ctucker/angular-snc-training
 ```
 
-You'll also need to install NodeJS (for the testing framework):
+Install NodeJS (for the testing framework):
 
 * http://nodejs.org/ or `brew install node`
 
-Check the instructions in the README.md file for additional info
-(we'll cover more in the next few slides).
+Check instructions in README.md file for more info
 
 ???
 
 Pause to get everyone set up
+
+---
+
+# Glide: Security Manager & Plugins
+
+Disable the security manager.
+
+```terminal
+-Dglide.security.policy=none
+```
+
+Add the plugic path to angular-snc-training:
+
+```terminal
+-Dglide.plugins.directories=$PATH:<new-path>
+```
+
+* IntelliJ: Run configuration, VM options
+* Eclipse: Run Configurations, Arguments, VM arguments
 
 ---
 
@@ -57,8 +83,7 @@ $ git commit -a -m 'Commiting local changes'
 $ git checkout <branch-name>
 ```
 
-On each slide you'll see a green box (see bottom left) indicating what
-step you should currently have checked out.
+Green box (see bottom left) indicates what step to check out
 
 ???
 
@@ -66,30 +91,20 @@ Make sure everyone can pull the right branch
 
 ---
 
-class: small-terminal
-
-
 # Karma test runner
 
 We run all of our unit tests using Karma.  Verify it works like so:
 
 ```terminal
-$ ./node_modules/karma/bin/karma start 
-<span class="aha-fg-green ">INFO [reporter.osx]: </span><span class="aha-fg-white ">OSX Notification Center reporter started at http://localhost:1337
-</span><span class="aha-fg-green ">INFO [karma]: </span><span class="aha-fg-white ">Karma v0.10.2 server started at http://localhost:9876/
-</span><span class="aha-fg-green ">INFO [launcher]: </span><span class="aha-fg-white ">Starting browser Chrome
-</span><span class="aha-fg-yellow ">WARN [watcher]: </span><span class="aha-fg-white ">Pattern &quot;/Users/ctucker/dev/js/angular-snc-training/tpl/*.html&quot; does not match any file.
-</span><span class="aha-fg-yellow ">WARN [reporter.growl]: </span><span class="aha-fg-white ">No running version of GNTP found.
-Make sure the Growl service is installed and running.
-For more information see https://github.com/theabraham/growly.
-</span><span class="aha-fg-green ">INFO [reporter.osx]: </span><span class="aha-fg-white ">node-osx-notifier exited with code 8
-</span><span class="aha-fg-green ">INFO [Chrome 30.0.1599 (Mac OS X 10.8.5)]: </span><span class="aha-fg-white ">Connected on socket R1mFdn9VnQW6vTRaKq9N
+$ ./node_modules/karma/bin/karma start
+<span class="aha-fg-white ">...(various output here)...</span>
+<span class="aha-fg-green ">INFO [Chrome 30.0.1599 (Mac OS X 10.8.5)]: </span><span class="aha-fg-white ">Connected on socket R1mFdn9VnQW6vTRaKq9N
 .
 Chrome 30.0.1599 (Mac OS X 10.8.5): Executed 1 of 1</span><span class="aha-fg-green "> SUCCESS</span><span class="aha-fg-white "> (0.823 secs / 0.008 secs)
 </span>
 ```
 
-* Default ServiceNow Chrome is broken, needs re-installing
+* Ensure you have up-to-date Chrome
 
 ???
 
@@ -99,8 +114,7 @@ Pause to help out with any issues in getting Karma running
 
 # Local web server
 
-Although we could do most everything using file urls, we'll be
-spinning up a local HTTP server.  This is easily done:
+Start a local web server:
 
 ```terminal
 $ ./http-server.sh
@@ -119,20 +133,14 @@ e2e vs unit
 
 # End-to-end: Selenium server
 
-Our end-to-end tests are written using Protractor, which is a thin
-Angular-aware wrapper written around Selenium.
+End-to-end tests written with Protractor, a thin Selenium wrapper. 
 
-To get ready to Selenium ready to go, run:
+Prepare selenium:
 ```terminal
 $ ./protractor.sh selenium
 Installing Selenium
 When finished, start the Selenium Standalone Server with ./selenium/start
-
-downloading http://selenium.googlecode.com/files/selenium-server-standalone-2.35.0.jar...
-downloading https://chromedriver.googlecode.com/files/chromedriver_mac32_2.2.zip...
-chromedriver_mac32_2.2.zip downloaded to ./selenium/chromedriver_mac32_2.2.zip
-selenium-server-standalone-2.35.0.jar downloaded to ./selenium/selenium-server-standalone-2.35.0.jar
-Oct 12, 2013 1:57:57 PM org.openqa.grid.selenium.GridLauncher main
+<span class="aha-fg-white ">...(various output here)...</span>
 INFO: Launching a standalone server
 Setting system property webdriver.chrome.driver to ./selenium/chromedriver
 ...
@@ -142,29 +150,19 @@ Setting system property webdriver.chrome.driver to ./selenium/chromedriver
 
 # End-to-end: Protractor
 
-Now you can run the actual Protractor tests with:
+Run the protractor tests:
 
 ```terminal
 $ ./protractor.sh
-Using the selenium server at http://localhost:4444/wd/hub
-<span class="aha-fg-red ">F</span>
-
-Failures:
-
-  1) angularjs homepage should be able to load the index page
-   Message:
+<span class="aha-fg-white">...(various output)...</span>
      <span class="aha-fg-red ">Error: Angular could not be found on the page http://localhost:8000/</span>
-   Stacktrace:
-     Error: Angular could not be found on the page http://localhost:8000/
-    at /Users/ctucker/dev/js/angular-snc-training/node_modules/protractor/lib/protractor.js:298:15
-...
-
+<span class="aha-fg-white">...(various output)...</span>
 Finished in 10.39 seconds
 <span class="aha-fg-red ">1 test, 1 assertion, 1 failure
 </span>
 ```
 
-Note that while the tests run, they currently fail!
+Note that while the tests run, they currently fail.  This is intentional!
 
 ---
 
@@ -215,11 +213,16 @@ layout: true
 
 Let's add a simple feature:
 
-* When I type into the input box, the label in the final `<li>` on the
-  page should receive the value I type
+* _When_ I type into the input box
+* _Then_ the label in the final `<li>` updates with that value
 
-We'll write a Protractor test to look for that behavior now, and then
-add the code to make it pass.
+To do this we take three steps:
+
+1. Write a failing protractor test for that change
+2. Add production code to make the test pass
+3. Refactor the production code
+
+
 
 ???
 
@@ -420,6 +423,7 @@ layout: true
   * `ng-repeat`: repeat a DOM template for every element in a list
 * Directives allow us to *extend* HTML with custom markup
   * Applied as elements, attributes, CSS classes, or comments
+* Later we'll learn to write our own...
 
 ---
 
@@ -662,15 +666,18 @@ function, it passes in a new Scope instance called `$scope` for you.
 * We'll be looking at *factory* dependencies
 
 ```javascript
-angular.module('tasks').factory('taskList', function() {...})
+angular.module('tasks').
+	factory('taskList', function() {...});
 ```
 
 This registers a factory called "taskList" that you can inject:
 
 ```javascript
-controller('TasksController', function($scope, taskList) {
-  // taskList is the return value of your factory function
-}
+controller('TasksController',
+           function($scope, taskList) {
+  // taskList is the return value of your
+  // factory function
+});
 ```
 
 ---
@@ -680,8 +687,10 @@ controller('TasksController', function($scope, taskList) {
 Dependencies in Angular are *singletons*.
 
 ```javascript
-function(taskList, taskList) {
-	taskList === taskList; // => true
+function($injector) {
+	var a = $injector.get('taskList');
+	var b = $injector.get('taskList')
+	a === b; // => true
 }
 ```
 
@@ -689,7 +698,7 @@ There are many different kinds of dependency:
 
 * `provider`, `factory`, `service`, `value`, `constant`
 * `controller`, `directive`, `filter`
-* etc.
+* ...
 
 ---
 
@@ -701,7 +710,8 @@ out.
 Create a file `factory.taskList.js` to contain the new factory.
 
 ```javascript
-angular.module('tasks').factory('taskList', function() {...})
+angular.module('tasks').
+	factory('taskList', function() {...})
 ```
 
 Move the definition of the `taskList` object into the factory function,
@@ -768,7 +778,7 @@ This takes a *predicate* argument of:
 Arguments are given with the `filterName:argument` syntax.
 
 ```html
-<li ng-repeat="task in taskList.tasks | filter:predicateVar">
+<li ng-repeat="task in taskList.tasks | filter:tpl">
 	...
 </li>
 ```
@@ -791,11 +801,13 @@ $scope.statusMask = {}
 
 And in our `ng-repeat` use:
 
+.shrink-text[
 ```html
 <li ng-repeat="task in taskList.tasks | filter:statusMask">
 	...
 </li>
 ```
+]
 
 ---
 
@@ -857,8 +869,7 @@ link, and populate it into the task list.
 
 # Promises: what and why
 
-* Alternative to callbacks
-* Simple way to manage parallelization/chaining
+* Cleaner alternative to callbacks
 
 ```javascript
 myPromise = myService.fetchDataAsync();
@@ -874,6 +885,23 @@ myPromise.then(
 myPromise.then(resolveFn, rejectFn)
          .then(resolveFn2, rejectFn2);
 ```
+
+---
+
+# Comparison to callbacks
+
+A common pattern is to take an action when a callback resolves.  You
+end up with code like:
+
+```javascript
+myService.fetchDataAsync(function cb() {
+	otherService.updateUI(function cb() {
+		console.log("Updated UI with new data");
+	});
+});
+```
+As the callbacks nest, you move to the right...your logic gets heavily
+indented and tightly coupled to all of the callbacks it resides within.
 
 ---
 
@@ -1180,27 +1208,32 @@ class `edit`.  Make it so!
 
 * Update the test HTML to:
 ```html
-<div sn-edit-task="task"><input class="edit"><input></div>
+<div sn-edit-task="task">
+	<input class="edit"><input>
+</div>
 ```
 * Use `spyOn` to spy on the focus method of the edit input
-* You can't focus a hidden element, so run a $digest to update the UI
-  before attempting to call `focus()`
+* Remember to run a `$digest` show the input before calling `focus()`
 * Use `ng-blur` to finish editing when focus is removed from the input
 
 ---
 
 # Finding the right element
 
+A helpful hint for finding the right element using jqLite:
+
+.shrink-text[
 ```javascript
 function findEditInput(childInputs) {
-    for (var i = 0; i < childInputs.length; ++i) {
-        var classNames = childInputs[i].getAttribute('class');
-        if (classNames && classNames.indexOf('edit') >= 0)
-            return childInputs[i];
-    }
-    return void(0);
+  for (var i = 0; i < childInputs.length; ++i) {
+    var classNames = childInputs[i].getAttribute('class');
+    if (classNames && classNames.indexOf('edit') >= 0)
+      return childInputs[i];
+  }
+  return void(0);
 }
 ```
+]
 
 ---
 
@@ -1214,14 +1247,16 @@ layout: true
 We can go further.  Let's break the task list itself into a directive.
 
 We want to change our index.html from:
+.shrink-text[
 ```html
-<li ng-repeat="task in taskList.tasks | filter:statusMask" ...>
+<li ng-repeat="..." ng-class="..." sn-edit-task="...">
     ...
 </li>
 ```
+]
 to:
 ```html
-<task-list />
+<todo-list />
 ```
 
 ---
@@ -1262,9 +1297,11 @@ Although the `<todo-list>` directive works, it's still heavily coupled
 to the `tasks` controller.
 
 In particular, consider the repeat:
+.shrink-text[
 ```html
 <li ng-repeat="task in taskList.tasks | filter:statusMask"
 ```
+]
 and the function calls we make to the controller
 ```html
 <button class="destroy" ng-click="deleteTask(task)">...
@@ -1282,9 +1319,10 @@ the tasks controller.
 Isolate using the `scope` argument to DDO:
 
 ```javascript
-{ restrict: 'E',
+{
+  restrict: 'E',
   templateUrl: 'tpl/todoList.html',
-  scope: { ... }
+  scope: { ??? }
 }
 ```
 
@@ -1344,7 +1382,7 @@ scope : { 'tasks' : '=listOfTasks' }
 
 # Isolating down: part 1
 
-Isolate the scope for the <todo-list> directive.
+Isolate the scope for the `<todo-list>` directive.
 
 You'll need to isolate down:
 

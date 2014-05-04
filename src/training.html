@@ -1,134 +1,159 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Introduction to Angular</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<link href="styles/remarkjs-std.css" rel="stylesheet" type="text/css"/>
-	<link href="styles/aha-solarized.css" rel="stylesheet" type="text/css"/>
-	<style type="text/css">
-		/* Show-specific styles */
+	<head>
+		<title>Introduction to Angular</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<!--<link href="styles/remarkjs-std.css" rel="stylesheet" type="text/css"/>-->
+		<link href="styles/aha-solarized.css" rel="stylesheet" type="text/css"/>
+		<script src="javascript/remark-HEAD.js"></script>
+		<style type="text/css">
+			/* Show-specific styles */
+			@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+			@import url(http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
 
-		body {
-			font-size: 26px;
-		}
+			html { font-size: 62.5%; }
 
-		.remark-slide .remark-slide-content {
-			padding: 1em 2em 1em 2em;
-		}
+			body { font-family: 'Droid Serif'; }
 
-		code {
-			font-size: 22px;
-		}
-
-		.terminal {
-			font-size: 22px;
-		}
-
-	  .small-terminal code {
-	  font-size: 16px !important;
-	 }
-
-	  .large-code code {
-	  font-size: 30px
-	  }
-
-		/* Terminal listings should wrap, as they do on the CLI */
-		pre .terminal {
-			white-space: pre-line;
-		}
-
-		.fullsize > img {
-			width: 100%;
-			height: 100%;
-		}
-
-		.step-name {
-			display: block;
-			background: darkgreen;
-			color: white;
-			position: fixed;
-			font-size: 120%;
-			font-family: monospace;
-			padding-left: .5em;
-			padding-right: .5em;
-			padding-top: 0.2ex;
-			padding-bottom: 0.2ex;
-			bottom: 1ex;
-			left: 1em;
-		}
-
-		.pull-left {
-			float: left;
-			width: 49%;
-		}
-		.pull-right {
-			float: right;
-			width: 49%;
-		}
-
-		.float-left {
-			float: left;
-			margin: 0 1rem 0 1rem;
-		}
-
-		.pull-right-3 {
-			float: right;
-		}
-
-		span.red {
-			color: red;
-		}
-
-		span.green {
-			color: green;
-		}
-
-		li {
-			margin-bottom: 1ex;
-		}
-
-		li li {
-			font-size: 80%;
-		}
-
-	</style>
-</head>
-<body>
-<textarea id="source">
-include "training.md"
-</textarea>
-<!--<script src="http://gnab.github.io/remark/downloads/remark-0.5.7.min.js" type="text/javascript"></script>-->
-<script src="javascript/remark-0.5.7.min.js"></script>
-<script src="javascript/jquery.min.js"></script>
-<script type="text/javascript">
-	var hljs = remark.highlighter.engine;
-
-	hljs.LANGUAGES.terminal = {
-		contains: [
-			{
-				className: 'string',
-				//begin: '^([\\w.]+)@([\\w.]+)'
-				begin: '^\\$'
-			},
-			{
-				className: 'constant',
-				begin: ' (.*) \\$ '
-			},
-			{
-				className: 'ansi',
-				begin: '<span class\\="(aha-[^"]+)">',
-				end: '<\\/span>'
+			h1, h2, h3 {
+				font-family: 'Yanone Kaffeesatz';
+				font-weight: normal;
+				width: 100%;
+				background-color: grey;
+				color: white;
+				padding: 0 0 0.5rem 1rem;
 			}
-		]
-	};
 
-	var slideshow = remark.create({highlightStyle: "solarized_dark"});
+			.title h1, .title h2, .title h3 {
+				background-color: white;
+				color: black;
+			}
 
-	// extract the embedded styling from ansi spans
-	$('code.terminal > span.ansi').replaceWith(function(i, x) {
-		return x.replace(/&lt;(\/?(\w+).*?)&gt;/g, '<$1>');
-	});
+			.remark-slide .remark-slide-content {
+				padding: 1em 2em 1em 2em;
+				font-size: 2.8rem;
+			}
 
-</script>
-</body>
+			code {
+				font-size: 2.4rem;
+			}
+
+			.shrink-text code {
+				font-size: 95%;
+			}
+
+			.terminal {
+				font-size: 2.5rem;
+				word-break: break-all;
+			}
+
+			.small-terminal code {
+				font-size: 1.6rem !important;
+			}
+
+			.large-code code {
+				font-size: 3.0rem
+			}
+
+			/* Terminal listings should wrap, as they do on the CLI */
+			pre .terminal {
+				white-space: pre-line;
+			}
+
+			.fullsize > img {
+				width: 100%;
+				height: 100%;
+			}
+
+			.step-name {
+				display: block;
+				background: darkgreen;
+				color: white;
+				position: fixed;
+				font-size: 120%;
+				font-family: monospace;
+				padding-left: .5em;
+				padding-right: .5em;
+				padding-top: 0.2ex;
+				padding-bottom: 0.2ex;
+				bottom: 1ex;
+				left: 1em;
+			}
+
+			.pull-left {
+				float: left;
+				width: 49%;
+			}
+			.pull-right {
+				float: right;
+				width: 49%;
+			}
+
+			.float-left {
+				float: left;
+				margin: 0 1rem 0 1rem;
+			}
+
+			.pull-right-3 {
+				float: right;
+			}
+
+			span.red {
+				color: red;
+			}
+
+			span.green {
+				color: green;
+			}
+
+			li {
+				margin-bottom: 1ex;
+			}
+
+			li li {
+				font-size: 90%;
+			}
+
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+include "training.md"
+		</textarea>
+		<!--<script src="http://gnab.github.io/remark/downloads/remark-0.5.7.min.js" type="text/javascript"></script>-->
+
+		<script src="javascript/jquery.min.js"></script>
+		<script type="text/javascript">
+			var hljs = remark.highlighter.engine;
+
+			hljs.registerLanguage('terminal', function() {
+				return {
+					contains: [
+						{
+							className: 'string',
+							//begin: '^([\\w.]+)@([\\w.]+)'
+							begin: '^\\$'
+						},
+						{
+							className: 'constant',
+							begin: ' (.*) \\$ '
+						},
+						{
+							className: 'ansi',
+							begin: '<span class\\="(aha-[^"]+)">',
+							end: '<\\/span>'
+						}
+					]
+				};
+			});
+
+			var slideshow = remark.create({highlightStyle: "solarized_dark"});
+
+			// extract the embedded styling from ansi spans
+			$('code.terminal > span.hljs-ansi').replaceWith(function(i, x) {
+				return x.replace(/&lt;(\/?(\w+).*?)&gt;/g, '<$1>');
+			});
+
+		</script>
+	</body>
 </html>
