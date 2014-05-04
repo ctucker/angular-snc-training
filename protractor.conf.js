@@ -29,7 +29,7 @@ exports.config = {
   chromeDriver: './node_modules/protractor/selenium/chromedriver',
   // If true, only chromedriver will be started, not a standalone selenium.
   // Tests for browsers other than chrome will not run.
-  chromeOnly: true,
+  chromeOnly: false,
   // Additional command line options to pass to selenium. For example,
   // if you need to change the browser timeout, use
   // seleniumArgs: ['-browserTimeout=60'],
@@ -43,7 +43,7 @@ exports.config = {
   // The address of a running selenium server. If specified, Protractor will
   // connect to an already running instance of selenium. This usually looks like
   // seleniumAddress: 'http://localhost:4444/wd/hub'
-  seleniumAddress: null,
+  seleniumAddress: 'http://localhost:4444/wd/hub',
 
   // The timeout for each script run on the browser. This should be longer
   // than the maximum time your application needs to stabilize between tasks.
@@ -99,11 +99,15 @@ exports.config = {
     // will be available. For example, you can add a Jasmine reporter with:
     //     jasmine.getEnv().addReporter(new jasmine.JUnitXmlReporter(
     //         'outputdir/', true, true));
-	 var driver = browser.driver;
-	 driver.get('http://localhost:8080/welcome.do');
-	 driver.findElement(protractor.By.css('#user_name')).sendKeys('admin');
-	 driver.findElement(protractor.By.css('#user_password')).sendKeys('admin');
-	 driver.findElement(protractor.By.css('#sysverb_login')).click();
+
+// If login is required, this will drive the SN login page, at the expense of about 5s
+// constant overhead on the test suite execution:
+//	 var driver = browser.driver;
+//	 driver.get('http://localhost:8080/welcome.do');
+//	 driver.findElement(protractor.By.css('#user_name')).sendKeys('admin');
+//	 driver.findElement(protractor.By.css('#user_password')).sendKeys('admin');
+//	 driver.findElement(protractor.By.css('#sysverb_login')).click();
+
   },
 
   // The params object will be passed directly to the protractor instance,

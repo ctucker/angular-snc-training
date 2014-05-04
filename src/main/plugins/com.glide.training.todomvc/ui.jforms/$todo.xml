@@ -2,7 +2,7 @@
 <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:g2="null">
 	<g2:doctype name="html" />
 
-	<html lang="en">
+	<html lang="en" ng-app="">
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -65,6 +65,7 @@
 		</footer>
 		<!-- Scripts here. Don't remove this ↓ -->
 		<script src="scripts/_todomvc.js" />
+		<script src="scripts/angular/angular.js" />
 	</body>
 </html>
 </j:jelly>

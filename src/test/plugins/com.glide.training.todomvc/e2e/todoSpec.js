@@ -11,12 +11,7 @@ var TodoListPage = function() {
 };
 
 describe('todo list homepage', function() {
-	it('should allow for text entry in the todo input', function() {
-		var todoListPage = new TodoListPage();
-		todoListPage.get();
-
-		todoListPage.addTodo("new title");
-
-		expect(todoListPage.todoInput.getAttribute('value')).toEqual("new title");
+	it('loads the $todo page successfully', function() {
+		new TodoListPage().get();
 	});
 });
