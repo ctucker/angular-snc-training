@@ -1,5 +1,8 @@
 {
   "devDependencies": {
+    "gulp": "^3.6.2",
+    "gulp-karma": "0.0.4",
+    "gulp-protractor": "0.0.7",
     "http-server": "*",
     "karma": "~0.12.14",
     "karma-chrome-launcher": "^0.1.3",
