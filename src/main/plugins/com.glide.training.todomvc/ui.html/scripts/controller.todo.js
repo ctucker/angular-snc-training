@@ -5,6 +5,10 @@ angular.module('todo').controller('Todo', function($scope) {
 	$scope.taskInput = '';
 
 	$scope.addTask = function() {
-		$scope.taskList.push($scope.taskInput);
+		var newTask = $scope.taskInput.trim();
+		if (newTask !== '') {
+			$scope.taskList.push(newTask);
+			$scope.taskInput = '';
+		}
 	}
 });
