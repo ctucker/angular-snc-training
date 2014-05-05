@@ -23,6 +23,14 @@ describe('todo controller', function() {
 			expect(scope.taskList[0]).toEqual('My new task');
 		});
 
+		it('adds new tasks to the end of the task list', function() {
+			scope.taskInput = 'Task 1';
+			scope.addTask();
+			scope.taskInput = 'Task 2';
+			scope.addTask();
+			expect(scope.taskList[1]).toEqual('Task 2');
+		})
+
 	});
 
 });
