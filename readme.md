@@ -17,6 +17,11 @@ command-line, you can use:
 
 	$ git clone http://github.com/ctucker/angular-snc-training
 
+If you're using Eclipse you can import the project from the `.project`
+file.  If you're using IntelliJ, import the
+`angular-training-2014.iml` file.  For Sublime or other text editors,
+open up the source tree as you normally would.
+
 At this point you should have everything you need to develop an
 angular app and run tests against it.  To verify, go into the
 `angular-snc-training` directory and run:
