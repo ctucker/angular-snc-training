@@ -8,7 +8,7 @@
 	</g:evaluate>
 	<g2:doctype name="html" />
 
-	<html lang="en" ng-app="">
+	<html lang="en" ng-app="todo">
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -16,10 +16,12 @@
 		<link rel="stylesheet" href="styles/todomvc.css" />
 	</head>
 	<body>
-		<section id="todoapp">
+		<section id="todoapp" ng-controller="Todo">
 			<header id="header">
 				<h1>todos</h1>
-				<input id="new-todo" placeholder="What needs to be done?" autofocus="true" autocomplete="off" ng-model="task" />
+				<form ng-submit="addTask()">
+					<input id="new-todo" placeholder="What needs to be done?" autofocus="true" autocomplete="off" ng-model="taskInput" />
+				</form>
 			</header>
 			<!-- This section should be hidden by default and shown when there are todos -->
 			<section id="main">
@@ -28,10 +30,10 @@
 				<ul id="todo-list">
 					<!-- These are here just to show the structure of the list items -->
 					<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-					<li class="completed">
+					<li>
 						<div class="view">
 							<input class="toggle" type="checkbox" checked="true" />
-							<label>{{task}}</label>
+							<label>{{taskList[0]}}</label>
 							<button class="destroy" />
 						</div>
 						<input class="edit" value="Create a TodoMVC template" />
@@ -62,8 +64,9 @@
 			<p>Double-click to edit a todo</p>
 		</footer>
 		<!-- Scripts here. Don't remove this ↓ -->
-		<script src="scripts/_todomvc.js" />
 		<script src="scripts/angular/angular.js" />
+		<script src="scripts/_todomvc.js" />
+		<script src="scripts/controller.todo.js" />
 	</body>
 </html>
 </j:jelly>
