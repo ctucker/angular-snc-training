@@ -19,7 +19,7 @@
 		<section id="todoapp">
 			<header id="header">
 				<h1>todos</h1>
-				<input id="new-todo" placeholder="What needs to be done?" autofocus="true" autocomplete="off" />
+				<input id="new-todo" placeholder="What needs to be done?" autofocus="true" autocomplete="off" ng-model="task" />
 			</header>
 			<!-- This section should be hidden by default and shown when there are todos -->
 			<section id="main">
@@ -31,18 +31,10 @@
 					<li class="completed">
 						<div class="view">
 							<input class="toggle" type="checkbox" checked="true" />
-							<label>Create a TodoMVC template</label>
+							<label>{{task}}</label>
 							<button class="destroy" />
 						</div>
 						<input class="edit" value="Create a TodoMVC template" />
-					</li>
-					<li>
-						<div class="view">
-							<input class="toggle" type="checkbox" />
-							<label>Rule the web</label>
-							<button class="destroy" />
-						</div>
-						<input class="edit" value="Rule the web" />
 					</li>
 				</ul>
 			</section>
