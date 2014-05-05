@@ -36,6 +36,18 @@ the future.
 
 Congratulations, you just ran a unit test!
 
+## Simplifying node runs
+
+If you want to make it a bit easier to run your node commands (karma,
+protractor, gulp) you can install them as a global dependency and add
+the node bin directory to your path:
+
+	$ npm install -g karma protractor gulp
+	$ echo 'export PATH=$PATH:/usr/local/share/npm/bin' >> ~/.bashrc
+
+You can now run karma, gulp, and protractor without the
+`./node_modules/<name>/bin/<exec>` nonsense.
+
 ## Tying in to ServiceNow
 
 The code is organized much as a standard ServiceNow plugin is
