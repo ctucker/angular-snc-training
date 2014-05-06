@@ -9,12 +9,13 @@ var TodoListPage = function() {
 	};
 
 	this.addTodo = function(todoTitle) {
+		this.todoInput.clear();
 		this.todoInput.sendKeys(todoTitle);
 		this.todoInput.submit();
 	};
 
 	this.getEntry = function(idx) {
-		return element.all(by.repeater('task in taskList').row(idx));
+		return element(by.repeater('task in taskList').row(idx));
 	};
 
 	this.getLastEntry = function() {
