@@ -16,15 +16,15 @@ describe('Todo controller', function() {
 	}
 
 	describe('adding a task', function() {
-		it('adds the newTask to the list on addTask', inject(function($rootScope, $controller) {
+		it('adds the newTask to the list on addTask', function() {
 			addATask('My new task');
 			expect(scope.taskList[0]).toEqual('My new task');
-		}));
+		});
 
-		it('adds new tasks to the end of the task list', inject(function($rootScope, $controller) {
+		it('adds new tasks to the end of the task list', function() {
 			addATask('Task 1');
 			addATask('Task 2');
 			expect(scope.taskList).toEqual(['Task 1', 'Task 2']);
-		}));
+		});
 	});
 });
