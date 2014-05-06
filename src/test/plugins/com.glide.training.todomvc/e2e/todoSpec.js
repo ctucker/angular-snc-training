@@ -2,6 +2,7 @@
 
 var TodoListPage = function() {
 	this.todoInput = element(by.css('#new-todo'));
+	this.todoEntries =  element.all(by.repeater('task in taskList'));
 
 	this.get = function() {
 		browser.get('/$todo.do');
@@ -14,11 +15,15 @@ var TodoListPage = function() {
 	};
 
 	this.getLastEntry = function() {
-		return element(by.css('#todo-list li:last-child'));
+		return this.todoEntries.last();
 	};
 
 	this.getEntry = function(rowNumber) {
-		return element(by.repeater('task in taskList').row(rowNumber))
+		return this.todoEntries.get(rowNumber)
+	};
+
+	this.toggleCompletionOfEntry = function(idx) {
+		this.todoEntries.get(idx).$('input.toggle').click();
 	}
 };
 
@@ -48,4 +53,27 @@ describe('todo list homepage', function() {
 			expect(todoListPage.getEntry(1).getText()).toEqual("My second todo");
 		});
 	});
+
+	describe('toggling completion', function() {
+		beforeEach(function() {
+			todoListPage.get();
+			todoListPage.addTodo("My todo");
+		});
+
+		it('starts out in an incomplete state', function() {
+			expect(todoListPage.getEntry(0).getAttribute('class')).not.toContain('completed');
+		});
+
+		it('sets the completed class on an entry when the checkmark is set', function() {
+			todoListPage.toggleCompletionOfEntry(0);
+			expect(todoListPage.getEntry(0).getAttribute('class')).toContain('completed');
+		});
+
+		it('unsets the completed class when the checkmark is unset', function() {
+			todoListPage.toggleCompletionOfEntry(0);
+			todoListPage.toggleCompletionOfEntry(0);
+			expect(todoListPage.getEntry(0).getAttribute('class')).not.toContain('completed');
+		})
+
+	})
 });
