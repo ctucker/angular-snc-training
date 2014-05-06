@@ -43,7 +43,7 @@ module.exports = function(config) {
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters: ['progress'],
+		reporters: ['progress', 'osx', 'growl'],
 
 
 		// web server port
@@ -70,6 +70,13 @@ module.exports = function(config) {
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
-		singleRun: false
+		singleRun: false,
+
+		plugins : [
+			'karma-jasmine',
+			'karma-chrome-launcher',
+			'karma-osx-reporter',
+			'karma-growl-reporter'
+		]
 	});
 };
