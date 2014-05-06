@@ -62,6 +62,33 @@ describe('todo controller', function() {
 		});
 	});
 
+	describe('tracking tasks', function() {
+		it('starts with hasTask flag to false when there are no tasks', function() {
+			expect(scope.hasTasks).toBe(false);
+		});
+
+		it('sets hasTask flag to true when a task is added', function() {
+			addATask('New task');
+			scope.$apply();
+			expect(scope.hasTasks).toBe(true);
+		});
+
+		it('sets hasTask flag back to false when the last task is removed', function() {
+			var task = addATask('New task');
+			scope.deleteTask(task);
+			scope.$apply();
+			expect(scope.hasTasks).toBe(false);
+		});
+
+		it('does not reset hasTask flag one one but not all tasks are removed', function() {
+			var task = addATask('New task');
+			addATask('Another task');
+			scope.deleteTask(task);
+			scope.$apply();
+			expect(scope.hasTasks).toBe(true);
+		})
+	});
+
 	function addATask(taskTitle) {
 		scope.taskInput = taskTitle;
 		scope.addTask();

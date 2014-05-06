@@ -26,6 +26,10 @@ var TodoListPage = function() {
 		return this.todoEntries;
 	};
 
+	this.getFooter = function() {
+		return element(by.css('#footer'));
+	}
+
 	this.toggleCompletionOfEntry = function(idx) {
 		this.todoEntries.get(idx).$('input.toggle').click();
 	};
@@ -45,21 +49,16 @@ describe('todo list homepage', function() {
 
 	beforeEach(function() {
 		todoListPage = new TodoListPage();
-	});
-
-	it('loads the $todo page successfully', function() {
 		todoListPage.get();
 	});
 
 	describe('adding a todo entry', function() {
 		it('adds a new entry to the end of the list', function() {
-			todoListPage.get();
 			todoListPage.addTodo("My new todo entry");
 			expect(todoListPage.getLastEntry().getText()).toEqual("My new todo entry");
 		});
 
 		it('adds multiple entries to the list', function() {
-			todoListPage.get();
 			todoListPage.addTodo("My first todo");
 			todoListPage.addTodo("My second todo");
 			expect(todoListPage.getEntry(0).getText()).toEqual("My first todo");
@@ -69,7 +68,6 @@ describe('todo list homepage', function() {
 
 	describe('toggling completion', function() {
 		beforeEach(function() {
-			todoListPage.get();
 			todoListPage.addTodo("My todo");
 		});
 
@@ -86,16 +84,26 @@ describe('todo list homepage', function() {
 			todoListPage.toggleCompletionOfEntry(0);
 			todoListPage.toggleCompletionOfEntry(0);
 			expect(todoListPage.getEntry(0).getAttribute('class')).not.toContain('completed');
-		})
+		});
 
 	});
 
 	describe('deleting a todo', function() {
 		it('deletes a task when the red x is clicked on', function() {
-			todoListPage.get();
 			todoListPage.addTodo("To delete");
 			todoListPage.deleteEntry(0);
 			expect(todoListPage.getAllEntries().count()).toBe(0);
-		})
+		});
+	});
+
+	describe('managing the footer', function() {
+		it('hides the footer when there are no tasks', function() {
+			expect(todoListPage.getFooter().getAttribute('class')).toContain('ng-hide');
+		});
+
+		it('shows the footer when a task is added', function() {
+			todoListPage.addTodo("First todo");
+			expect(todoListPage.getFooter().getAttribute('class')).not.toContain('ng-hide');
+		});
 	});
 });
