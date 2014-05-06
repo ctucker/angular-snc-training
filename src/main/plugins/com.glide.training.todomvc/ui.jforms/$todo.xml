@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:g2="null">
+	<g:evaluate>
+		GlideCacheManager.disable('syscache_realform');
+		GlideCacheManager.disable('syscache_jelly_script');
+		GlideCacheManager.disable('syscache_jelly_ui_jtemplates');
+		GlideCacheManager.disable('syscache_jelly_template');
+	</g:evaluate>
 	<g2:doctype name="html" />
 
 	<html lang="en" ng-app="">
