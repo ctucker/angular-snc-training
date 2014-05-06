@@ -54,9 +54,18 @@ describe('todo controller', function() {
 
 	});
 
+	describe('deleting a task', function() {
+		it('removes a task from the list when the task is deleted', function() {
+			var newTask = addATask('My task');
+			scope.deleteTask(newTask);
+			expect(scope.taskList.length).toBe(0);
+		});
+	});
+
 	function addATask(taskTitle) {
 		scope.taskInput = taskTitle;
 		scope.addTask();
+		return scope.taskList[scope.taskList.length - 1];
 	}
 
 	function titleOfTask(idx) {

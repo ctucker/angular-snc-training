@@ -12,6 +12,12 @@ angular.module('todo').controller('Todo', function($scope) {
 		}
 	};
 
+	$scope.deleteTask = function(task) {
+		var idx = $scope.taskList.indexOf(task);
+		if (idx >= 0)
+			$scope.taskList.splice(idx, 1);
+	};
+
 	function newTask(title) {
 		return {
 			title : title,

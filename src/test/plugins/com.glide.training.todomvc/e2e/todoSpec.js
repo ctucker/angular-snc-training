@@ -2,7 +2,7 @@
 
 var TodoListPage = function() {
 	this.todoInput = element(by.css('#new-todo'));
-	this.todoEntries =  element.all(by.repeater('task in taskList'));
+	this.todoEntries = element.all(by.repeater('task in taskList'));
 
 	this.get = function() {
 		browser.get('/$todo.do');
@@ -22,9 +22,22 @@ var TodoListPage = function() {
 		return this.todoEntries.get(rowNumber)
 	};
 
+	this.getAllEntries = function() {
+		return this.todoEntries;
+	};
+
 	this.toggleCompletionOfEntry = function(idx) {
 		this.todoEntries.get(idx).$('input.toggle').click();
-	}
+	};
+
+	this.deleteEntry = function(idx) {
+		var toDelete = this.getEntry(idx);
+		var deleteButton = toDelete.$('button.destroy');
+		browser.actions()
+			.mouseMove(toDelete)
+			.perform();
+		deleteButton.click();
+	};
 };
 
 describe('todo list homepage', function() {
@@ -75,5 +88,14 @@ describe('todo list homepage', function() {
 			expect(todoListPage.getEntry(0).getAttribute('class')).not.toContain('completed');
 		})
 
-	})
+	});
+
+	describe('deleting a todo', function() {
+		it('deletes a task when the red x is clicked on', function() {
+			todoListPage.get();
+			todoListPage.addTodo("To delete");
+			todoListPage.deleteEntry(0);
+			expect(todoListPage.getAllEntries().count()).toBe(0);
+		})
+	});
 });
