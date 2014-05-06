@@ -65,8 +65,8 @@
 		</footer>
 		<!-- Scripts here. Don't remove this ↓ -->
 		<script src="scripts/angular/angular.js" />
-		<script src="scripts/_todomvc.js" />
-		<script src="scripts/controller.todo.js" />
+		<script src="scripts/app.todo/_todo.js" />
+		<script src="scripts/app.todo/controller.todo.js" />
 	</body>
 </html>
 </j:jelly>
