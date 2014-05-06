@@ -8,18 +8,20 @@
 	</g:evaluate>
 	<g2:doctype name="html" />
 
-	<html lang="en" ng-app="">
+	<html lang="en" ng-app="todo">
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>ServiceNow Angular Training • TodoMVC</title>
 		<link rel="stylesheet" href="styles/todomvc.css" />
 	</head>
-	<body>
+	<body ng-controller="Todo">
 		<section id="todoapp">
 			<header id="header">
 				<h1>todos</h1>
-				<input id="new-todo" ng-model="newTask" placeholder="What needs to be done?" autofocus="true" autocomplete="off" />
+				<form ng-submit="addTask()">
+					<input id="new-todo" ng-model="newTask" placeholder="What needs to be done?" autofocus="true" autocomplete="off" />
+				</form>
 			</header>
 			<!-- This section should be hidden by default and shown when there are todos -->
 			<section id="main">
@@ -31,7 +33,7 @@
 					<li>
 						<div class="view">
 							<input class="toggle" type="checkbox" />
-							<label>{{ newTask }}</label>
+							<label>{{ taskList[0] }}</label>
 							<button class="destroy" />
 						</div>
 						<input class="edit" value="Rule the web" />
@@ -62,8 +64,9 @@
 			<p>Double-click to edit a todo</p>
 		</footer>
 		<!-- Scripts here. Don't remove this ↓ -->
-		<script src="scripts/_todomvc.js" />
 		<script src="scripts/angular/angular.js" />
+		<script src="scripts/app.todo/_todomvc.js" />
+		<script src="scripts/app.todo/controller.todo.js" />
 	</body>
 </html>
 </j:jelly>
