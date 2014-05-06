@@ -10,6 +10,7 @@ var TodoListPage = function() {
 
 	this.addTodo = function(todoTitle) {
 		this.todoInput.sendKeys(todoTitle);
+		this.todoInput.submit();
 	};
 
 	this.getLastEntry = function() {
