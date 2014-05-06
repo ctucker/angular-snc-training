@@ -26,5 +26,25 @@ describe('Todo controller', function() {
 			addATask('Task 2');
 			expect(scope.taskList).toEqual(['Task 1', 'Task 2']);
 		});
+
+		it('clears the new task input on task addition', function() {
+			addATask('Task 1');
+			expect(scope.newTask).toEqual('');
+		});
+
+		it('strips whitespace from the task input', function() {
+			addATask(' Task ');
+			expect(scope.taskList).toEqual(['Task']);
+		});
+
+		it('does not allow submission of an empty task', function() {
+			addATask('');
+			expect(scope.taskList).toEqual([]);
+		});
+
+		it('does not allow submission of an all-whitespace task', function() {
+			addATask('  ');
+			expect(scope.taskList).toEqual([]);
+		})
 	});
 });

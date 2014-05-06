@@ -4,7 +4,11 @@ angular.module('todo').controller('Todo', function($scope) {
 	$scope.newTask = '';
 	$scope.taskList = [];
 	$scope.addTask = function() {
-		$scope.taskList.push($scope.newTask);
+		var title = $scope.newTask.trim();
+		if (title) {
+			$scope.taskList.push(title);
+			$scope.newTask = '';
+		}
 	}
 
 });
