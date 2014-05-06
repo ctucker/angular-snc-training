@@ -7,8 +7,8 @@ angular.module('todo').controller('Todo', function($scope) {
 		var title = $scope.newTask.trim();
 		if (title) {
 			$scope.taskList.push(title);
-			$scope.newTask = '';
 		}
+		$scope.newTask = '';
 	}
 
 });
