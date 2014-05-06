@@ -59,8 +59,12 @@ The code is organized much as a standard ServiceNow plugin is
 organized.  We will be running the code from within ServiceNow by
 installing this as a plugin.
 
-You'll need to adjust your run configuration to find the plugin.  In
-your launch config's VM arguments, add:
+You'll need to adjust your run configuration to find the plugin. 
+(In Eclipse you'll find the VM Arguments by going to Run -> Run Configurations,
+Under Java Application select GlideOrbit, VM Arguments are located 
+in the Arguments tab.)
+
+In your launch config's VM arguments, add:
 
 	-Dglide.security.policy=none
 
