@@ -33,7 +33,7 @@
 					<li ng-class="{completed : task.complete}" ng-repeat="task in taskList">
 						<div class="view">
 							<input class="toggle" type="checkbox" checked="true" ng-model="task.complete" />
-							<label>{{task.title}}</label>
+							<label ng-bind="task.title" />
 							<button class="destroy" ng-click="deleteTask(task)"/>
 						</div>
 						<input class="edit" value="Create a TodoMVC template" />
