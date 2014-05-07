@@ -28,7 +28,11 @@ var TodoListPage = function() {
 
 	this.getFooter = function() {
 		return element(by.css('#footer'));
-	}
+	};
+
+	this.getIncompleteItemString = function() {
+		return element(by.css('#todo-count')).getText();
+	};
 
 	this.toggleCompletionOfEntry = function(idx) {
 		this.todoEntries.get(idx).$('input.toggle').click();
@@ -106,4 +110,18 @@ describe('todo list homepage', function() {
 			expect(todoListPage.getFooter().getAttribute('class')).not.toContain('ng-hide');
 		});
 	});
+
+	describe('displaying items left', function() {
+		it('shows a single incomplete item with correct pluralization', function() {
+			todoListPage.addTodo('My todo');
+			expect(todoListPage.getIncompleteItemString()).toEqual('1 item left');
+		});
+
+		it('shows a two incomplete items with correct pluralization', function() {
+			todoListPage.addTodo('First todo');
+			todoListPage.addTodo('Second todo');
+			expect(todoListPage.getIncompleteItemString()).toEqual('2 items left');
+		});
+	});
+
 });

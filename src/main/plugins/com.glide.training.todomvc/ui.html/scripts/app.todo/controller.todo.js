@@ -4,6 +4,7 @@ angular.module('todo').controller('Todo', function($scope) {
 	$scope.taskList = [];
 	$scope.taskInput = '';
 	$scope.hasTasks = false;
+	$scope.incompleteTaskCount = 0;
 
 	$scope.addTask = function() {
 		var title = $scope.taskInput.trim();
@@ -19,9 +20,12 @@ angular.module('todo').controller('Todo', function($scope) {
 			$scope.taskList.splice(idx, 1);
 	};
 
-	$scope.$watch('taskList.length', function(newLength) {
-		$scope.hasTasks = !!newLength;
-	});
+	$scope.$watch('taskList', function(newTasks) {
+		$scope.incompleteTaskCount = $scope.taskList.filter(function(task) {
+			return !task.complete;
+		}).length;
+		$scope.hasTasks = newTasks.length > 0;
+	}, true);
 
 	function newTask(title) {
 		return {

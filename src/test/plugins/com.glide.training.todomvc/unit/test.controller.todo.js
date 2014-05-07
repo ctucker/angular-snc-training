@@ -89,10 +89,42 @@ describe('todo controller', function() {
 		})
 	});
 
+	describe('counting incomplete tasks', function() {
+		it('starts with 0 incomplete tasks', function() {
+			expect(scope.incompleteTaskCount).toBe(0);
+		});
+
+		it('has a single incomplete task when a new task is added', function() {
+			addATask('Incomplete task');
+			expect(scope.incompleteTaskCount).toBe(1);
+		});
+
+		it('has a single incomplete task when two tasks are added and one is completed', function() {
+			addATask('Incomplete task');
+			var complete = addATask('Completed task');
+			completeTask(complete);
+			expect(scope.incompleteTaskCount).toBe(1);
+		});
+
+		it('has no incomplete tasks when all tasks are completed', function() {
+			var task1 = addATask('Task 1');
+			var task2 = addATask('Task 2');
+			completeTask(task1);
+			completeTask(task2);
+			expect(scope.incompleteTaskCount).toBe(0);
+		})
+	});
+
 	function addATask(taskTitle) {
 		scope.taskInput = taskTitle;
 		scope.addTask();
+		scope.$apply();
 		return scope.taskList[scope.taskList.length - 1];
+	}
+
+	function completeTask(task) {
+		task.complete = true;
+		scope.$apply();
 	}
 
 	function titleOfTask(idx) {
