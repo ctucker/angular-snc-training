@@ -38,6 +38,10 @@ var TodoListPage = function() {
 		return this.lastEntry;
 	};
 
+	this.getFooter = function() {
+		return element(by.css('#footer'));
+	};
+
 };
 
 describe('todo list homepage', function() {
@@ -91,6 +95,17 @@ describe('todo list homepage', function() {
 			expect(todoListPage.getEntries().count()).toBe(0);
 		});
 
-	})
+	});
+
+	describe('conditionally showing the footer', function() {
+		it('hides the footer by default', function() {
+			expect(todoListPage.getFooter().isDisplayed()).toBeFalsy();
+		});
+
+		it('shows the footer when there are entries in the list', function() {
+			todoListPage.addTodo("My todo");
+			expect(todoListPage.getFooter().isDisplayed()).toBeTruthy();
+		});
+	});
 
 });

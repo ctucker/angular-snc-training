@@ -14,6 +14,11 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>ServiceNow Angular Training • TodoMVC</title>
 		<link rel="stylesheet" href="styles/todomvc.css" />
+
+		<script src="scripts/angular/angular.js" />
+		<script src="scripts/app.todo/_todomvc.js" />
+		<script src="scripts/app.todo/controller.todo.js" />
+
 	</head>
 	<body ng-controller="Todo">
 		<section id="todoapp">
@@ -42,7 +47,7 @@
 				</ul>
 			</section>
 			<!-- This footer should hidden by default and shown when there are todos -->
-			<footer id="footer">
+			<footer id="footer" ng-show="hasTasks" ng-cloak="true">
 				<!-- This should be `0 items left` by default -->
 				<span id="todo-count"><strong>1</strong> item left</span>
 				<!-- Remove this if you don't implement routing -->
@@ -64,10 +69,6 @@
 		<footer id="info">
 			<p>Double-click to edit a todo</p>
 		</footer>
-		<!-- Scripts here. Don't remove this ↓ -->
-		<script src="scripts/angular/angular.js" />
-		<script src="scripts/app.todo/_todomvc.js" />
-		<script src="scripts/app.todo/controller.todo.js" />
 	</body>
 </html>
 </j2:whitespace>

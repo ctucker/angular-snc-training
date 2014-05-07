@@ -3,6 +3,8 @@ angular.module('todo').controller('Todo', function($scope) {
 
 	$scope.newTask = '';
 	$scope.taskList = [];
+	$scope.hasTasks = false;
+
 	$scope.addTask = function() {
 		var title = $scope.newTask.trim();
 		if (title)
@@ -15,6 +17,10 @@ angular.module('todo').controller('Todo', function($scope) {
 		if (idx >= 0)
 			$scope.taskList.splice(idx, 1);
 	};
+
+	$scope.$watch('taskList.length', function(newLength) {
+		$scope.hasTasks = !!$scope.taskList.length;
+	});
 
 	function newTask(title) {
 		return {

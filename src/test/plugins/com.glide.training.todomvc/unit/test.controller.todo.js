@@ -13,6 +13,7 @@ describe('Todo controller', function() {
 	function addATask(title) {
 		scope.newTask = title;
 		scope.addTask();
+		scope.$digest();
 		return scope.taskList[scope.taskList.length - 1];
 	}
 
@@ -22,6 +23,11 @@ describe('Todo controller', function() {
 
 	function completionStatusOfTask(idx) {
 		return scope.taskList[idx].isComplete;
+	}
+
+	function deleteTask(task) {
+		scope.deleteTask(task);
+		scope.$digest();
 	}
 
 	describe('adding a task', function() {
@@ -74,6 +80,26 @@ describe('Todo controller', function() {
 			var newTask = addATask("should remain");
 			scope.deleteTask({});
 			expect(scope.taskList).toEqual([newTask]);
+		});
+
+	});
+
+
+	describe('tracking whether we have tasks', function() {
+
+		it('starts out not having tasks', function() {
+			expect(scope.hasTasks).toBe(false);
+		});
+
+		it('indicates it has a task when a task is added', function() {
+			addATask('My task');
+			expect(scope.hasTasks).toBe(true);
+		});
+
+		it('indicates it has no tasks when the last task is deleted', function() {
+			var task = addATask('To delete');
+			deleteTask(task);
+			expect(scope.hasTasks).toBe(false);
 		})
 
 	});
