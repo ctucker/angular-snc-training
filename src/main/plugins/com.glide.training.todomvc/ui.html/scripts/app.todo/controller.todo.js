@@ -1,4 +1,4 @@
-angular.module('todo').controller('Todo', function($scope) {
+angular.module('todo').controller('Todo', function($scope, $location) {
 	"use strict";
 
 	$scope.newTask = '';
@@ -6,6 +6,7 @@ angular.module('todo').controller('Todo', function($scope) {
 	$scope.hasTasks = false;
 	$scope.remainingTodos = 0;
 	$scope.completedTodos = 0;
+	$scope.allComplete = false;
 
 	$scope.addTask = function() {
 		var title = $scope.newTask.trim();
@@ -26,6 +27,12 @@ angular.module('todo').controller('Todo', function($scope) {
 				$scope.taskList.splice(i, 1);
 		}
 	};
+
+	$scope.$watch('allComplete', function(newStatus) {
+		$scope.taskList.forEach(function(task) {
+			task.isComplete = newStatus;
+		});
+	});
 
 	$scope.$watch('taskList', function(newList) {
 		$scope.remainingTodos = newList.filter(function(task) {

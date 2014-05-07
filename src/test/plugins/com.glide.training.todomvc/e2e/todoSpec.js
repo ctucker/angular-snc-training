@@ -28,7 +28,11 @@ var TodoListPage = function() {
 
 	this.clearCompleted = function() {
 		this.getClearCompletedButton().click();
-	}
+	};
+
+	this.toggleCompleteAll = function() {
+		element(by.css('#toggle-all')).click();
+	};
 
 	this.getEntries = function() {
 		return this.todoEntries;
@@ -52,6 +56,10 @@ var TodoListPage = function() {
 
 	this.getClearCompletedButton = function() {
 		return element(by.css('#clear-completed'));
+	};
+
+	this.getCompletionStatusOf = function(idx) {
+		return this.getEntry(idx).$('input[type="checkbox"]').getAttribute('checked');
 	}
 
 };
@@ -155,7 +163,16 @@ describe('todo list homepage', function() {
 			todoListPage.toggleCompletionOfEntry(0);
 			todoListPage.clearCompleted();
 			expect(todoListPage.getEntries().count()).toBe(0);
-		})
+		});
 	});
+
+	describe('marking all items complete', function() {
+		it('marks all items complete when complete-all chevron is checked', function() {
+			todoListPage.addTodo('First todo');
+			todoListPage.addTodo('Second todo');
+			todoListPage.toggleCompleteAll();
+			expect(todoListPage.getCompletionStatusOf(0)).toBeTruthy()
+		})
+	})
 
 });

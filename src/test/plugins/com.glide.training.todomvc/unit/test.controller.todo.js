@@ -152,5 +152,37 @@ describe('Todo controller', function() {
 			expect(titleOfTask(0)).toBe('Incomplete task');
 			expect(titleOfTask(1)).toBe('Another incomplete task');
 		});
+	});
+
+	describe('toggling completion of all elements', function() {
+		var incomplete1, complete1, incomplete2;
+		beforeEach(function() {
+			incomplete1 = addATask('First incomplete');
+			complete1 = addATask('First complete');
+			incomplete2 = addATask('Second incomplete')
+			completeTask(complete1);
+		});
+
+		it('defaults to allComplete being set to false', function() {
+			expect(scope.allComplete).toBe(false);
+		});
+
+		it('marks all tasks complete when allComplete is set to true', function() {
+			scope.allComplete = true;
+			scope.$digest();
+			expect(completionStatusOfTask(0)).toBe(true);
+			expect(completionStatusOfTask(1)).toBe(true);
+			expect(completionStatusOfTask(2)).toBe(true);
+		});
+
+		it('marks all tasks incomplete when allComplete is set to false', function() {
+			scope.allComplete = true;
+			scope.$digest();
+			scope.allComplete = false;
+			scope.$digest();
+			expect(completionStatusOfTask(0)).toBe(false);
+			expect(completionStatusOfTask(1)).toBe(false);
+			expect(completionStatusOfTask(2)).toBe(false);
+		})
 	})
 });
