@@ -1,4 +1,4 @@
-angular.module('todo').controller('Todo', function($scope) {
+angular.module('todo').controller('Todo', function($scope, $location) {
 	"use strict";
 
 	$scope.taskList = [];
@@ -7,6 +7,8 @@ angular.module('todo').controller('Todo', function($scope) {
 	$scope.incompleteTaskCount = 0;
 	$scope.completedTaskCount = 0;
 	$scope.toggleAllCompleted = false;
+	$scope.statusMask = {};
+	$scope.location = $location;
 
 	$scope.addTask = function() {
 		var title = $scope.taskInput.trim();
@@ -42,6 +44,16 @@ angular.module('todo').controller('Todo', function($scope) {
 		$scope.completedTaskCount = $scope.taskList.length - $scope.incompleteTaskCount;
 		$scope.hasTasks = newTasks.length > 0;
 	}, true);
+
+	$scope.$watch('location.path()', function(newPath) {
+		$scope.path = newPath || '/';
+		if (/active/.test(newPath))
+			$scope.statusMask = { complete: false };
+		else if (/completed/.test(newPath))
+			$scope.statusMask = { complete : true };
+		else
+			$scope.statusMask = {};
+	});
 
 
 	function newTask(title) {

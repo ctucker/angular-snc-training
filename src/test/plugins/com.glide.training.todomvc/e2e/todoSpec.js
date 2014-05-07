@@ -54,6 +54,14 @@ var TodoListPage = function() {
 			.perform();
 		deleteButton.click();
 	};
+
+	this.showActive = function() {
+		element(by.css('#filters a[href="#/active"]')).click();
+	};
+
+	this.showCompleted = function() {
+		element(by.css('#filters a[href="#/completed"]')).click();
+	}
 };
 
 describe('todo list homepage', function() {
@@ -151,6 +159,26 @@ describe('todo list homepage', function() {
 			todoListPage.clearCompleted();
 			expect(todoListPage.getEntry(0).getText()).toEqual('Incomplete todo');
 		});
-	})
+	});
+
+	describe('filtering entries', function() {
+
+		beforeEach(function() {
+			todoListPage.addTodo('Completed todo');
+			todoListPage.addTodo('Incomplete todo');
+			todoListPage.toggleCompletionOfEntry(0);
+		});
+
+		it('shows shows only incomplete entries when viewing "active" set', function() {
+			todoListPage.showActive();
+			expect(todoListPage.getEntry(0).getText()).toEqual('Incomplete todo');
+		});
+
+		it('shows only complete entries when viewing "completed" set"', function() {
+			todoListPage.showCompleted();
+			expect(todoListPage.getEntry(0).getText()).toEqual('Completed todo');
+			expect(todoListPage.getAllEntries().count()).toEqual(1);
+		})
+	});
 
 });

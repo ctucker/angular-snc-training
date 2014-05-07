@@ -165,6 +165,31 @@ describe('todo controller', function() {
 		})
 	});
 
+	describe('filtering tasks', function() {
+		it('defaults statusMask to empty object', function() {
+			expect(scope.statusMask).toEqual({});
+		});
+
+		it('sets the statusMask to isComplete : false when location is #/active', function() {
+			scope.location.path('#/active');
+			scope.$digest();
+			expect(scope.statusMask).toEqual( { complete : false } );
+		});
+
+		it('sets the statusMask to isComplete : true when location is #/completed', function() {
+			scope.location.path('#/completed');
+			scope.$digest();
+			expect(scope.statusMask).toEqual( { complete : true } );
+		});
+
+		it('sets the statusMask to empty object when location is #/', function() {
+			scope.location.path('#/');
+			scope.$digest();
+			expect(scope.statusMask).toEqual( {} );
+		});
+
+	});
+
 	function addATask(taskTitle) {
 		scope.taskInput = taskTitle;
 		scope.addTask();
