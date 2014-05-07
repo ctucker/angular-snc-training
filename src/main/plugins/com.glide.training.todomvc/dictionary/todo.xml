@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+  <element label="Todo" name="todo" type="collection">
+    <element label="Is Complete" max_length="40" name="iscomplete" type="boolean"/>
+    <element label="Title" max_length="40" name="title" type="string"/>
+  </element>
+</database>
