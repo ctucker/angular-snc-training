@@ -15,8 +15,8 @@
 		<title>ServiceNow Angular Training • TodoMVC</title>
 		<link rel="stylesheet" href="styles/todomvc.css" />
 	</head>
-	<body>
-		<section id="todoapp" ng-controller="Todo">
+	<body  ng-controller="Todo">
+		<section id="todoapp">
 			<header id="header">
 				<h1>todos</h1>
 				<form ng-submit="addTask()">
@@ -66,7 +66,7 @@
 		</section>
 		<footer id="info">
 			<p>Double-click to edit a todo</p>
-			<button id="load-demo-data">Load demo data</button>
+			<button id="load-demo-data" ng-click="loadDemoData()">Load demo data</button>
 		</footer>
 		<!-- Scripts here. Don't remove this ↓ -->
 		<script src="scripts/angular/angular.js" />
