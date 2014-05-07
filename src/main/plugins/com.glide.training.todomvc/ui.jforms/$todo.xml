@@ -66,6 +66,7 @@
 		</section>
 		<footer id="info">
 			<p>Double-click to edit a todo</p>
+			<button id="load-demo-data">Load demo data</button>
 		</footer>
 		<!-- Scripts here. Don't remove this ↓ -->
 		<script src="scripts/angular/angular.js" />
