@@ -140,6 +140,31 @@ describe('todo controller', function() {
 		})
 	});
 
+	describe('marking all tasks complete', function() {
+		var complete, incomplete;
+		beforeEach(function() {
+			complete = addATask('Complete');
+			incomplete = addATask('Incomplete');
+			completeTask(complete);
+		});
+
+		it('marks all tasks to complete when toggled', function() {
+			scope.toggleAllCompleted = true;
+			scope.$digest();
+			expect(completionStatusOfTask(0)).toBeTruthy();
+			expect(completionStatusOfTask(1)).toBeTruthy();
+		});
+
+		it('resets all to incomplete when untoggled', function() {
+			scope.toggleAllCompleted = true;
+			scope.$digest();
+			scope.toggleAllCompleted = false;
+			scope.$digest();
+			expect(completionStatusOfTask(0)).toBeFalsy();
+			expect(completionStatusOfTask(1)).toBeFalsy();
+		})
+	});
+
 	function addATask(taskTitle) {
 		scope.taskInput = taskTitle;
 		scope.addTask();

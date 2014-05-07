@@ -6,6 +6,7 @@ angular.module('todo').controller('Todo', function($scope) {
 	$scope.hasTasks = false;
 	$scope.incompleteTaskCount = 0;
 	$scope.completedTaskCount = 0;
+	$scope.toggleAllCompleted = false;
 
 	$scope.addTask = function() {
 		var title = $scope.taskInput.trim();
@@ -27,6 +28,12 @@ angular.module('todo').controller('Todo', function($scope) {
 				$scope.taskList.splice(i, 1);
 		}
 	};
+
+	$scope.$watch('toggleAllCompleted', function(newValue) {
+		$scope.taskList.forEach(function(task) {
+			task.complete = newValue;
+		});
+	});
 
 	$scope.$watch('taskList', function(newTasks) {
 		$scope.incompleteTaskCount = $scope.taskList.filter(function(task) {
