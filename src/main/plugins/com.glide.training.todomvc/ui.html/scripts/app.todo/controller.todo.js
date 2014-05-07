@@ -7,6 +7,7 @@ angular.module('todo').controller('Todo', function($scope, $location) {
 	$scope.remainingTodos = 0;
 	$scope.completedTodos = 0;
 	$scope.allComplete = false;
+	$scope.statusMask = {};
 
 	$scope.addTask = function() {
 		var title = $scope.newTask.trim();
@@ -41,6 +42,18 @@ angular.module('todo').controller('Todo', function($scope, $location) {
 		$scope.completedTodos = newList.length - $scope.remainingTodos;
 		$scope.hasTasks = !!$scope.taskList.length;
 	}, true);
+
+	$scope.$watch(
+		function() { return $location.path() },
+		function(newPath) {
+			$scope.path = newPath || '/';
+			if (/active/.test(newPath))
+				$scope.statusMask = { isComplete : false };
+			else if (/completed/.test(newPath))
+				$scope.statusMask = { isComplete : true };
+			else
+				$scope.statusMask = {};
+	});
 
 	function newTask(title) {
 		return {

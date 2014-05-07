@@ -35,7 +35,7 @@
 				<ul id="todo-list">
 					<!-- These are here just to show the structure of the list items -->
 					<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-					<li ng-repeat="task in taskList"
+					<li ng-repeat="task in taskList | filter:statusMask"
 						ng-class="{ completed : task.isComplete }">
 						<div class="view">
 							<input class="toggle" type="checkbox" ng-model="task.isComplete" />
@@ -56,13 +56,13 @@
 				<!-- Remove this if you don't implement routing -->
 				<ul id="filters">
 					<li>
-						<a class="selected" href="#/">All</a>
+						<a href="#/" ng-class="{ selected : path === '/' }">All</a>
 					</li>
 					<li>
-						<a href="#/active">Active</a>
+						<a href="#/active" ng-class="{ selected : path === '/active' }">Active</a>
 					</li>
 					<li>
-						<a href="#/completed">Completed</a>
+						<a href="#/completed" ng-class="{ selected : path === '/completed' }">Completed</a>
 					</li>
 				</ul>
 				<!-- Hidden if no completed items are left ↓ -->

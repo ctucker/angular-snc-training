@@ -34,6 +34,14 @@ var TodoListPage = function() {
 		element(by.css('#toggle-all')).click();
 	};
 
+	this.showActive = function() {
+		element(by.css('#filters a[href="#/active"]')).click();
+	};
+
+	this.showCompleted = function() {
+		element(by.css('#filters a[href="#/completed"]')).click();
+	};
+
 	this.getEntries = function() {
 		return this.todoEntries;
 	};
@@ -173,6 +181,28 @@ describe('todo list homepage', function() {
 			todoListPage.toggleCompleteAll();
 			expect(todoListPage.getCompletionStatusOf(0)).toBeTruthy()
 		})
+	});
+
+	describe('filtering which todos are shown', function() {
+		beforeEach(function() {
+			todoListPage.addTodo('First incomplete todo');
+			todoListPage.addTodo('Complete todo');
+			todoListPage.addTodo('Second incomplete todo');
+			todoListPage.toggleCompletionOfEntry(1);
+		});
+
+		it('shows only incomplete todos when active link is clicked', function() {
+			todoListPage.showActive();
+			expect(todoListPage.getEntries().count()).toBe(2);
+			expect(todoListPage.getEntry(1).getText()).toBe('Second incomplete todo')
+		});
+
+		it('shows only complete todos when completed link is clicked', function() {
+			todoListPage.showCompleted();
+			expect(todoListPage.getEntries().count()).toBe(1);
+			expect(todoListPage.getEntry(0).getText()).toBe('Complete todo');
+		});
+
 	})
 
 });

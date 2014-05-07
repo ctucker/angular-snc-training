@@ -3,11 +3,12 @@ describe('Todo controller', function() {
 
 	beforeEach(module('todo'));
 
-	var scope;
+	var scope, $location;
 
-	beforeEach(inject(function($rootScope, $controller) {
+	beforeEach(inject(function($rootScope, $controller, _$location_) {
 		scope = $rootScope.$new();
 		$controller('Todo', { $scope : scope });
+		$location = _$location_;
 	}));
 
 	function addATask(title) {
@@ -184,5 +185,37 @@ describe('Todo controller', function() {
 			expect(completionStatusOfTask(1)).toBe(false);
 			expect(completionStatusOfTask(2)).toBe(false);
 		})
-	})
+	});
+
+	describe('filtering todos', function() {
+		it('defaults to an empty status mask', function() {
+			expect(scope.statusMask).toEqual({});
+		});
+
+		it('sets a mask with isComplete false when location is /active', function() {
+			changePath('/active');
+			expect(scope.statusMask).toEqual({ isComplete : false });
+		});
+
+		it('sets a mask with isComplete true when location is /completed', function() {
+			changePath('/completed');
+			expect(scope.statusMask).toEqual({ isComplete : true });
+		});
+
+		it('sets the mask back to empty when location is re-set to /', function() {
+			changePath('/');
+			expect(scope.statusMask).toEqual({});
+		});
+
+		it('defaults the path to / if path is empty', function() {
+			changePath('');
+			expect(scope.path).toEqual('/');
+		});
+
+		function changePath(newPath) {
+			$location.path(newPath);
+			scope.$digest();
+		}
+
+	});
 });
