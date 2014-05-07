@@ -3,6 +3,7 @@
 var TodoListPage = function() {
 	this.todoInput = element(by.css('#new-todo'));
 	this.lastEntry = element(by.css('#todo-list > li:last-child'));
+	this.todoEntries = element.all(by.repeater('task in taskList'));
 
 	this.get = function() {
 		browser.get('/$todo.do');
@@ -15,16 +16,28 @@ var TodoListPage = function() {
 	};
 
 	this.toggleCompletionOfEntry = function(idx) {
-		this.getEntry(idx).element(by.css('input.toggle')).click();
+		this.getEntry(idx).$('input.toggle').click();
+	};
+
+	this.deleteEntry = function(idx) {
+		browser.actions().
+			mouseMove(this.getEntry(idx)).
+			perform();
+		this.getEntry(idx).$('button.destroy').click();
+	};
+
+	this.getEntries = function() {
+		return this.todoEntries;
 	};
 
 	this.getEntry = function(idx) {
-		return element(by.repeater('task in taskList').row(idx));
+		return this.todoEntries.get(idx);
 	};
 
 	this.getLastEntry = function() {
 		return this.lastEntry;
-	}
+	};
+
 };
 
 describe('todo list homepage', function() {
@@ -37,18 +50,20 @@ describe('todo list homepage', function() {
 
 	describe('adding an entry', function() {
 
-		it('adds a new entry at the end of the list when user types into input box', function() {
+		it('adds a new entry at the end of the list when user types into input box', function () {
 			todoListPage.addTodo("My new todo");
 			expect(todoListPage.getLastEntry().getText()).toEqual("My new todo");
 		});
 
-		it('adds multiple entries to the list one after another', function() {
+		it('adds multiple entries to the list one after another', function () {
 			todoListPage.addTodo("My first todo");
 			todoListPage.addTodo("My second todo");
 			expect(todoListPage.getEntry(0).getText()).toEqual("My first todo");
 			expect(todoListPage.getEntry(1).getText()).toEqual("My second todo");
 		});
+	});
 
+	describe('toggling completion status', function() {
 		it('starts out in an incomplete state', function() {
 			todoListPage.addTodo("Incomplete todo");
 			expect(todoListPage.getEntry(0).getAttribute('class')).not.toContain('completed');
@@ -63,8 +78,19 @@ describe('todo list homepage', function() {
 		it('updates to an incomplete state when checkbox is unchecked', function() {
 			todoListPage.addTodo("Incomplete todo");
 			todoListPage.toggleCompletionOfEntry(0);
-			todoListPage.toggleCompletionOfEntry(0)
+			todoListPage.toggleCompletionOfEntry(0);
 			expect(todoListPage.getEntry(0).getAttribute('class')).not.toContain('completed');
-		})
+		});
 	});
+
+	describe('deleting a task', function() {
+
+		it('deletes a task when the delete button is clicked', function() {
+			todoListPage.addTodo("To delete");
+			todoListPage.deleteEntry(0);
+			expect(todoListPage.getEntries().count()).toBe(0);
+		});
+
+	})
+
 });

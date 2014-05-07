@@ -61,4 +61,20 @@ describe('Todo controller', function() {
 			expect(completionStatusOfTask(0)).toEqual(false);
 		});
 	});
+
+	describe('removing tasks', function() {
+
+		it('deletes a task from the list when deleteTask is invoked', function() {
+			var task = addATask('To delete');
+			scope.deleteTask(task);
+			expect(scope.taskList).toEqual([]);
+		});
+
+		it('does nothing when attempting to delete a task that does not exist', function() {
+			var newTask = addATask("should remain");
+			scope.deleteTask({});
+			expect(scope.taskList).toEqual([newTask]);
+		})
+
+	});
 });
