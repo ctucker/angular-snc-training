@@ -21,6 +21,13 @@ angular.module('todo').controller('Todo', function($scope) {
 			$scope.taskList.splice(idx, 1);
 	};
 
+	$scope.deleteCompleted = function() {
+		for (var i = $scope.taskList.length - 1; i >= 0; i--) {
+			if ($scope.taskList[i].complete)
+				$scope.taskList.splice(i, 1);
+		}
+	};
+
 	$scope.$watch('taskList', function(newTasks) {
 		$scope.incompleteTaskCount = $scope.taskList.filter(function(task) {
 			return !task.complete;

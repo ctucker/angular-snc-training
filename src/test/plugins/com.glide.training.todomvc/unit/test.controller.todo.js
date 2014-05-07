@@ -127,6 +127,19 @@ describe('todo controller', function() {
 		})
 	});
 
+	describe('deleting completed tasks', function() {
+		it('removes only tasks that are completed', function() {
+			var complete1 = addATask('First complete');
+			var incomplete = addATask('Incomplete task');
+			var complete2 = addATask('Second complete');
+			completeTask(complete1);
+			completeTask(complete2);
+			scope.deleteCompleted();
+			expect(scope.taskList.length).toBe(1);
+			expect(titleOfTask(0)).toEqual('Incomplete task');
+		})
+	});
+
 	function addATask(taskTitle) {
 		scope.taskInput = taskTitle;
 		scope.addTask();

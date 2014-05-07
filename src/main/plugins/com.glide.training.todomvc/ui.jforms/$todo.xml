@@ -61,7 +61,7 @@
 					</li>
 				</ul>
 				<!-- Hidden if no completed items are left ↓ -->
-				<button id="clear-completed" ng-show="completedTaskCount">Clear completed ({{ completedTaskCount }})</button>
+				<button id="clear-completed" ng-show="completedTaskCount" ng-click="deleteCompleted()">Clear completed ({{ completedTaskCount }})</button>
 			</footer>
 		</section>
 		<footer id="info">

@@ -42,6 +42,10 @@ var TodoListPage = function() {
 		this.todoEntries.get(idx).$('input.toggle').click();
 	};
 
+	this.clearCompleted = function() {
+		this.getClearCompletedButton().click();
+	};
+
 	this.deleteEntry = function(idx) {
 		var toDelete = this.getEntry(idx);
 		var deleteButton = toDelete.$('button.destroy');
@@ -138,6 +142,14 @@ describe('todo list homepage', function() {
 			todoListPage.addTodo('Completed todo');
 			todoListPage.toggleCompletionOfEntry(0);
 			expect(todoListPage.getClearCompletedButton().isDisplayed()).toBeTruthy();
+		});
+
+		it('removes all completed items when the completed items button is clicked', function() {
+			todoListPage.addTodo('Completed todo');
+			todoListPage.addTodo('Incomplete todo');
+			todoListPage.toggleCompletionOfEntry(0);
+			todoListPage.clearCompleted();
+			expect(todoListPage.getEntry(0).getText()).toEqual('Incomplete todo');
 		});
 	})
 
