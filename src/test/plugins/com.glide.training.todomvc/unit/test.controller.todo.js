@@ -30,6 +30,11 @@ describe('Todo controller', function() {
 		scope.$digest();
 	}
 
+	function completeTask(task) {
+		task.isComplete = true;
+		scope.$digest();
+	}
+
 	describe('adding a task', function() {
 		it('adds the newTask to the list on addTask', function() {
 			addATask('My new task');
@@ -103,4 +108,27 @@ describe('Todo controller', function() {
 		})
 
 	});
+
+	describe('counting remaining tasks', function() {
+		it('starts out with 0 remaining tasks', function() {
+			expect(scope.remainingTodos).toBe(0);
+		});
+
+		it('increments the remaining tasks when a new task is added', function() {
+			addATask('Incomplete task');
+			expect(scope.remainingTodos).toBe(1);
+		});
+
+		it('decrements the remaining tasks when a task is deleted', function() {
+			var task = addATask('To delete');
+			deleteTask(task);
+			expect(scope.remainingTodos).toBe(0);
+		});
+
+		it('decrements the remaining tasks when a task is completed', function() {
+			var task = addATask('To complete');
+			completeTask(task);
+			expect(scope.remainingTodos).toBe(0);
+		});
+	})
 });

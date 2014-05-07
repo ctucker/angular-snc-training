@@ -42,6 +42,10 @@ var TodoListPage = function() {
 		return element(by.css('#footer'));
 	};
 
+	this.getItemsLeft = function() {
+		return element(by.css('#todo-count'));
+	}
+
 };
 
 describe('todo list homepage', function() {
@@ -107,5 +111,20 @@ describe('todo list homepage', function() {
 			expect(todoListPage.getFooter().isDisplayed()).toBeTruthy();
 		});
 	});
+
+	describe('counting the remaining items', function() {
+
+		it('shows 1 item left when there is a single, incomplete item in the list', function() {
+			todoListPage.addTodo("One incomplete todo");
+			expect(todoListPage.getItemsLeft().getText()).toEqual('1 item left');
+		});
+
+		it('shows 2 items left when there are two, incomplete items in the list', function() {
+			todoListPage.addTodo("First incomplete todo");
+			todoListPage.addTodo("Second incomplete todo");
+			expect(todoListPage.getItemsLeft().getText()).toEqual('2 items left');
+		});
+
+	})
 
 });
