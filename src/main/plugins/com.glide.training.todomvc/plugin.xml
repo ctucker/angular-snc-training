@@ -8,5 +8,6 @@
 	<description>Training application for ServiceNow Angular Training course</description>
 	<requires>
 		<import plugin="com.glide.ui.angular"/>
+		<import plugin="com.glide.rest"/>
 	</requires>
 </plugin>
