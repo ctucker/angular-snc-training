@@ -130,5 +130,27 @@ describe('Todo controller', function() {
 			completeTask(task);
 			expect(scope.remainingTodos).toBe(0);
 		});
+	});
+
+	describe('clearing completed items', function() {
+		it('starts out with zero completed items', function() {
+			expect(scope.completedTodos).toBe(0);
+		});
+
+		it('has a completed todo count of 1 when there is one completed todo', function() {
+			var task = addATask('Completed');
+			completeTask(task);
+			expect(scope.completedTodos).toBe(1);
+		});
+
+		it('removes only completed todos when deleteCompleted is called', function() {
+			var incomplete = addATask('Incomplete task');
+			var complete = addATask('Completed task');
+			var incomplete2 = addATask('Another incomplete task');
+			completeTask(complete);
+			scope.deleteCompleted();
+			expect(titleOfTask(0)).toBe('Incomplete task');
+			expect(titleOfTask(1)).toBe('Another incomplete task');
+		});
 	})
 });

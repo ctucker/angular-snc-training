@@ -26,6 +26,10 @@ var TodoListPage = function() {
 		this.getEntry(idx).$('button.destroy').click();
 	};
 
+	this.clearCompleted = function() {
+		this.getClearCompletedButton().click();
+	}
+
 	this.getEntries = function() {
 		return this.todoEntries;
 	};
@@ -44,6 +48,10 @@ var TodoListPage = function() {
 
 	this.getItemsLeft = function() {
 		return element(by.css('#todo-count'));
+	};
+
+	this.getClearCompletedButton = function() {
+		return element(by.css('#clear-completed'));
 	}
 
 };
@@ -125,6 +133,29 @@ describe('todo list homepage', function() {
 			expect(todoListPage.getItemsLeft().getText()).toEqual('2 items left');
 		});
 
-	})
+	});
+
+	describe('clearing completed items', function() {
+		it('should not show the clear completed button when there are no completed items', function() {
+			todoListPage.addTodo('Incomplete todo');
+			expect(todoListPage.getClearCompletedButton().isDisplayed()).toBeFalsy();
+		});
+
+		it('shows the correct count on the button when there are completed items', function() {
+			todoListPage.addTodo('Completed todo');
+			todoListPage.addTodo('Second completed todo');
+			todoListPage.toggleCompletionOfEntry(0);
+			todoListPage.toggleCompletionOfEntry(1);
+			expect(todoListPage.getClearCompletedButton().isDisplayed()).toBeTruthy();
+			expect(todoListPage.getClearCompletedButton().getText()).toEqual("Clear completed (2)");
+		});
+
+		it('deletes completed tasks when the clear completed button is clicked', function() {
+			todoListPage.addTodo('Completed todo');
+			todoListPage.toggleCompletionOfEntry(0);
+			todoListPage.clearCompleted();
+			expect(todoListPage.getEntries().count()).toBe(0);
+		})
+	});
 
 });

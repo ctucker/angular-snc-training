@@ -5,6 +5,7 @@ angular.module('todo').controller('Todo', function($scope) {
 	$scope.taskList = [];
 	$scope.hasTasks = false;
 	$scope.remainingTodos = 0;
+	$scope.completedTodos = 0;
 
 	$scope.addTask = function() {
 		var title = $scope.newTask.trim();
@@ -19,10 +20,18 @@ angular.module('todo').controller('Todo', function($scope) {
 			$scope.taskList.splice(idx, 1);
 	};
 
+	$scope.deleteCompleted = function() {
+		for (var i = $scope.taskList.length - 1; i >= 0; i--) {
+			if ($scope.taskList[i].isComplete)
+				$scope.taskList.splice(i, 1);
+		}
+	};
+
 	$scope.$watch('taskList', function(newList) {
 		$scope.remainingTodos = newList.filter(function(task) {
 			return !task.isComplete;
 		}).length;
+		$scope.completedTodos = newList.length - $scope.remainingTodos;
 		$scope.hasTasks = !!$scope.taskList.length;
 	}, true);
 
