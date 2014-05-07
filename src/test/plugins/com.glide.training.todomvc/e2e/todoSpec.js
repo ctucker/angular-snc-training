@@ -34,6 +34,10 @@ var TodoListPage = function() {
 		return element(by.css('#todo-count')).getText();
 	};
 
+	this.getClearCompletedButton = function() {
+		return element(by.css('#clear-completed'));
+	};
+
 	this.toggleCompletionOfEntry = function(idx) {
 		this.todoEntries.get(idx).$('input.toggle').click();
 	};
@@ -123,5 +127,18 @@ describe('todo list homepage', function() {
 			expect(todoListPage.getIncompleteItemString()).toEqual('2 items left');
 		});
 	});
+
+	describe('clearing completed items', function() {
+		it('does not show the clear completed items button when there are only incomplete items in the list', function() {
+			todoListPage.addTodo('Incomplete todo');
+			expect(todoListPage.getClearCompletedButton().isDisplayed()).toBeFalsy();
+		});
+
+		it('shows the clear completed items button when there are completed items in the list', function() {
+			todoListPage.addTodo('Completed todo');
+			todoListPage.toggleCompletionOfEntry(0);
+			expect(todoListPage.getClearCompletedButton().isDisplayed()).toBeTruthy();
+		});
+	})
 
 });

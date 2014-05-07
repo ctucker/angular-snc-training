@@ -115,6 +115,18 @@ describe('todo controller', function() {
 		})
 	});
 
+	describe('counting completed tasks', function() {
+		it('starts with 0 completed tasks', function() {
+			expect(scope.completedTaskCount).toBe(0);
+		});
+
+		it('has a single completed task when a task is marked completed', function() {
+			var task = addATask('Completed task');
+			completeTask(task);
+			expect(scope.completedTaskCount).toBe(1);
+		})
+	});
+
 	function addATask(taskTitle) {
 		scope.taskInput = taskTitle;
 		scope.addTask();
