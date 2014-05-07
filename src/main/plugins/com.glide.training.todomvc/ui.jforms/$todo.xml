@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:g2="null">
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:g2="null" xmlns:j2="null">
 	<g:evaluate>
 		GlideCacheManager.disable('syscache_realform');
 		GlideCacheManager.disable('syscache_jelly_script');
@@ -7,7 +7,7 @@
 		GlideCacheManager.disable('syscache_jelly_template');
 	</g:evaluate>
 	<g2:doctype name="html" />
-
+	<j2:whitespace trim="false">
 	<html lang="en" ng-app="todo">
 	<head>
 		<meta charset="utf-8" />
@@ -70,4 +70,5 @@
 		<script src="scripts/app.todo/controller.todo.js" />
 	</body>
 </html>
+</j2:whitespace>
 </j:jelly>
