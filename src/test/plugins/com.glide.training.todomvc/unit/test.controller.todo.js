@@ -215,6 +215,19 @@ describe('todo controller', function() {
 
 	});
 
+	describe('entering edit mode', function() {
+		it('defaults to no task being edited', function() {
+			expect(scope.taskBeingEdited).toBe(null);
+		});
+
+		it('sets task being edited to chosen task', function() {
+			var task = addATask('To edit');
+			scope.editTask(task);
+			expect(scope.taskBeingEdited).toEqual(task);
+		});
+
+	});
+
 	function addATask(taskTitle) {
 		scope.taskInput = taskTitle;
 		scope.addTask();

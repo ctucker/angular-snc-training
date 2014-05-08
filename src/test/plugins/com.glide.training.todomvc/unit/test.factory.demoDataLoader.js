@@ -42,12 +42,12 @@ describe('loading demo data', function() {
 
 	it('yields completed tasks with an isComplete status of true', function() {
 		var tasks = getDemoTasks();
-		expect(tasks[0].isComplete).toBe(true);
+		expect(tasks[0].complete).toBe(true);
 	});
 
 	it('yields incomplete tasks with an isComplete status of false', function() {
 		var tasks = getDemoTasks();
-		expect(tasks[1].isComplete).toBe(false);
+		expect(tasks[1].complete).toBe(false);
 	});
 
 	function getDemoTasks() {

@@ -9,6 +9,7 @@ angular.module('todo').controller('Todo', function($scope, $location, demoDataLo
 	$scope.toggleAllCompleted = false;
 	$scope.statusMask = {};
 	$scope.location = $location;
+	$scope.taskBeingEdited = null;
 
 	$scope.addTask = function() {
 		var title = $scope.taskInput.trim();
@@ -29,6 +30,10 @@ angular.module('todo').controller('Todo', function($scope, $location, demoDataLo
 			if ($scope.taskList[i].complete)
 				$scope.taskList.splice(i, 1);
 		}
+	};
+
+	$scope.editTask = function(task) {
+		$scope.taskBeingEdited = task;
 	};
 
 	$scope.loadDemoData = function() {

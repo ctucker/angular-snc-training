@@ -26,6 +26,10 @@ var TodoListPage = function() {
 		return this.todoEntries;
 	};
 
+	this.getEditBoxForEntry = function(idx) {
+		return this.getEntry(idx).$('input.edit');
+	};
+
 	this.getFooter = function() {
 		return element(by.css('#footer'));
 	};
@@ -61,6 +65,10 @@ var TodoListPage = function() {
 
 	this.showCompleted = function() {
 		element(by.css('#filters a[href="#/completed"]')).click();
+	};
+
+	this.enterEditModeOnEntry = function(idx) {
+		browser.actions().doubleClick(this.getEntry(idx)).perform();
 	}
 };
 
@@ -178,6 +186,21 @@ describe('todo list homepage', function() {
 			todoListPage.showCompleted();
 			expect(todoListPage.getEntry(0).getText()).toEqual('Completed todo');
 			expect(todoListPage.getAllEntries().count()).toEqual(1);
+		})
+	});
+
+	describe('editing entries', function() {
+
+		it('puts a task in edit mode when it is double clicked', function() {
+			todoListPage.addTodo('Task to edit');
+			todoListPage.enterEditModeOnEntry(0);
+			expect(todoListPage.getEditBoxForEntry(0).isDisplayed()).toBeTruthy();
+		});
+
+		it('carries the current task title in the edit box', function() {
+			todoListPage.addTodo('Task to edit');
+			todoListPage.enterEditModeOnEntry(0);
+			expect(todoListPage.getEditBoxForEntry(0).getAttribute('value')).toEqual('Task to edit');
 		})
 	});
 
