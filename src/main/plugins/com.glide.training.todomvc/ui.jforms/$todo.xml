@@ -73,6 +73,7 @@
 		<script src="scripts/app.todo/_todo.js" />
 		<script src="scripts/app.todo/controller.todo.js" />
 		<script src="scripts/app.todo/factory.demoDataLoader.js" />
+		<script src="scripts/app.todo/factory.taskFactory.js" />
 	</body>
 </html>
 </j2:whitespace>

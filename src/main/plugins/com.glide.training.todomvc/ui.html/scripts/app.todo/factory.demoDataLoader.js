@@ -1,4 +1,4 @@
-angular.module('todo').factory('demoDataLoader', function($http, demoDataUrl) {
+angular.module('todo').factory('demoDataLoader', function($http, demoDataUrl, taskFactory) {
 	"use strict";
 
 	return {
@@ -9,10 +9,7 @@ angular.module('todo').factory('demoDataLoader', function($http, demoDataUrl) {
 				var taskList = [];
 				for (var i = 0; i < data.length; ++i) {
 					todo = data[i];
-					taskList.push({
-						title : todo.title,
-						isComplete : todo.iscomplete === 'true'
-					});
+					taskList.push(taskFactory.newTask(todo.title, todo.iscomplete === 'true'));
 				}
 				return taskList;
 			});
