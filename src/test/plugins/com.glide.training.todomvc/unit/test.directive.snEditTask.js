@@ -3,9 +3,10 @@ describe('sn-edit-task', function() {
 
 	beforeEach(module('todo'))
 
-	var scope, element, task, editInput;
+	var scope, element, task, editInput, $timeout;
 
-	beforeEach(inject(function($compile, $rootScope) {
+	beforeEach(inject(function($compile, $rootScope, _$timeout_) {
+		$timeout = _$timeout_;
 		scope = $rootScope.$new();
 		scope.editTask = jasmine.createSpy('editTask');
 		task = 'THIS WOULD BE A TASK';
@@ -31,6 +32,7 @@ describe('sn-edit-task', function() {
 
 	it('sets focus on the edit input on a double click event', function() {
 		element.triggerHandler('dblclick');
+		$timeout.flush();
 		expect(editInput.focus).toHaveBeenCalled();
 	})
 

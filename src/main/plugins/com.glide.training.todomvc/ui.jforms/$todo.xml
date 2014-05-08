@@ -48,7 +48,9 @@
 							<label>{{ task.title }}</label>
 							<button class="destroy" ng-click="deleteTask(task)" />
 						</div>
-						<input class="edit" ng-model="task.title" />
+						<form ng-submit="finishEditing()">
+							<input class="edit" ng-model="task.title" ng-blur="finishEditing()" />
+						</form>
 					</li>
 				</ul>
 			</section>

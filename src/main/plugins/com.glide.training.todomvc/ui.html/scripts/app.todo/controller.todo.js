@@ -8,6 +8,7 @@ angular.module('todo').controller('Todo', function($scope, $location, demoDataLo
 	$scope.completedTodos = 0;
 	$scope.allComplete = false;
 	$scope.statusMask = {};
+	$scope.taskBeingEdited = null;
 
 	$scope.addTask = function() {
 		var title = $scope.newTask.trim();
@@ -37,6 +38,10 @@ angular.module('todo').controller('Todo', function($scope, $location, demoDataLo
 	$scope.editTask = function(task) {
 		$scope.taskBeingEdited = task;
 	};
+
+	$scope.finishEditing = function() {
+		$scope.taskBeingEdited = null;
+	}
 
 	$scope.loadDemoData = function() {
 		demoDataLoader.loadData().then(function(tasks) {
