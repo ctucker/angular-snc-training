@@ -36,6 +36,10 @@ angular.module('todo').controller('Todo', function($scope, $location, demoDataLo
 		$scope.taskBeingEdited = task;
 	};
 
+	$scope.finishEditing = function() {
+		$scope.taskBeingEdited = null;
+	};
+
 	$scope.loadDemoData = function() {
 		demoDataLoader.retrieveDemoData().then(function(tasks) {
 			tasks.forEach(function(task) {
