@@ -10,7 +10,12 @@ describe('sn-edit-task', function() {
 	beforeEach(inject(function($compile, $rootScope, $injector) {
 		$timeout = $injector.get('$timeout');
 
-		element = angular.element('<div sn-edit-task="task" />');
+		element = angular.element(
+			'<div sn-edit-task="task">' +
+				'<input class="not-edit">' +
+				'<input class="edit">' +
+			'</div>'
+		);
 		scope = $rootScope.$new();
 		scope.task = TASK_OBJECT;
 		scope.editTask = jasmine.createSpy('editTask');
@@ -23,6 +28,15 @@ describe('sn-edit-task', function() {
 		element.triggerHandler('dblclick');
 		$timeout.flush();
 		expect(scope.editTask).toHaveBeenCalledWith(TASK_OBJECT);
+	});
+
+	it('sets focus on the edit input on double click event', function() {
+		var editInput = element[0].querySelector('input.edit');
+		spyOn(editInput, 'focus');
+		element.triggerHandler('dblclick');
+		$timeout.flush();
+
+		expect(editInput.focus).toHaveBeenCalled();
 	})
 
 });
