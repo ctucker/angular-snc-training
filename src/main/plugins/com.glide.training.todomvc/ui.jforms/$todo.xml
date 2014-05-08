@@ -71,7 +71,7 @@
 		</section>
 		<footer id="info">
 			<p>Double-click to edit a todo</p>
-			<button id="load-demo-data">Load Demo Data</button>
+			<button id="load-demo-data" ng-click="loadDemoData()">Load Demo Data</button>
 		</footer>
 	</body>
 </html>

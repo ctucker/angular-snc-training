@@ -3,12 +3,13 @@ describe('Todo controller', function() {
 
 	beforeEach(module('todo'));
 
-	var scope, $location;
+	var scope, $location, $httpBackend;
 
-	beforeEach(inject(function($rootScope, $controller, _$location_) {
+	beforeEach(inject(function($rootScope, $controller, _$location_, _$httpBackend_) {
 		scope = $rootScope.$new();
 		$controller('Todo', { $scope : scope });
 		$location = _$location_;
+		$httpBackend = _$httpBackend_;
 	}));
 
 	function addATask(title) {
@@ -217,5 +218,47 @@ describe('Todo controller', function() {
 			scope.$digest();
 		}
 
+	});
+
+	describe('loading demo data', function() {
+
+		beforeEach(function() {
+			$httpBackend.whenGET('/api/now/table/todo_sample').respond(
+				{ result : [
+					{ title: 'My task', iscomplete : 'true' },
+					{ title: 'Incomplete', iscomplete : 'false' }
+				]}
+			);
+		});
+
+		afterEach(function() {
+			$httpBackend.verifyNoOutstandingExpectation();
+			$httpBackend.verifyNoOutstandingRequest();
+		});
+
+		it('pulls data from the server on loadDemoData call', function() {
+			$httpBackend.expectGET('/api/now/table/todo_sample');
+			scope.loadDemoData();
+			$httpBackend.flush();
+		});
+
+		it('adds tasks from the server to the end of the task list', function() {
+			scope.loadDemoData();
+			$httpBackend.flush();
+			expect(titleOfTask(0)).toBe('My task');
+			expect(scope.taskList.length).toBe(2);
+		});
+
+		it('marks incomplete tasks as such', function() {
+			scope.loadDemoData();
+			$httpBackend.flush();
+			expect(completionStatusOfTask(1)).toBe(false);
+		});
+
+		it('marks complete tasks as such', function() {
+			scope.loadDemoData();
+			$httpBackend.flush();
+			expect(completionStatusOfTask(0)).toBe(true);
+		});
 	});
 });

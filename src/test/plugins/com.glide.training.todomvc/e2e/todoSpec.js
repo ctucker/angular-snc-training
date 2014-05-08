@@ -203,6 +203,6 @@ describe('todo list homepage', function() {
 			expect(todoListPage.getEntry(0).getText()).toBe('Complete todo');
 		});
 
-	})
+	});
 
 });

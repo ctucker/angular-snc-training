@@ -1,4 +1,4 @@
-angular.module('todo').controller('Todo', function($scope, $location) {
+angular.module('todo').controller('Todo', function($scope, $location, $http) {
 	"use strict";
 
 	$scope.newTask = '';
@@ -29,6 +29,17 @@ angular.module('todo').controller('Todo', function($scope, $location) {
 		}
 	};
 
+	$scope.loadDemoData = function() {
+		$http.get('/api/now/table/todo_sample').
+			success(function(data) {
+				var result = data.result;
+				result.forEach(function(demoTask) {
+					var task = newTask(demoTask.title, demoTask.iscomplete === 'true');
+					$scope.taskList.push(task);
+				});
+			});
+	};
+
 	$scope.$watch('allComplete', function(newStatus) {
 		$scope.taskList.forEach(function(task) {
 			task.isComplete = newStatus;
@@ -55,10 +66,10 @@ angular.module('todo').controller('Todo', function($scope, $location) {
 				$scope.statusMask = {};
 	});
 
-	function newTask(title) {
+	function newTask(title, isComplete) {
 		return {
 			title : title,
-			isComplete : false
+			isComplete : !!isComplete
 		}
 	}
 
