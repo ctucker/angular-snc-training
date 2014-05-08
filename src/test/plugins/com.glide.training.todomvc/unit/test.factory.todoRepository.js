@@ -42,7 +42,7 @@ describe('todo repository', function() {
 			var savedTodo = getSavedTodo();
 			expect(savedTodo).toEqual({
 				sysId : serverTodo.result.sys_id,
-				complete : serverTodo.result.iscomplete === 'true',
+				isComplete : serverTodo.result.iscomplete === 'true',
 				title : serverTodo.result.title
 			});
 		});

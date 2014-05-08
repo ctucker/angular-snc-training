@@ -1,10 +1,11 @@
 angular.module('todo').factory('taskFactory', function() {
 	"use strict";
 	return {
-		newTask : function(title, isComplete) {
+		newTask : function(title, isComplete, sysId) {
 			return {
 				title : title,
-				isComplete : !!isComplete
+				isComplete : !!isComplete,
+				sysId : sysId
 			}
 		}
 	}

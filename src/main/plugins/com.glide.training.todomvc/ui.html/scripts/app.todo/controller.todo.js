@@ -1,4 +1,4 @@
-angular.module('todo').controller('Todo', function($scope, $location, $http, demoDataLoader, taskFactory) {
+angular.module('todo').controller('Todo', function($scope, $location, demoDataLoader, taskFactory, todoRepository) {
 	"use strict";
 
 	$scope.newTask = '';
@@ -11,8 +11,13 @@ angular.module('todo').controller('Todo', function($scope, $location, $http, dem
 
 	$scope.addTask = function() {
 		var title = $scope.newTask.trim();
-		if (title)
-			$scope.taskList.push(taskFactory.newTask(title));
+		if (title) {
+			var todo = taskFactory.newTask(title);
+			$scope.taskList.push(todo);
+			todoRepository.addTodo(todo).then(function(serverTask) {
+				todo.sysId = serverTask.sysId;
+			});
+		}
 		$scope.newTask = '';
 	};
 
