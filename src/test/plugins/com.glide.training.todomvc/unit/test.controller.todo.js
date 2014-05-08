@@ -3,14 +3,20 @@ describe('Todo controller', function() {
 
 	beforeEach(module('todo'));
 
-	var scope, $location, $httpBackend, demoDataLoader, $q;
+	var scope, $location, $httpBackend, demoDataLoader, $q, todoRepository;
 
 	beforeEach(inject(function($rootScope, $controller, _$location_, _$httpBackend_, _$q_, _demoDataLoader_) {
 		scope = $rootScope.$new();
 		$q = _$q_;
 		demoDataLoader = _demoDataLoader_;
 
-		$controller('Todo', { $scope : scope });
+		todoRepository = jasmine.createSpyObj('todoRepository', ['addTodo']);
+
+		var deferred = $q.defer();
+		deferred.resolve({ title : 'To save', complete : false, sysId : 3 });
+		todoRepository.addTodo.andReturn(deferred.promise);
+
+		$controller('Todo', { $scope : scope, todoRepository : todoRepository });
 
 		$location = _$location_;
 		$httpBackend = _$httpBackend_;
@@ -251,5 +257,17 @@ describe('Todo controller', function() {
 			expect(scope.taskList.length).toEqual(1);
 		});
 
+	});
+
+	describe('persisting tasks', function() {
+		it('issues an addTodo call to the todoRepository when a new todo is added', function() {
+			var task = addATask('To save');
+			expect(todoRepository.addTodo).toHaveBeenCalledWith(task);
+		});
+
+		it('updates the todo with the sysId of the saved todo', function() {
+			var task = addATask('To save');
+			expect(task.sysId).toEqual(3);
+		});
 	});
 });
