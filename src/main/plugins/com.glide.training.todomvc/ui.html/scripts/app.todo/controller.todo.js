@@ -1,4 +1,4 @@
-angular.module('todo').controller('Todo', function($scope, $location, $http, demoDataLoader) {
+angular.module('todo').controller('Todo', function($scope, $location, $http, demoDataLoader, taskFactory) {
 	"use strict";
 
 	$scope.newTask = '';
@@ -12,7 +12,7 @@ angular.module('todo').controller('Todo', function($scope, $location, $http, dem
 	$scope.addTask = function() {
 		var title = $scope.newTask.trim();
 		if (title)
-			$scope.taskList.push(newTask(title));
+			$scope.taskList.push(taskFactory.newTask(title));
 		$scope.newTask = '';
 	};
 
@@ -62,12 +62,5 @@ angular.module('todo').controller('Todo', function($scope, $location, $http, dem
 			else
 				$scope.statusMask = {};
 	});
-
-	function newTask(title, isComplete) {
-		return {
-			title : title,
-			isComplete : !!isComplete
-		}
-	}
 
 });
