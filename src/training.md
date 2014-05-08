@@ -4,6 +4,7 @@ class: center, middle, title
 
 ## Chris Tucker, Will Leingang
 ### ServiceNow Core (Platform) UI Team
+
 ---
 
 # Goals of this training
@@ -21,9 +22,7 @@ class: center, middle, title
 	* Presented overviews of aspects of Angular
 	* Live development of features
 	* Paired-up implementation of features by all of you
-
 * Testing is an integral part of the course
-
 * Code is all in a github repo
 
 ---
@@ -72,25 +71,6 @@ layout: true
 
 ---
 
-# Tagged steps
-
-Git branches are used to manage steps
-
-To fast-forward to the next step you should:
-
-```terminal
-$ git commit -a -m 'Commiting local changes'
-$ git checkout <branch-name>
-```
-
-Green box (see bottom left) indicates what step to check out
-
-???
-
-Make sure everyone can pull the right branch
-
----
-
 # Karma test runner
 
 We run all of our unit tests using Karma.  Verify it works like so:
@@ -109,98 +89,54 @@ Chrome 30.0.1599 (Mac OS X 10.8.5): Executed 1 of 1</span><span class="aha-fg-gr
 ???
 
 Pause to help out with any issues in getting Karma running
-
----
-
-# Local web server
-
-Start a local web server:
-
-```terminal
-$ ./http-server.sh
-<span class="aha-fg-yellow ">Starting up http-server, serving </span><span class="aha-fg-white "></span><span class="aha-fg-cyan ">./</span><span class="aha-fg-white "></span><span class="aha-fg-yellow "> on port: </span><span class="aha-fg-white "></span><span class="aha-fg-cyan ">8000</span><span class="aha-fg-white ">
-Hit CTRL-C to stop the server
-```
-
-You'll need the web server up for the next steps, running e2e tests
-with protractor
-
-???
-
-e2e vs unit
+Walk through getting set up with IntelliJ and Eclipse
 
 ---
 
 # End-to-end: Selenium server
 
-End-to-end tests written with Protractor, a thin Selenium wrapper. 
+Launch selenium server in a background tab:
 
-Prepare selenium:
 ```terminal
-$ ./protractor.sh selenium
-Installing Selenium
-When finished, start the Selenium Standalone Server with ./selenium/start
+$ gulp webdriver-standalone
+[<span class="aha-fg-green ">gulp</span><span class="aha-fg-white ">] Using gulpfile </span><span class="aha-fg-magenta ">gulpfile.js</span><span class="aha-fg-white ">
+[</span><span class="aha-fg-green ">gulp</span><span class="aha-fg-white ">]
+Starting '</span><span class="aha-fg-cyan">webdriver-standalone</span><span class="aha-fg-white ">'...
 <span class="aha-fg-white ">...(various output here)...</span>
-INFO: Launching a standalone server
-Setting system property webdriver.chrome.driver to ./selenium/chromedriver
-...
+17:22:50.788 INFO - Started org.openqa.jetty.jetty.Server@7c4c51
 ```
 
 ---
 
 # End-to-end: Protractor
 
-Run the protractor tests:
+Run protractor:
 
 ```terminal
-$ ./protractor.sh
-<span class="aha-fg-white">...(various output)...</span>
-     <span class="aha-fg-red ">Error: Angular could not be found on the page http://localhost:8000/</span>
-<span class="aha-fg-white">...(various output)...</span>
-Finished in 10.39 seconds
-<span class="aha-fg-red ">1 test, 1 assertion, 1 failure
-</span>
-```
+$ gulp
+[<span class="aha-fg-green ">gulp</span><span class="aha-fg-white ">] Using gulpfile </span><span class="aha-fg-magenta ">/Users/ctucker/dev/js/angular-snc-2014/gulpfile.js</span><span class="aha-fg-white ">
+[</span><span class="aha-fg-green ">gulp</span><span class="aha-fg-white ">] Starting '</span><span class="aha-fg-cyan ">protractor</span><span class="aha-fg-white ">'...
+Using the selenium server at http://localhost:4444/wd/hub
+</span><span class="aha-fg-green ">.</span>
 
-Note that while the tests run, they currently fail.  This is intentional!
+Finished in 2.437 seconds
+<span class="aha-fg-green ">1 test, 0 assertions, 0 failures</span>
+```
 
 ---
 
 # WebStorm / IntelliJ users
 
-Run configs are provided to launch from within IDE.
+You can run Karma from within the IDE natively.
 
-Add the configurations with:
-```terminal
-$ cp -a intellij/runConfigurations .idea/runConfigurations
-```
-
-You'll then see them in the run menu:
-
-.center[![Run Configurations](images/runConfigurations.png)]
+Install the Angular JS and Karma plugins, then right click on the
+`karma.conf.js` in the root and choose "Run".
 
 ---
 
-# What we'll be doing
+# On to the real work!
 
 .middle[.center[![task0-complete](images/todolist-task0.png)]]
-
----
-
-# First steps
-
-That failing test is no good.  Let's make it pass!
-
-Recall the error:
-```terminal
-<span class="aha-fg-red ">Error: Angular could not be found on the page http://localhost:8000/</span>
-```
-
-The solution is to add Angular to the page, which we'll do now.
-
-???
-
-To be implemented by presenter live
 
 ---
 
@@ -209,20 +145,27 @@ layout: true
 
 ---
 
+class: center, middle, title
+
+# A quick tour of the existing code
+
+---
+
 # Adding behavior, test-first
 
 Let's add a simple feature:
 
-* _When_ I type into the input box
-* _Then_ the label in the final `<li>` updates with that value
+* _When_ I type into the input box and hit enter
+* _Then_ the first entry in the list of todos reflects the newly
+  entered task
 
-To do this we take three steps:
+--
 
-1. Write a failing protractor test for that change
-2. Add production code to make the test pass
-3. Refactor the production code
+To do this, we follow .red[_red_], .green[_green_], .blue[_refactor_]
 
-
+* .red[Red]: Write a failing test
+* .green[Green]: Make it pass
+* .blue[Refactor]: Clean up our code
 
 ???
 
@@ -232,6 +175,12 @@ To be implemented by presenter live
 
 layout: true
 .step-name[x-task1-step2]
+
+---
+
+# Model, View, Controller
+
+.middle[.center[![MVC](images/angular-mvc.png)]]
 
 ---
 
@@ -263,7 +212,7 @@ Right now we update the task title in place.  We want to only do
 this when the user hits enter.
 
 * At this point, we're going to need some custom JS
-* This is where the *Controller* comes in
+* This is where the *Controller* and *scope* come in
 
 ---
 
@@ -272,7 +221,7 @@ this when the user hits enter.
 * Establishes a new scope that inherits from its parent
 * Declared in JS:
 ```javascript
-angular.module('tasks').controller('CtrlName', fn)
+angular.module('todo').controller('CtrlName', fn)
 ```
 * and in HTML
 ```html
@@ -286,43 +235,32 @@ Note that scope is *not* the model
 
 ---
 
+# Scope
+
+* Hierarchy of JS objects
+* Prototypically inherit from one another
+* Each new angular piece (controller, directive, etc.) creates a new
+  scope
+* Exact nature of inheritance relationship varies
+* Consider scope as a big pinboard on which we tack all of the bits of
+  data and code the View can access
+
+---
+
 # Adding the task on enter
 
-* Record a "new task" variable on the scope
-* Bind the value to a different variable
-* Update that different variable when the form is submitted
+Basic approach:
 
-Let's go through writing a spec for this...
+* Write test for initial state and build empty controller
+* Write test that exercises an "add task" method and update the
+  controller
+* Wire it all up in the HTML
 
----
+???
 
-# Making it pass: the Controller
-
-Go through the test step-by-step:
-
-1. Add a `$scope.newTask` variable to hold your newly entered task
-2. Add a `$scope.taskList` variable that holds a list of tasks
-3. Add a `$scope.addTask()` function that will add your new task on to
-   the task list
-
-This is all just plain-old JavaScript: the only thing to remember is
-that `$scope` in your controller is the same thing as `scope` in the
-test.
-
----
-
-# Making it pass: the HTML
-
-There are a few things to do here:
-
-* Tell Angular the app module name with `ng-app="tasks"`
-* Add your controller to the todo-app section container with
-  `ng-controller="TasksController"`
-* Wrap the `new-todo` input in a form
-* Update the model and binding to reflect the `newTask.title` variable
-* Add an `ng-submit` to the form to call the `addTask()` function
-* Make sure you add the `tasksController.js` file to the scripts at
-  the bottom of the page!
+Going to add:
+Module definition
+Controller
 
 ---
 
@@ -336,50 +274,22 @@ layout: true
 The controller currently lets you add multiple tasks, but we do
 nothing with them.
 
-We want to:
+1. Write a unit test to confirm that calling `addTask()` adds a new
+   task to the end of the task list
 
-1. Verify in our `todoListSpec` that adding an item to the list causes a
-   new item to be added to the UI (this will .red[fail])
-2. Verify that our controller adds new tasks to the end of the task
-   list (this will .green[pass])
-3. Change the HTML to make the `todoListSpec` pass
+--
 
----
+2. Write an e2e test that verifies that submitting first one task then
+   another results in two tasks being added to the list
 
-# Multiple tasks e2e
+--
 
-Add a failing test to the `todoListSpec.js` that:
-
-1. Adds two items to the todo-list by sending keys and submitting the
-   `new-todo` input
-  * Use taskInput.clear() to blank out the input 
-2. Verifies that the HTML now has two `<li>` elements under the
-   `#todo-list` `<ul>` for the new entries
-
-To get at the list of DOM elements for assertion, use the form:
-
-```javascript
-ptor.findElements(selector).then(
-	function(foundItems) { ... }
-)
-```
+3. Update the HTML to make the new e2e test pass
 
 ---
 
 layout: true
 .step-name[x-task1-step5]
-
----
-
-# Multiple tasks controller spec
-
-Add a passing test to the `tasksControllerSpec.js` that:
-
-1. Adds two tasks to the list using `scope.newTask` and
-   `scope.addTask()`
-2. Verifies that the task list has both tasks in the right order
-
-This should be a very simple test!
 
 ---
 
@@ -393,7 +303,6 @@ layout: true
 We need to repeat elements on the page so we'll use the `ng-repeat`
 directive.
 
-
 Usage:
 ```html
 <li ng-repeat="«name» in «scope variable»">
@@ -404,7 +313,6 @@ Usage:
 ```
 
 * After making your change, run your e2e tests
-* You may need to adjust the first test now the list is "correct" (I did)
 
 ---
 
@@ -416,13 +324,12 @@ layout: true
 # A little bit about Directives
 
 * Directives in Angular are the only thing that can manipulate the DOM
-* We've now seen a few built-in directives:
+* We've already seen a few built-in directives:
   * `ng-controller`: connect a controller and set up a new scope
   * `ng-model`: bind a model value to an input
   * `ng-submit`: set a form-submission handler
   * `ng-repeat`: repeat a DOM template for every element in a list
 * Directives allow us to *extend* HTML with custom markup
-  * Applied as elements, attributes, CSS classes, or comments
 * Later we'll learn to write our own...
 
 ---
@@ -442,6 +349,20 @@ You can trust Angular, so test at the controller level.
 
 ---
 
+# Binding flashes
+
+* Angular loads _after_ the DOM is parsed and presented to the user
+* Mustache bindings can flicker in before Angular replaces them
+* Fix this with `ng-bind` and `ng-cloak`
+
+```html
+<span ng-cloak>Hello, {{ name }}</span>
+<span ng-bind="greeting" />
+<span ng-bind-template="Hello, {{name}}" />
+```
+
+---
+
 layout: true
 .step-name[part1-complete]
 
@@ -457,16 +378,29 @@ layout: true
 Clicking the check mark next to a task should mark it completed and
 set the `<li>` class to `completed`.
 
-To conditionally set a class, use the `ng-class` directive on the `<li>`
+Conditionally set a class with the `ng-class` on the `<li>`
 
 ```javascript
 ng-class="{ «class_name» : «boolean expression» }"
 ```
-You should:
 
 * Track completion status of each task
 * Use an `ng-model` binding on checkbox to set status
-* Use `ng-class` to set the class based
+* Use `ng-class` to set the class
+
+???
+
+e2e:
+* incomplete to start
+* complete on click
+* incomplete on second click
+
+unit:
+* incomplete to start (redundant with e2e, but fast)
+* clean up all of the equality checks etc.
+
+html:
+* add the ng-class, update to fit with new task structure
 
 ---
 
@@ -477,15 +411,29 @@ layout: true
 
 # Deleting tasks
 
-Mouse over the right side of the task to see a red X.
+Mouse over a task to see a red X on the right.
 
 Clicking the red X should delete the task from the list.
 
-You should:
-
-* Add a (tested) `deleteTask` function to your controller
+* Write tests for and implement a `deleteTask` function on your controller
 * Invoke it using an `ng-click` directive on the delete button
-* Skip the e2e test (Protractor has issues with `:hover`)
+* An e2e test would be nice, but leave it to the end: hover support is
+  complex
+
+???
+
+Basic approach: deleteTask(task), indexOf to find task, splice to pull
+it out
+
+e2e:
+* deleteEntry uses browser.actions and mouseMove to go the li, then
+  standard click on the delete button
+* webelement list #count() to get number of entries
+
+unit:
+* Just verify the simple deletion case
+  * may be an entry point to discuss what tests to write
+
 
 ---
 
@@ -552,6 +500,13 @@ We'll implement this as before in a test-driven  fashion by:
 
 To be implemented by presenter live
 
+* Write two parts of e2e test first
+  * Look for class value of ng-hide
+* Make pass with ng-hide="true" then ng-hide="taskList.length"
+* Then go into using a tracking variable instead
+  * TDD it all the way: hard-coded false to set in addTask
+* Eventually, pull back to a $scope.$watch and demo scope.$apply() in test
+
 ---
 
 layout: true
@@ -564,13 +519,21 @@ layout: true
 The count in the bottom left should update dynamically.
 
 1. Write an e2e test to verify the number is correct
-2. Add a scope variable to track the number of completed items
-3. Add a watch to the task list to update the completion count every
+2. Add a scope variable to track the number of incomplete items
+3. Add a watch to the task list to update the incomplete count every
    time a task is changed
 4. Update the HTML to make the e2e test pass
 
 Bonus: use `ng-pluralize` to print "item" for 1 item, "items" for
 anything else (with tests, of course!)
+
+???
+
+* WRAP EVERYTHING IN <j2:whitespace trim="false">
+* e2e: get item string, check it's 1 item left then 2 items left
+* unit: on failing e2e, write tests for tracking counts
+* impl: use a $watch, remember true flag at end, use
+  taskList.filter().length to get at the count
 
 ---
 
@@ -591,6 +554,13 @@ Combine the previous steps:
 You'll need to use the `ng-show` and `ng-click` directives, and
 manipulate the existing watch.
 
+???
+
+* use
+  `expect(todoListPage.getClearCompletedButton().isDisplayed()).toBeTruthy();`
+* standard show/hide tests first, get that working through units
+* then move on to delete case, again through e2e then units
+
 ---
 
 layout: true
@@ -600,149 +570,13 @@ layout: true
 
 # Flagging all items as completed
 
-We'll skip this for now (it's implemented in the code that we're
-following, but there's not a lot of value in coding it ourselves).
+Clicking the chevron by the task input should mark all tasks complete
 
-We're done with our exploration of watch/apply/digest.
+Clicking the chevron a second time should mark all tasks incomplete
 
-Next up we'll take a look at factories, services, and dependency injection.
-
----
-
-layout: true
-.step-name[x-task2-step4]
-
----
-
-# What is dependency injection?
-
-It's all about who has responsibility for creating the objects you use
-(your *dependencies*).  Consider:
-
-.pull-left[
-```javascript
-function makeCoffee() {
-	var pot = new Pot();
-	pot.brew();
-}
-makeCoffee();
-```
-Traditional
-]
-
-.pull-right[
-```javascript
-function makeCoffee(pot) {
-	pot.brew();
-}
-var pot = new Pot();
-makeCoffee(pot);
-```
-Injected
-]
-
----
-
-# DI in Angular
-
-* Angular injects dependencies by *name*
-* Dependencies are configured in *modules*
-* You've already seen an injected dependency...
-
-```javascript
-angular.module('tasks')
-  .controller('TasksController',
-              function($scope) {
-});
-```
-`$scope` is an injected dependency: when Angular calls the controller
-function, it passes in a new Scope instance called `$scope` for you.
-
----
-
-# Injecting your own dependency
-
-* Register a dependency against the module
-* We'll be looking at *factory* dependencies
-
-```javascript
-angular.module('tasks').
-	factory('taskList', function() {...});
-```
-
-This registers a factory called "taskList" that you can inject:
-
-```javascript
-controller('TasksController',
-           function($scope, taskList) {
-  // taskList is the return value of your
-  // factory function
-});
-```
-
----
-
-# Angular dependency lifecycle
-
-Dependencies in Angular are *singletons*.
-
-```javascript
-function($injector) {
-	var a = $injector.get('taskList');
-	var b = $injector.get('taskList')
-	a === b; // => true
-}
-```
-
-There are many different kinds of dependency:
-
-* `provider`, `factory`, `service`, `value`, `constant`
-* `controller`, `directive`, `filter`
-* ...
-
----
-
-# A factory for our task list
-
-The `taskList` object in our controller is getting big.  Let's pull it
-out.
-
-Create a file `factory.taskList.js` to contain the new factory.
-
-```javascript
-angular.module('tasks').
-	factory('taskList', function() {...})
-```
-
-Move the definition of the `taskList` object into the factory function,
-and return it.
-
-Add the `taskList` as a dependency to your controller (by adding it as
-an argument), and bind it to the scope.
-
----
-
-layout: true
-.step-name[x-task2-step5]
-
----
-
-# Factor taskList behavior
-
-* Controller now has a few things that breach encapsulation on
-  `taskList`
-* Move implementation details to `taskList` for:
-  * `addTask()`
-  * `deleteTask(task)`
-  * `normalizedTitle()`
-* Extra credit: move all of the counts and their calculation to
-  `taskList`
-* Your tests should all still pass!
-
----
-
-layout: true
-.step-name[x-task2-step6]
+* Set a model on the check-all checkbox
+* When its value changes, set all tasks to complete or incomplete based
+  on the chevron's state
 
 ---
 
@@ -778,7 +612,7 @@ This takes a *predicate* argument of:
 Arguments are given with the `filterName:argument` syntax.
 
 ```html
-<li ng-repeat="task in taskList.tasks | filter:tpl">
+<li ng-repeat="task in taskList | filter:tpl">
 	...
 </li>
 ```
@@ -790,7 +624,7 @@ Arguments are given with the `filterName:argument` syntax.
 To match tasks by status we could use:
 
 ```javascript
-$scope.statusMask = { completed : true | false }
+$scope.statusMask = { isComplete : true | false }
 ```
 
 To match all tasks we could use:
@@ -803,7 +637,7 @@ And in our `ng-repeat` use:
 
 .shrink-text[
 ```html
-<li ng-repeat="task in taskList.tasks | filter:statusMask">
+<li ng-repeat="task in taskList | filter:statusMask">
 	...
 </li>
 ```
@@ -844,12 +678,12 @@ layout: true
 
 # Loading demo data
 
-Let's say we have some demo data on the server.
+We want to populate the list with some demo data.
 
-We want to pull that down when the user clicks a "Load Demo Data"
-link, and populate it into the task list.
+When the user clicks a button, it should append to the task list
+some sample data pulled from the server.
 
-* We'll use `$http` in a new service
+* We'll use angular's `$http` service
 * We'll learn about promises and how they're awesome
 
 ---
@@ -862,7 +696,7 @@ link, and populate it into the task list.
 * Returns a *promise* with HTTP-specific methods
 	* `success` for when the result is a 2XX response
 	* `error` otherwise (redirects are transparently followed)
-* Easy to unit test with `$httpBackend`
+* Easy(ish) to unit test with `$httpBackend`
 * See the docs for examples
 
 ---
@@ -939,27 +773,27 @@ function getAvailableAppCount() {
 $scope.appCount = getAvailableAppCount();
 ```
 
-* Angular views render promises when they resolve
 * See docs for a lot more about promises (`$q`)
 
 ---
 
 # Loading default data
 
-* JSON file at `/demo.json`
-* Has the format:
+Table `todo_sample` can be queried with REST API:
 
 ```javascript
-[ { "title" : "Buy Milk",
-    "completed" : true|false },
-  ...
-]
+// http://localhost:8080/api/now/table/todo_sample
+// =>
+{ result : [
+    { "title" : "Buy Milk",
+      "isComplete" : true|false },
+    ...
+]}
 ```
 
-* Add a button "Load Demo Data" to the HTML
-* When clicked, link should fetch the data with `$http`
-* Data should be set as the task list
-* Create a new service for this and test it with `$httpBackend`
+* Use Load Demo Data button to populate the demo data
+* Use the $http service to fetch the data
+* Demo data should add all entries fetched to the task list
 
 ---
 
@@ -967,6 +801,172 @@ layout: true
 .step-name[x-task3-step1]
 
 ---
+
+# Single responsibility, Coupling, and Cohesion
+
+* Single responsiblity: how many different things is this module doing?
+* Coupling: how many dependencies there are between modules?
+* Cohesion: how closely related are functions within a piece of code?
+
+---
+
+# Todo controller responsiblities
+
+--
+
+1. Managing scope for communication with view
+   * Setting up data for the view to render
+   * Watching for changes to data in the view
+
+--
+
+2. Querying and manipulating the task list
+   * Adding tasks
+   * Deleting tasks
+   * Toggling completion state
+
+--
+
+3. Pulling in demo data
+
+---
+
+# Angular's approach to decoupling
+
+* Separate different units of responsiblity into different _providers_
+* Configure wiring between providers using modules
+* Access the functionality providers offer through injection
+
+There are many different kinds of provider:
+
+* `provider`, `factory`, `service`, `value`, `constant`
+* `controller`, `directive`, `filter`
+* ...
+
+---
+
+layout: true
+.step-name[x-task2-step4]
+
+---
+
+# What is dependency injection?
+
+It's all about who has responsibility for creating the objects you use
+(your *dependencies*).  Consider:
+
+.pull-left[
+```javascript
+function makeCoffee() {
+	var pot = new Pot();
+	pot.brew();
+}
+makeCoffee();
+```
+Traditional
+]
+
+.pull-right[
+```javascript
+function makeCoffee(pot) {
+	pot.brew();
+}
+var pot = new Pot();
+makeCoffee(pot);
+```
+Injected
+]
+
+---
+
+# DI in Angular
+
+* Angular injects dependencies by *name*
+* Dependencies are configured in *modules*
+* You've already seen an injected dependency...
+
+```javascript
+angular.module('todo')
+  .controller('Todo',
+              function($scope) {
+});
+```
+`$scope` is an injected dependency: when Angular calls the controller
+function, it passes in a new Scope instance called `$scope` for you.
+
+---
+
+# Injecting your own dependency
+
+* Register a dependency against the module
+* We'll be looking at *factory* dependencies
+
+```javascript
+angular.module('todo').
+	factory('demoDataLoader', function() {...});
+```
+
+This registers a factory called "demoDataLoader" that you can inject:
+
+```javascript
+controller('Todo',
+           function($scope, demoDataLoader) {
+  // demoDataLoader is the return value of your
+  // factory function
+});
+```
+
+---
+
+# Angular dependency lifecycle
+
+Dependencies in Angular are *singletons*.
+
+```javascript
+function($injector) {
+	var a = $injector.get('demoDataLoader');
+	var b = $injector.get('demoDataLoader')
+	a === b; // => true
+}
+```
+
+* Be aware of this if your dependency carries any state!
+
+???
+
+* Note the use of factories in your dependencies to stamp off new instances
+
+---
+
+# A factory for the demo data loader
+
+Create a file `factory.demoDataLoader.js` to house our loader
+
+```javascript
+angular.module('todo').
+	factory('demoDataLoader', function() {...})
+```
+
+* Move the `$http` behavior over into the `demoDataLoader`
+* `demoDataLoader` should expose a function that gets the data and
+  returns a promise
+* Move unit tests for data loading out of the controller test and into
+  a new `demoDataLoader` test
+* Extra credit: inject the URL as a _value_ binding set in your module setup.
+
+---
+
+layout: true
+.step-name[x-task2-step5]
+
+
+---
+
+layout: true
+.step-name[x-task2-step6]
+
+---
+
 
 # Task 3: Complete!
 
@@ -981,74 +981,107 @@ layout: true
 
 # Persisting task information
 
-* We've looked at creating a simple service dependency to pull data
-  from the server
-* Want to look at saving data now
-* Later we'll consider doing this over AJAX; for now, we'll use
-  LocalStorage
+This is where we tie it all back in to ServiceNow.
+
+* Use ServiceNow instance to track todos
+* Write to the `todo` table
+* Use Angular's `$resource` service with REST API
+* Minimize disruption to the controller
 
 ---
 
-# Modules and dependencies
+# ngResource and $resource
 
-* We know we may want to use different storage mechanisms
-* Rather than coding our storage system into the `tasks` module, we'll
-  create a third-party module and *depend* on that
+`$resource` is made available in the `ngResource` module
 
 ```javascript
-angular.module('localStorage', []).
-	factory('persister', function() {
-		// Service to persist to local storage
-	});
+angular.module('todo', []);
 ```
+
+must change to:
 
 ```javascript
-angular.module('tasks', ['localStorage']);
+angular.module('todo', ['ngResource']);
 ```
 
-To change storage mechanisms, we change the module dependency.
+Declares that the `todo` module wants all providers registered against
+the `ngResource` module to be made available.
+
+* `ngResource` is declared in the `angular-resource.js` file
 
 ---
 
-# The LocalStorage API
+# $resource usage
 
-* We'll just use the stock HTML5 LocalStorage API:
+* Use `$resource` to construct a client for your endpoint
 
 ```javascript
-localStorage.setItem(key, string); // Save an item to key
-localStorage.getItem(key); // => item stored under key
+var client = $resource(urlPattern,
+                       patternArgs,
+					   methods)
 ```
 
-* For our purposes, we'll just store a JSON string as our value
-* Use `angular.toJson` and `angular.fromJson` for serialization
-* To start with, write a service that can store a JS object and
-  retrieve a JS object on-demand
-* Initially do this completely independently of tasks
+* `urlPattern`: a URL with placeholders
+* `patternArgs`: object describing how to substitute in placeholders
+* `methods`: object describing methods desired and mapping to HTTP verbs
 
 ---
 
-layout: true
-.step-name[x-task4-step1]
+# $resource client usage
+
+```javascript
+client.get().$promise.then(function(data) {
+	// data is list of todos from server
+}
+client.get(sysId).$promise.then(function(data) {
+	// data is an individual todo
+}
+client.post({/*...*/}); // Add a new task
+client.put({sys_id: sysId},
+           {/*...*/});  // Edit task
+```
 
 ---
 
-# Tying it in to the Todo list
+# Saving todo entries
 
-At this point we've not tied the local storage in to the app.  Let's
-change that.
+* Create `factory.todoRepository.js` to manage saved todos
+* Use `$resource` to build API that can save added todo's to
+  the server
+* Modify the controller to save when a todo is added
 
-* We should *retrieve* the task list when the application loads.
-* We should *store* the task list whenever it changes.
+```javascript
+todoRepository.saveTodo(myTodo).then(
+	function(savedTodo) {
+		// Update myTodo with new sysId
+	}
+);
+```
 
-Inject the `persister` as a dependency.
-
-Set tasks with `setTaskList` and persist them whenever they change
-with `persister.save(key, data)`.
+* Use _`todo.list`_ in your instance to see your data appearing!
 
 ---
 
-layout: true
-.step-name[x-task4-step2]
+# Retrieving todo entries
+
+* Add a `getAllTodos` method to the `todoRepository`
+* Return a promise that yields a list of task entries
+* Call `getAllTodos` when the controller loads to set initial todo
+  list
+* Two options for handling latency
+  * Don't make the input box active until `getAllTodos` resolves
+  * Have `getAllTodos` _prepend_ todos on the task list
+
+---
+
+# Marking entries complete
+
+* Add an `updateTodo` method to the `todoRepository`
+* Call `updateTodo` with a changed todo whenever a change occurs
+* For now only handling completion changes
+  * Will deal with editing titles later
+* Use the `newValue` and `oldValue` arguments to watch to determine
+  what is changing
 
 ---
 
@@ -1065,9 +1098,9 @@ layout: true
 
 # Editing entries
 
-We switch to an editing mode by:
+Edit tasks by:
 
-* Double-clicking on a title
+* Double-clicking on a title (`ng-dblclick`)
 * Making a change to the title
 * Hitting enter to submit the change
 
@@ -1075,9 +1108,7 @@ The HTML/CSS already supports this:
 
 * Set the "editing" class on the `<li>` being edited
 * Set the value of the `edit` input appropriately
-
-Wrap the `input` in a form to handle submission with
-the enter key.
+* Bind it up with an `ng-model`
 
 ???
 
@@ -1096,7 +1127,7 @@ layout: true
 
 # Handling focus
 
-Editing works, but we're not focusing the form element.
+Editing works, but our focus is all messed up.
 
 Setting focus is going to require our first foray into the world of
 *custom directives*
@@ -1109,10 +1140,9 @@ Setting focus is going to require our first foray into the world of
 # Directives
 
 ```javascript
-angular.module('tasks').directive('name', function() {
+angular.module('todo').directive('name', function() {
 	return {
 		restrict: 'AECM',
-		controller: function() { }
 		link: function(scope, element, attrs) { }
 		// ... lots of other options ...
 	};
@@ -1121,8 +1151,7 @@ angular.module('tasks').directive('name', function() {
 
 * Restrict limits directive type to Attribute, Class,
   Element, or coMment
-  * Class and comment directives should generally be avoided
-* The controller lets you create a directive-specific controller
+  * Class and comment directives should _not_ be used
 * The "link" function takes your scope and tweaks the DOM.
 
 ???
@@ -1136,8 +1165,6 @@ Note that the link function is the workhorse
 1. Angular sees the directive in HTML and looks for the directive
    handler
 2. Angular *compiles* the directive, to get a *link* function
-	* Both `compile` and `link` functions can be specified in the
-      directive
 3. Angular calls the `link` function with the current scope, element,
    and attributes
 
@@ -1193,7 +1220,8 @@ to
 ```html
 <li sn-edit-task="task" ...>
 ```
-and retain all the same behavior.
+
+Right now, just moving the double-click handling.
 
 ???
 
@@ -1203,37 +1231,20 @@ Presenter led: walk through a TDD on this
 
 # Focus!
 
-As well as setting the class, we must focus the input with the
-class `edit`.  Make it so!
+Now we can attack the DOM to `focus()` the edit box.
 
 * Update the test HTML to:
+
 ```html
 <div sn-edit-task="task">
-	<input class="edit"><input>
+	<input class="edit">
 </div>
 ```
+
 * Use `spyOn` to spy on the focus method of the edit input
-* Remember to run a `$digest` show the input before calling `focus()`
-* Use `ng-blur` to finish editing when focus is removed from the input
-
----
-
-# Finding the right element
-
-A helpful hint for finding the right element using jqLite:
-
-.shrink-text[
-```javascript
-function findEditInput(childInputs) {
-  for (var i = 0; i < childInputs.length; ++i) {
-    var classNames = childInputs[i].getAttribute('class');
-    if (classNames && classNames.indexOf('edit') >= 0)
-      return childInputs[i];
-  }
-  return void(0);
-}
-```
-]
+* `$digest` to show the input before calling `focus()`
+* `ng-blur` to remove focus (when editing is done)
+* Use `document.querySelector()` to get edit input
 
 ---
 
@@ -1268,21 +1279,25 @@ layout: true
 
 # Templates and element directives
 
-* To create an element directive we use the 'E' restrict setting.
-* We can specify an HTML template file with `templateUrl`
+* `restrict: 'E'` for element directive
+* HTML template file with `template`
 
 ```javascript
 {
 	restrict: 'E',
-	templateUrl: 'tpl/todoList.html
+	template: 'string_containing_template'
 }
 ```
 
-* Extract the HTML out of `index.html`, put it into a template file,
-  and use the new directive in you index
-* There is a simple test of the `todo-list` directive that will pass
-  when things are working
-* ptor `getItems()` selector is bad; fix it and run tests
+* In production code, use `templateUrl`
+
+---
+
+# The todo-list directive
+
+* Create `directive.todoList.js`
+* Extract `#todo-list` element and use as template
+* All tests should continue to pass
 
 ---
 
@@ -1297,11 +1312,10 @@ Although the `<todo-list>` directive works, it's still heavily coupled
 to the `tasks` controller.
 
 In particular, consider the repeat:
-.shrink-text[
 ```html
-<li ng-repeat="task in taskList.tasks | filter:statusMask"
+<li ng-repeat="task in taskList | filter:statusMask"
 ```
-]
+
 and the function calls we make to the controller
 ```html
 <button class="destroy" ng-click="deleteTask(task)">...
@@ -1409,7 +1423,7 @@ layout: true
 Editing doesn't work because we were accessing `scope.editTask()` from
 our `sn-edit-task` directive
 
-* `scope.editTask()` is defined on the `TasksController`
+* `scope.editTask()` is defined on the `Todo` controller
 * ... but we only care about which task is edited for the list
 * ... and the list is now owned by the `todo-list` directive
 * so let's move the editing management down on to a controller for the
