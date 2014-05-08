@@ -1085,6 +1085,19 @@ todoRepository.saveTodo(myTodo).then(
 
 ---
 
+# Deleting entries
+
+* Add a `deleteTodo` method to the `todoRepository`
+* Call `deleteTodo` with a todo when the delete button is clicked
+* Extra credit: Use the taskList watcher to compare `newValue` and `oldValue` to determine
+  what to delete
+  
+???
+
+Mention synchronizing
+
+---
+
 # Task 4: Complete!
 
 .middle[.center[![task4-complete](images/todolist-task4.png)]]
