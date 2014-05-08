@@ -1033,11 +1033,11 @@ var client = $resource(urlPattern,
 client.get().$promise.then(function(data) {
 	// data is list of todos from server
 }
-client.get(sysId).$promise.then(function(data) {
+client.get({id:myId}).$promise.then(function(data) {
 	// data is an individual todo
 }
 client.post({/*...*/}); // Add a new task
-client.put({sys_id: sysId},
+client.put({id: myId},
            {/*...*/});  // Edit task
 ```
 
@@ -1149,7 +1149,7 @@ angular.module('todo').directive('name', function() {
 }
 ```
 
-* Restrict limits directive type to Attribute, Class,
+* "restrict" limits directive type to Attribute, Class,
   Element, or coMment
   * Class and comment directives should _not_ be used
 * The "link" function takes your scope and tweaks the DOM.
@@ -1335,7 +1335,7 @@ Isolate using the `scope` argument to DDO:
 ```javascript
 {
   restrict: 'E',
-  templateUrl: 'tpl/todoList.html',
+  template: '<li ng-repeat="task in tasks"> ... </li>',
   scope: { ??? }
 }
 ```
@@ -1376,7 +1376,7 @@ scope : { 'tasks' : '=listOfTasks' }
 ```
 
 ```html
->> template.html
+>> template contents
 <li ng-repeat="task in tasks"> ... </li>
 ```
 
