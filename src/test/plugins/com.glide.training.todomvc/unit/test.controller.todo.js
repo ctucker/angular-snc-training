@@ -3,11 +3,15 @@ describe('Todo controller', function() {
 
 	beforeEach(module('todo'));
 
-	var scope, $location, $httpBackend;
+	var scope, $location, $httpBackend, demoDataLoader, $q;
 
-	beforeEach(inject(function($rootScope, $controller, _$location_, _$httpBackend_) {
+	beforeEach(inject(function($rootScope, $controller, _$location_, _$httpBackend_, _$q_, _demoDataLoader_) {
 		scope = $rootScope.$new();
+		$q = _$q_;
+		demoDataLoader = _demoDataLoader_;
+
 		$controller('Todo', { $scope : scope });
+
 		$location = _$location_;
 		$httpBackend = _$httpBackend_;
 	}));
@@ -223,12 +227,12 @@ describe('Todo controller', function() {
 	describe('loading demo data', function() {
 
 		beforeEach(function() {
-			$httpBackend.whenGET('/api/now/table/todo_sample').respond(
-				{ result : [
-					{ title: 'My task', iscomplete : 'true' },
-					{ title: 'Incomplete', iscomplete : 'false' }
-				]}
-			);
+			var deferred = $q.defer();
+			deferred.resolve([
+				{ title : 'My title',
+					isComplete : false }
+			]);
+			spyOn(demoDataLoader, 'loadData').andReturn(deferred.promise);
 		});
 
 		afterEach(function() {
@@ -236,29 +240,16 @@ describe('Todo controller', function() {
 			$httpBackend.verifyNoOutstandingRequest();
 		});
 
-		it('pulls data from the server on loadDemoData call', function() {
-			$httpBackend.expectGET('/api/now/table/todo_sample');
+		it('requests demo data from the demoDataLoader on loadDemoData call', function() {
 			scope.loadDemoData();
-			$httpBackend.flush();
+			expect(demoDataLoader.loadData).toHaveBeenCalled();
 		});
 
-		it('adds tasks from the server to the end of the task list', function() {
+		it('adds the tasks from the promise to the task list', function() {
 			scope.loadDemoData();
-			$httpBackend.flush();
-			expect(titleOfTask(0)).toBe('My task');
-			expect(scope.taskList.length).toBe(2);
+			scope.$digest();
+			expect(scope.taskList.length).toEqual(1);
 		});
 
-		it('marks incomplete tasks as such', function() {
-			scope.loadDemoData();
-			$httpBackend.flush();
-			expect(completionStatusOfTask(1)).toBe(false);
-		});
-
-		it('marks complete tasks as such', function() {
-			scope.loadDemoData();
-			$httpBackend.flush();
-			expect(completionStatusOfTask(0)).toBe(true);
-		});
 	});
 });

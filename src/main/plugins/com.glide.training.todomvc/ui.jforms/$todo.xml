@@ -18,6 +18,7 @@
 		<script src="scripts/angular/angular.js" />
 		<script src="scripts/app.todo/_todomvc.js" />
 		<script src="scripts/app.todo/controller.todo.js" />
+		<script src="scripts/app.todo/factory.demoDataLoader.js" />
 
 	</head>
 	<body ng-controller="Todo">
