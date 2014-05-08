@@ -4,15 +4,17 @@ describe('loading demo data', function() {
 	beforeEach(module('todo'));
 
 	var demoDataLoader,
+		demoDataUrl,
 		$httpBackend;
 
 	beforeEach(inject(function($injector) {
 		demoDataLoader = $injector.get('demoDataLoader');
+		demoDataUrl = $injector.get('demoDataUrl');
 		$httpBackend = $injector.get('$httpBackend');
 	}));
 
 	beforeEach(function() {
-		$httpBackend.whenGET('/api/now/table/todo_sample').respond(
+		$httpBackend.whenGET(demoDataUrl).respond(
 			{ result : [
 				{ title: 'My task', iscomplete : 'true' },
 				{ title: 'Incomplete', iscomplete : 'false' }
@@ -26,7 +28,7 @@ describe('loading demo data', function() {
 	});
 
 	it('pulls data from the server on loadDemoData call', function() {
-		$httpBackend.expectGET('/api/now/table/todo_sample');
+		$httpBackend.expectGET(demoDataUrl);
 		demoDataLoader.retrieveDemoData();
 		$httpBackend.flush();
 	});

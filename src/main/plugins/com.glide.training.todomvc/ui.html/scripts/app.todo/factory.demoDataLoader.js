@@ -1,9 +1,9 @@
-angular.module('todo').factory('demoDataLoader', function($http) {
+angular.module('todo').factory('demoDataLoader', function($http, demoDataUrl) {
 	"use strict";
 
 	return {
 		retrieveDemoData : function() {
-			return $http.get('/api/now/table/todo_sample').then(function(response) {
+			return $http.get(demoDataUrl).then(function(response) {
 				var data = response.data.result;
 				var todo;
 				var taskList = [];
