@@ -3,15 +3,16 @@ describe('todo controller', function() {
 
 	beforeEach(module('todo'));
 
-	var scope, $httpBackend;
+	var scope, $httpBackend, demoDataLoader, $q;
 
 	beforeEach(inject(function($injector) {
 		var $rootScope = $injector.get('$rootScope');
 		var $controller = $injector.get('$controller');
 		$httpBackend = $injector.get('$httpBackend');
+		demoDataLoader = $injector.get('demoDataLoader');
+		$q = $injector.get('$q');
 		scope = $rootScope.$new();
-		$controller('Todo', { $scope: scope});
-
+		$controller('Todo', { $scope: scope });
 	}));
 
 	describe('adding a task', function() {
@@ -194,31 +195,22 @@ describe('todo controller', function() {
 	});
 
 	describe('fetching demo data', function() {
-		var sampleDataEndpoint = 'http://localhost:8080/api/now/table/todo_sample';
+
 		var sampleTodos = [
-			{ title: "Todo", isComplete: false }
+			{ title: "Todo", isComplete: false },
+			{ title: "Todid", isComplete : true }
 		];
 
 		beforeEach(function() {
-			$httpBackend.whenGET(sampleDataEndpoint).respond({ result : sampleTodos});
-		});
-
-		afterEach(function() {
-			$httpBackend.verifyNoOutstandingExpectation();
-			$httpBackend.verifyNoOutstandingRequest();
-		});
-
-		it('requests demo data from the server on loadDemoData call', function() {
-			$httpBackend.expectGET();
-			scope.loadDemoData();
-			$httpBackend.flush();
+			var deferred = $q.defer();
+			deferred.resolve(sampleTodos);
+			spyOn(demoDataLoader, 'retrieveDemoData').andReturn(deferred.promise);
 		});
 
 		it('adds the demo data to the list of tasks', function() {
 			scope.loadDemoData();
-			$httpBackend.flush();
-			expect(titleOfTask(0)).toEqual('Todo');
-			expect(completionStatusOfTask(0)).toEqual(false);
+			scope.$digest();
+			expect(scope.taskList).toEqual(sampleTodos)
 		});
 
 	});

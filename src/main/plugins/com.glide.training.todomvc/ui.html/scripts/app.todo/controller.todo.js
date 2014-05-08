@@ -1,4 +1,4 @@
-angular.module('todo').controller('Todo', function($scope, $location, $http) {
+angular.module('todo').controller('Todo', function($scope, $location, demoDataLoader) {
 	"use strict";
 
 	$scope.taskList = [];
@@ -32,13 +32,10 @@ angular.module('todo').controller('Todo', function($scope, $location, $http) {
 	};
 
 	$scope.loadDemoData = function() {
-		$http.get('http://localhost:8080/api/now/table/todo_sample').success(function(data) {
-			var response = data.result;
-			var todo;
-			for (var i = 0; i < response.length; ++i) {
-				todo = response[i];
-				$scope.taskList.push(newTask(todo.title, todo.isComplete));
-			}
+		demoDataLoader.retrieveDemoData().then(function(tasks) {
+			tasks.forEach(function(task) {
+				$scope.taskList.push(task);
+			})
 		});
 	};
 
