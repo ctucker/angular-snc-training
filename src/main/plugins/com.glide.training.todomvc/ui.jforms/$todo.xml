@@ -22,6 +22,7 @@
 		<script src="scripts/app.todo/factory.demoDataLoader.js" />
 		<script src="scripts/app.todo/factory.taskFactory.js" />
 		<script src="scripts/app.todo/factory.todoRepository.js" />
+		<script src="scripts/app.todo/directive.editTask.js" />
 
 	</head>
 	<body ng-controller="Todo">
@@ -41,7 +42,7 @@
 					<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
 					<li ng-repeat="task in taskList | filter:statusMask"
 						ng-class="{ completed : task.isComplete, editing : task === taskBeingEdited }"
-						ng-dblclick="editTask(task)">
+						sn-edit-task="task">
 						<div class="view">
 							<input class="toggle" type="checkbox" ng-model="task.isComplete" />
 							<label>{{ task.title }}</label>
