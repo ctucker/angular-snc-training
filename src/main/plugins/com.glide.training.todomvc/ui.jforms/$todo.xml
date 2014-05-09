@@ -38,7 +38,18 @@
 			<section id="main">
 				<input id="toggle-all" type="checkbox" ng-model="allComplete" />
 				<label for="toggle-all">Mark all as complete</label>
-				<sn-todo-list />
+
+				<sn-todo-list
+						list-of-tasks="taskList"
+						mask="statusMask"
+						task-being-edited="taskBeingEdited"
+						edit-task="editTask(outermostTask)"
+						task-remover="deleteTask(outermostTask)"
+						edit-finisher="finishEditing()"
+						/>
+
+
+
 			</section>
 			<!-- This footer should hidden by default and shown when there are todos -->
 			<footer id="footer" ng-show="hasTasks" ng-cloak="true">
