@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+</head>
+<body>
+  <% if (user) { %>
+    <h1>Welcome, <%= user.displayName %>!</h1>
+    <p>Email: <%= user.email %></p> <% // This will be the primary email, likely from Google if that was the first login %>
+
+    <hr>
+    <h2>Connected Accounts:</h2>
+
+    <div>
+      <h3>LinkedIn</h3>
+      <% if (user.linkedinId) { %>
+        <p>Status: Connected</p>
+        <p>Name: <%= user.linkedinDisplayName %></p>
+        <% if (user.linkedinEmail) { %>
+          <p>Email: <%= user.linkedinEmail %></p>
+        <% } %>
+      <% } else { %>
+        <p>Status: Not Connected</p>
+        <p><a href="/connect/linkedin">Connect LinkedIn</a></p>
+      <% } %>
+    </div>
+
+    <hr>
+
+    <div>
+      <h3>Twitter/X</h3>
+      <% if (user.twitterId) { %>
+        <p>Status: Connected</p>
+        <p>Name: <%= user.twitterDisplayName %></p>
+        <p>Username: @<%= user.twitterUsername %></p>
+        <% if (user.twitterEmail) { %>
+          <p>Email: <%= user.twitterEmail %></p>
+        <% } %>
+      <% } else { %>
+        <p>Status: Not Connected</p>
+        <p><a href="/connect/twitter">Connect Twitter/X</a></p>
+      <% } %>
+    </div>
+
+    <hr>
+    <a href="/">Home</a>
+    <br>
+    <a href="/auth/logout">Logout</a>
+  <% } else { %>
+    <p>You are not logged in.</p>
+    <p>Please <a href="/auth/google">log in with Google</a> or go to <a href="/">Home</a>.</p>
+  <% } %>
+</body>
+</html>

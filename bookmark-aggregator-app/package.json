@@ -1,0 +1,23 @@
+{
+  "name": "bookmark-aggregator-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "ejs": "^3.1.6",
+    "passport": "^0.5.0",
+    "passport-google-oauth20": "^2.0.0",
+    "express-session": "^1.17.2",
+    "passport-linkedin-oauth2": "^2.0.0",
+    "passport-twitter": "^1.0.4",
+    "sqlite3": "^5.0.0"
+  }
+}
